@@ -48,10 +48,21 @@ export class PortalComponent implements OnInit {
   public totalCompletedOrder: number = 0;
   public totalInprogressOrder: number = 0;
   public totalCanceledOrder: number = 0;
+
+  //Month Names
+  public monthNames: string[] = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  public currentMonthIndex: number = 0;
   
   constructor(private reportservice: ReportsService) {}
 
   ngOnInit() {
+    const d = new Date();
+    this.currentMonthIndex = d.getMonth();
+
     this.reportservice.getOrderSummary().subscribe((response: any) => {
       this.totalOrder = response.data.totalOrder;
       this.totalCompletedOrder = response.data.totalCompletedOrder;
@@ -59,7 +70,7 @@ export class PortalComponent implements OnInit {
       this.totalCanceledOrder = response.data.totalCanceledOrder;
     });
 
-    this.reportservice.getMostOrderedProducts(5, 2021).subscribe((response: any) => {
+    this.reportservice.getMostOrderedProducts(this.currentMonthIndex, d.getFullYear()).subscribe((response: any) => {
       this.barChartLabels = [];
       this.barChartData[0].data = [];
 
@@ -69,12 +80,16 @@ export class PortalComponent implements OnInit {
       });
     });
 
-    this.reportservice.getMostPopularTags(5, 2021).subscribe((response: any) => {
+    this.reportservice.getMostPopularTags(this.currentMonthIndex, d.getFullYear()).subscribe((response: any) => {
       response.data.forEach((item) => {
         this.pieChartLabels.push(item.tagName);
         this.pieChartData.push(item.percentage);
       });
     });
+  }
+
+  get currentMonth(): string {
+    return this.monthNames[this.currentMonthIndex];
   }
 
   get showSummary(): boolean {

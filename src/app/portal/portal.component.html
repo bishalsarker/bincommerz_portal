@@ -7,14 +7,16 @@
             <h6 style="font-weight: 700;">Analytics</h6>
         </div>
         <div class="w-100" *ngIf="!(barChartData[0].data.length > 0 && barChartData[0].data.length > 0)">
-            <p>No analytics data available</p>
+            <p>No analytics data available for this month</p>
         </div>
         <div class="row" *ngIf="barChartData[0].data.length > 0 && barChartData[0].data.length > 0">
             <div class="col-md-6 col-sm-12" *ngIf="barChartData[0].data.length > 0">
                 <div class="card text-center">
                     <div class="card-body">
                       <h5 class="card-title">Most Ordered Products</h5>
-                      <h6 style="font-weight: 700; margin-bottom: 40px;">Month: <span style="color: green;">August</span></h6>
+                      <h6 style="font-weight: 700; margin-bottom: 40px;">Month: 
+                        <span style="color: green;">{{ currentMonth }}</span>
+                      </h6>
                       <canvas baseChart
                         [datasets]="barChartData"
                         [labels]="barChartLabels"
@@ -29,7 +31,9 @@
                 <div class="card text-center">
                     <div class="card-body">
                       <h5 class="card-title">Most Popular Tags</h5>
-                      <h6 style="font-weight: 700; margin-bottom: 40px;">Month: <span style="color: green;">August</span></h6>
+                      <h6 style="font-weight: 700; margin-bottom: 40px;">Month: 
+                        <span style="color: green;">{{ currentMonth }}</span>
+                      </h6>
                       <canvas baseChart
                         [data]="pieChartData"
                         [labels]="pieChartLabels"
