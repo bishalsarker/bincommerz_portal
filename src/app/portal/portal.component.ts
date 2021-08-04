@@ -70,7 +70,7 @@ export class PortalComponent implements OnInit {
       this.totalCanceledOrder = response.data.totalCanceledOrder;
     });
 
-    this.reportservice.getMostOrderedProducts(this.currentMonthIndex, d.getFullYear()).subscribe((response: any) => {
+    this.reportservice.getMostOrderedProducts(this.currentMonthIndex + 1, d.getFullYear()).subscribe((response: any) => {
       this.barChartLabels = [];
       this.barChartData[0].data = [];
 
@@ -80,7 +80,7 @@ export class PortalComponent implements OnInit {
       });
     });
 
-    this.reportservice.getMostPopularTags(this.currentMonthIndex, d.getFullYear()).subscribe((response: any) => {
+    this.reportservice.getMostPopularTags(this.currentMonthIndex + 1, d.getFullYear()).subscribe((response: any) => {
       response.data.forEach((item) => {
         this.pieChartLabels.push(item.tagName);
         this.pieChartData.push(item.percentage);
