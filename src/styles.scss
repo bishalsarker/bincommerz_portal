@@ -1,1 +1,85 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~ngx-toastr/toastr-bs4-alert";
+
+html,
+body {
+  font-family: "Nunito", sans-serif;
+}
+
+.card {
+  margin-bottom: 20px;
+}
+
+.text-gray-800 {
+  color: #5a5c69 !important;
+}
+
+.btn-link {
+  text-decoration: none !important;
+}
+
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
+.breadcrumb {
+  background: none;
+  .breadcrumb-item {
+    a {
+      text-decoration: none;
+      i {
+        color: #007bff;
+      }
+    }
+  }
+}
+
+.button-row {
+  .btn {
+    margin-right: 5px;
+  }
+}
+
+.form-group {
+  label {
+    font-weight: 600;
+  }
+}
+
+.required {
+  label::after {
+    content: " *";
+    color: red;
+  }
+}
+
+.info-box {
+  padding-left: 0px;
+  list-style-type: none;
+
+  li {
+    padding-bottom: 20px;
+    .info-label {
+      font-weight: 600;
+    }
+  }
+}
+
+a {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+}
+
+a:hover {
+  text-decoration: none;
+}

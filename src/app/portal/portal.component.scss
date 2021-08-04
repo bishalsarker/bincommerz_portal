@@ -1,0 +1,61 @@
+.card-counter{
+    box-shadow: 2px 2px 10px #DADADA;
+    margin: 5px;
+    padding: 20px 10px;
+    background-color: #fff;
+    height: 180px;
+    border-radius: 5px;
+    transition: .2s linear all;
+
+    h3, h5 {
+        text-align: center;
+    }
+
+  }
+
+  .card-counter:hover{
+    cursor: pointer;
+    box-shadow: 4px 4px 20px #8b8b8b;
+    transition: .2s linear all;
+  }
+
+  .card-counter.primary{
+    background-color: #2a91ff;
+    color: #FFF;
+  }
+
+  .card-counter.danger{
+    background-color: #f85c59;
+    color: #FFF;
+  }  
+
+  .card-counter.success{
+    background-color: #74b978;
+    color: #FFF;
+  }  
+
+  .card-counter.info{
+    background-color: #9655ff;
+    color: #FFF;
+  }  
+
+  .card-counter i{
+    font-size: 5em;
+    opacity: 0.2;
+  }
+
+  .card-counter .count-numbers{
+    // position: absolute;
+    // right: 35px;
+    // top: 20px;
+    font-size: 5em;
+  }
+
+  .card-counter .count-name{
+    // position: absolute;
+    // right: 35px;
+    // top: 65px;
+    font-style: italic;
+    text-transform: capitalize;
+    font-size: 18px;
+  }
