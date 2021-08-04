@@ -9,7 +9,7 @@ const routes: Routes = [
     pathMatch: "full",
     loadChildren: () =>
       import("./portal/portal.module").then((m) => m.PortalModule),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: "auth-callback",
