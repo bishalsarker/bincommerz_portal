@@ -52,12 +52,12 @@ export class PortalComponent implements OnInit {
   constructor(private reportservice: ReportsService) {}
 
   ngOnInit() {
-    // this.reportservice.getOrderSummary().subscribe((response: any) => {
-    //   this.totalOrder = response.data.totalOrder;
-    //   this.totalCompletedOrder = response.data.totalCompletedOrder;
-    //   this.totalInprogressOrder = response.data.totalIncompleteOrder;
-    //   this.totalCanceledOrder = response.data.totalCanceledOrder;
-    // });
+    this.reportservice.getOrderSummary().subscribe((response: any) => {
+      this.totalOrder = response.data.totalOrder;
+      this.totalCompletedOrder = response.data.totalCompletedOrder;
+      this.totalInprogressOrder = response.data.totalIncompleteOrder;
+      this.totalCanceledOrder = response.data.totalCanceledOrder;
+    });
 
     this.reportservice.getMostOrderedProducts(5, 2021).subscribe((response: any) => {
       this.barChartLabels = [];
