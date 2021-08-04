@@ -2,73 +2,82 @@
     <div class="row" style="margin-bottom: 50px;">
         <h4 style="padding-left: 15px;">Welcome to Retail Portal!</h4>
     </div>
-    <div class="row" style="margin-bottom: 50px;">
-        <div class="col-12" style="margin-bottom: 10px;">
+    <div style="margin-bottom: 50px;">
+        <div class="w-100" style="margin-bottom: 10px;">
             <h6 style="font-weight: 700;">Analytics</h6>
         </div>
-        <div class="col-md-6 col-sm-12" *ngIf="barChartData[0].data.length > 0">
-            <div class="card text-center">
-                <div class="card-body">
-                  <h5 class="card-title">Most Ordered Products</h5>
-                  <h6 style="font-weight: 700; margin-bottom: 40px;">Month: <span style="color: green;">August</span></h6>
-                  <canvas baseChart
-                    [datasets]="barChartData"
-                    [labels]="barChartLabels"
-                    [options]="barChartOptions"
-                    [legend]="barChartLegend"
-                    [chartType]="barChartType">
-                </canvas>
+        <div class="w-100" *ngIf="!(barChartData[0].data.length > 0 && barChartData[0].data.length > 0)">
+            <p>No analytics data available</p>
+        </div>
+        <div class="row" *ngIf="barChartData[0].data.length > 0 && barChartData[0].data.length > 0">
+            <div class="col-md-6 col-sm-12" *ngIf="barChartData[0].data.length > 0">
+                <div class="card text-center">
+                    <div class="card-body">
+                      <h5 class="card-title">Most Ordered Products</h5>
+                      <h6 style="font-weight: 700; margin-bottom: 40px;">Month: <span style="color: green;">August</span></h6>
+                      <canvas baseChart
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType">
+                    </canvas>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6 col-sm-12" *ngIf="pieChartData.length > 0">
-            <div class="card text-center">
-                <div class="card-body">
-                  <h5 class="card-title">Most Popular Tags</h5>
-                  <h6 style="font-weight: 700; margin-bottom: 40px;">Month: <span style="color: green;">August</span></h6>
-                  <canvas baseChart
-                    [data]="pieChartData"
-                    [labels]="pieChartLabels"
-                    [chartType]="pieChartType"
-                    [options]="pieChartOptions"
-                    [colors]="pieChartColors"
-                    [legend]="pieChartLegend">
-                  </canvas>
+            <div class="col-md-6 col-sm-12" *ngIf="pieChartData.length > 0">
+                <div class="card text-center">
+                    <div class="card-body">
+                      <h5 class="card-title">Most Popular Tags</h5>
+                      <h6 style="font-weight: 700; margin-bottom: 40px;">Month: <span style="color: green;">August</span></h6>
+                      <canvas baseChart
+                        [data]="pieChartData"
+                        [labels]="pieChartLabels"
+                        [chartType]="pieChartType"
+                        [options]="pieChartOptions"
+                        [colors]="pieChartColors"
+                        [legend]="pieChartLegend">
+                      </canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row" style="margin-bottom: 50px;">
-        <div class="col-12" style="margin-bottom: 10px;">
+    <div style="margin-bottom: 50px;">
+        <div class="w-100" style="margin-bottom: 10px;">
             <h6 style="font-weight: 700;">Order Summary</h6>
         </div>
-
-        <div class="col-md-3 mt-auto" style="margin: auto 0;">
-          <div class="card-counter primary">
-              <h5 class="w-100">Total Orders</h5>
-              <h3 class="count-numbers w-100">{{ totalOrder }}</h3>
-          </div>
+        <div class="w-100" *ngIf="!showSummary">
+            <p>No summary data available</p>
         </div>
-    
-        <div class="col-md-3">
-          <div class="card-counter info">
-            <h5 class="w-100">In Progress Order</h5>
-              <h3 class="count-numbers w-100">{{ totalInprogressOrder }}</h3>
-          </div>
-        </div>
-    
-        <div class="col-md-3">
-          <div class="card-counter success">
-            <h5 class="w-100">Completed Order</h5>
-              <h3 class="count-numbers w-100">{{ totalCompletedOrder }}</h3>
-          </div>
-        </div>
-    
-        <div class="col-md-3">
-          <div class="card-counter danger">
-            <h5 class="w-100">Canceled Order</h5>
-              <h3 class="count-numbers w-100">{{ totalCanceledOrder }}</h3>
-          </div>
+        <div class="row" style="margin-bottom: 50px;" *ngIf="showSummary">
+            <div class="col-md-3 mt-auto" style="margin: auto 0;">
+              <div class="card-counter primary">
+                  <h5 class="w-100">Total Orders</h5>
+                  <h3 class="count-numbers w-100">{{ totalOrder }}</h3>
+              </div>
+            </div>
+        
+            <div class="col-md-3">
+              <div class="card-counter info">
+                <h5 class="w-100">In Progress Order</h5>
+                  <h3 class="count-numbers w-100">{{ totalInprogressOrder }}</h3>
+              </div>
+            </div>
+        
+            <div class="col-md-3">
+              <div class="card-counter success">
+                <h5 class="w-100">Completed Order</h5>
+                  <h3 class="count-numbers w-100">{{ totalCompletedOrder }}</h3>
+              </div>
+            </div>
+        
+            <div class="col-md-3">
+              <div class="card-counter danger">
+                <h5 class="w-100">Canceled Order</h5>
+                  <h3 class="count-numbers w-100">{{ totalCanceledOrder }}</h3>
+              </div>
+            </div>
         </div>
     </div>
     <div class="row">
