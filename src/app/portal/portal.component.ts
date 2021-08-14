@@ -3,6 +3,7 @@ import { ChartType, ChartOptions, ChartDataSets } from 'chart.js';
 import { Label, SingleDataSet } from 'ng2-charts';
 import { API_HOST, AUTH_HOST } from "../constants/api-constants";
 import { ReportsService } from "./services/reports.service";
+import { StockHealthService } from "./services/stock-health.service";
 
 @Component({
   selector: "app-portal",
@@ -10,6 +11,9 @@ import { ReportsService } from "./services/reports.service";
   styleUrls: ["./portal.component.scss"],
 })
 export class PortalComponent implements OnInit {
+
+  public stockHealthData: any = null;
+
   public barChartOptions: ChartOptions = {
     responsive: true,
     scales: { xAxes: [{}], yAxes: [{ ticks : {
@@ -57,7 +61,7 @@ export class PortalComponent implements OnInit {
 
   public currentMonthIndex: number = 0;
   
-  constructor(private reportservice: ReportsService) {}
+  constructor(private reportservice: ReportsService, private stockHealthService: StockHealthService) {}
 
   ngOnInit() {
     const d = new Date();
@@ -86,6 +90,10 @@ export class PortalComponent implements OnInit {
         this.pieChartData.push(item.percentage);
       });
     });
+
+    this.stockHealthService.getStockHealth().subscribe((response: any) => {
+      this.stockHealthData = response.data;
+    })
   }
 
   get currentMonth(): string {
