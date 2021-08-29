@@ -111,4 +111,8 @@ export class PortalComponent implements OnInit {
   get productManagementUrl(): string {
     return API_HOST + "retail-admin/product-management/";
   }
+
+  get contentManagementUrl(): string {
+    return API_HOST + "retail-admin/content-management/";
+  }
 }

@@ -20,7 +20,7 @@
           <strong><i class="fas fa-exclamation-circle fa-fw"></i></strong> &nbsp; <b>{{ stockHealthData.warning.length }} Product stocks are soon going to be finished</b>
         </div>
       </span>
-  </div>
+    </div>
     <div style="margin-bottom: 50px;">
         <div class="w-100" style="margin-bottom: 10px;">
             <h6 style="font-weight: 700;">Analytics</h6>
@@ -74,28 +74,28 @@
             <p>No summary data available</p>
         </div>
         <div class="row" style="margin-bottom: 50px;" *ngIf="showSummary">
-            <div class="col-md-3 mt-auto" style="margin: auto 0;">
+            <!-- <div class="col-md-3 mt-auto" style="margin: auto 0;">
               <div class="card-counter primary">
                   <h5 class="w-100">Total Orders</h5>
                   <h3 class="count-numbers w-100">{{ totalOrder }}</h3>
               </div>
             </div>
-        
-            <div class="col-md-3">
+         -->
+            <div class="col-md-4">
               <div class="card-counter info">
                 <h5 class="w-100">In Progress Order</h5>
                   <h3 class="count-numbers w-100">{{ totalInprogressOrder }}</h3>
               </div>
             </div>
         
-            <div class="col-md-3">
+            <div class="col-md-4">
               <div class="card-counter success">
                 <h5 class="w-100">Completed Order</h5>
                   <h3 class="count-numbers w-100">{{ totalCompletedOrder }}</h3>
               </div>
             </div>
         
-            <div class="col-md-3">
+            <div class="col-md-4">
               <div class="card-counter danger">
                 <h5 class="w-100">Canceled Order</h5>
                   <h3 class="count-numbers w-100">{{ totalCanceledOrder }}</h3>
@@ -107,7 +107,7 @@
         <div class="col-12" style="margin-bottom: 10px;">
             <h6 style="font-weight: 700;">Management</h6>
         </div>
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-4 col-sm-12">
             <div class="card text-center">
                 <div class="card-body">
                   <h5 class="card-title">Order Management</h5>
@@ -116,7 +116,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-4 col-sm-12">
             <div class="card text-center">
                 <div class="card-body">
                   <h5 class="card-title">Product Management</h5>
@@ -125,5 +125,14 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4 col-sm-12">
+          <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Content Management</h5>
+                <p class="card-text">Manage your site without changing your code. Add new pages, widgets homepage content and many more.</p>
+                <a [href]="contentManagementUrl" class="btn btn-primary">Enter</a>
+              </div>
+          </div>
+      </div>
     </div>
 </div>
