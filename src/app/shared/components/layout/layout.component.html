@@ -8,10 +8,16 @@
         <span class="navbar-text">
           <div class="dropdown">
             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ shopId }}
+              {{ userName }}
             </a>
           
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" routerLink="/dashboard" style="cursor: pointer;">
+                <i class="fas fa-home fa-fw"></i> Home
+              </a>
+              <a class="dropdown-item" routerLink="/dashboard/settings" style="cursor: pointer;">
+                <i class="fas fa-cog fa-fw"></i> Settings
+              </a>
               <a class="dropdown-item" (click)="authService.signOut()" style="cursor: pointer;">
                 <i class="fas fa-sign-out-alt fa-fw"></i> Log out
               </a>

@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: "",
     pathMatch: "full",
+    redirectTo: "/dashboard"
+  },
+  {
+    path: "dashboard",
     loadChildren: () =>
       import("./portal/portal.module").then((m) => m.PortalModule),
     canActivate: [AuthGuard],

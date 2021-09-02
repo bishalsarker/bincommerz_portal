@@ -8,6 +8,8 @@ import { AUTH_HOST } from "src/app/constants/api-constants";
   providedIn: "root",
 })
 export class AuthService {
+  public siteInfo: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
   constructor(private httpClient: HttpClient) {}
 
   validateToken(): Observable<boolean> {
@@ -38,7 +40,37 @@ export class AuthService {
         },
       })
       .subscribe((data: any) => {
-        localStorage.setItem("shop_id", data.shopId);
+        localStorage.setItem("user_name", data.userName);
       });
+  }
+
+  getShopInfo(): void {
+    this.httpClient
+      .get(AUTH_HOST + "auth/shopinfo", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .subscribe((response: any) => {
+        localStorage.setItem("shop_id", response.data.id);
+        this.siteInfo.next(response.data);
+      });
+  }
+
+  getShopInfoObservable(): Observable<any> {
+    return this.httpClient
+      .get(AUTH_HOST + "auth/shopinfo", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .pipe(
+        map((response: any) => {
+          this.siteInfo.next(response.data);
+          return response.data;
+        })
+      );
   }
 }

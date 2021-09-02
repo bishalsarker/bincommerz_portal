@@ -23,6 +23,7 @@ export class AuthCallbackComponent implements OnInit {
       if (auth_token && auth_token.trim() !== "") {
         localStorage.setItem("auth_token", auth_token);
         this.authService.getUserInfo();
+        this.authService.getShopInfo();
         this.router.navigate([state]);
       }
     });

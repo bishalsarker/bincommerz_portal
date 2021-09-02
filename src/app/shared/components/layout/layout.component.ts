@@ -34,6 +34,10 @@ export class LayoutComponent implements OnInit {
     this.router.navigateByUrl(menuItem.route);
   }
 
+  get userName(): string {
+    return localStorage.getItem("user_name");
+  }
+
   get shopId(): string {
     return localStorage.getItem("shop_id");
   }
