@@ -1,0 +1,70 @@
+<div style="padding-left: 12px;">
+    <div>
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="form-group required">
+                    <label for="exampleInputEmail1">Page Title</label>
+                    <input type="text" class="form-control" [formControl]="pageTitleControl" />
+                    <small>Maximum 50 characters are allowed</small>
+                </div>
+                <div class="form-group required" style="margin-bottom: 15px;">
+                    <label for="exampleInputEmail1">Slug</label>
+                    <input type="text" class="form-control" [formControl]="slugControl" />
+                    <small>Slug should be unique. Only english characters are allowed. No spaces and special characters are allowed accept hypen (-) and underscore (_)</small>
+                </div>
+                <div class="form-group required">
+                    <label for="exampleInputEmail1">Category</label>
+                    <ng-select
+                        [items]="pagesdataService.categories$ | async"
+                        [multiple]="false"
+                        [closeOnSelect]="true"
+                        [searchable]="false"
+                        bindLabel="name"
+                        bindValue="value"
+                        placeholder="Select Page Category"
+                        [formControl]="pageCategoryControl">
+                    </ng-select>
+                </div>
+                <div class="form-group required" 
+                *ngIf="pageCategoryControl.value !== 'faq'">
+                    <label for="exampleInputEmail1">Link Title</label>
+                    <input type="text" maxlength="50" class="form-control" [formControl]="linkTitleControl" />
+                    <small>Maximum 50 characters are allowed</small>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px; margin-top: 20px;">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1" [formControl]="isPublishedControl">                
+                        <label *ngIf="!isEditMode" class="custom-control-label" for="customCheck1">Publish after creation</label>
+                        <label *ngIf="isEditMode" class="custom-control-label" for="customCheck1">Is Published</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" *ngIf="pageCategoryControl.value !== 'externallink'">
+                <div class="form-group required" >
+                    <label for="exampleFormControlTextarea1">Content</label>
+                    <quill-editor
+                        [styles]="{height: '450px'}"
+                        class="content-editor" 
+                        [formControl]="contentControl">
+                    </quill-editor>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12" *ngIf="pageCategoryControl.value === 'externallink'">
+                <div class="form-group required">
+                    <label for="exampleInputEmail1">URL</label>
+                    <input type="text" maxlength="50" class="form-control" [formControl]="urlControl" />
+                </div>
+            </div>
+        </div>
+        <div class="row">  
+            <div class="col-12 button-row" style="margin-top: 33px;">
+                <button class="btn btn-danger" routerLink="/pages" [disabled]="disableAddBtn">Cancel</button>
+                <button class="btn btn-primary" (click)="addOrUpdatePage()" [disabled]="!pageForm.valid || disableAddBtn">
+                    <span>{{ buttonText }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

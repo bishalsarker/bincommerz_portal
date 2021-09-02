@@ -4,7 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --output-path dist --base-href /",
+    "build-dashboard": "ng build dashboard --prod --output-path dist --base-href /",
+    "build-pm": "ng build product-management --prod --output-path dist/product-management --base-href /product-management/",
+    "build-om": "ng build order-management --prod --output-path dist/order-management --base-href /order-management/",
+    "build-cm": "ng build content-management --prod --output-path dist/content-management --base-href /content-management/",
+    "build": "npm run build-dashboard && npm run build-pm && npm run build-om && npm run build-cm",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -24,6 +28,8 @@
     "chart.js": "^2.9.3",
     "date-fns": "^2.21.3",
     "lodash": "^4.17.21",
+    "ngx-quill": "^5.2.0",
+    "quill": "^1.3.7",
     "ng2-charts": "^2.3.0",
     "ngx-toastr": "^11.3.3",
     "rxjs": "~6.4.0",

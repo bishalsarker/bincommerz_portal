@@ -1,0 +1,20 @@
+<div style="padding-left: 12px;">
+    <app-data-table
+        [columnConfig]="imgGalleryListService.columnConfig$ | async" 
+        [tableData]="imgGalleryDataService.imageGalleryData$ | async"
+        [actions]="imgGalleryListService.tableActions$ | async">
+        <div class="w-50">
+            <input
+                #fileinput
+                id="file" 
+                type="file" 
+                accept=".jpg, .jpeg, .png" 
+                (change)="handleFileInput($event.target.files[0])" 
+            />
+        </div>
+        <button [disabled]="!enableButton || imageData == ''" (click)="upload()" class="btn btn-primary" style="margin-top: 10px;">
+            <i class="fas fa-plus"></i>&nbsp;
+            <span style="font-weight: 600; margin-left: 5px;">{{ uploadBtnText }}</span>
+        </button>
+    </app-data-table>
+</div>

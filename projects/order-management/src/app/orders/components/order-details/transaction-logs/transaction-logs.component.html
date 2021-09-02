@@ -1,0 +1,17 @@
+<div style="padding-left: 12px;">
+    <p class="d-flex justify-content-start">
+        <span style="font-weight: bold;">Order ID:&nbsp;</span> {{ orderId }}
+        <span>
+            <a style="padding-left: 15px;" routerLink="/orders/details/{{ orderId }}">(See details)</a>
+        </span>
+    </p>
+    <ul class="nav">
+        <li class="nav-item">
+          
+        </li>
+      </ul>
+    <app-data-table
+        [columnConfig]="transactionLogService.columnConfig$ | async" 
+        [tableData]="transactionLogs$ | async">
+    </app-data-table>
+</div>

@@ -1,0 +1,11 @@
+<div style="padding-left: 12px;">
+    <app-data-table
+        [columnConfig]="tagListService.columnConfig | async" 
+        [tableData]="tagsDataService.tags | async"
+        [actions]="tagListService.tableActions | async">
+        <a class="btn btn-link" routerLink="/tags/add"  style="padding-left: 0px;">
+            <i class="fas fa-plus"></i>&nbsp;
+            <span style="font-weight: 600; margin-left: 5px;">Add New</span>
+        </a>
+    </app-data-table>
+</div>

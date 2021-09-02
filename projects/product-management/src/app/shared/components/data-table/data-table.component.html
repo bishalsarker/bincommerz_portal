@@ -1,0 +1,86 @@
+<!-- <div class="row" style="margin-bottom: 20px;">
+    <div class="col-lg-9 col-md-7 col-sm-12">
+      <ng-content style="margin-left: 12px;"></ng-content>
+    </div>
+    <div class="col-lg-3 col-md-5 col-sm-12" style="padding-right: 5px;">
+      <input style="float: right;" class="form-control" type="text" placeholder="Search...">
+    </div>
+</div> -->
+
+<div style="width: 100%; margin-bottom: 15px;">
+    <ng-content></ng-content>
+</div>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" *ngFor="let column of columnConfig; let i=index">
+                    {{ column.columnName }}
+                </th>
+                <th *ngIf="actions.length > 0"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let dataObject of tableData; let i=index">
+                <td *ngFor="let column of columnConfig">
+                    <div *ngIf="!column.template">
+                        {{ getValue(column, dataObject) }}
+                    </div>
+                    <div *ngIf="column.template && column.template.type =='image'" class="border" style="width: 200px; padding: 10px; background-color: rgb(202, 202, 202);">
+                        <img [src]="getValue(column, dataObject)" class="w-100" style="height: 150px; object-fit: contain" />
+                    </div>
+                    <div *ngIf="column.template && column.template.type =='link'">
+                        <a style="text-decoration: none;" routerLink="{{ getHyperlink(column.template.config.href, dataObject) }}">{{ getValue(column, dataObject) }}</a>
+                    </div>
+                    <div *ngIf="column.template && column.template.type =='bool'">
+                        <span 
+                            *ngIf="getValue(column, dataObject) === true"
+                            style="color: green">
+                            <i class="fas fa-check-circle"></i>
+                        </span>
+                        <span 
+                            *ngIf="getValue(column, dataObject) === false" 
+                            style="color: red">
+                            <i class="fas fa-times-circle"></i>
+                        </span>
+                    </div>
+                    <div *ngIf="column.template && column.template.type =='stock-quantity'">
+                        <span 
+                            *ngIf="getValue(column, dataObject) > 0"
+                            style="color: green; font-weight: 600;">
+                            {{ getValue(column, dataObject) }}
+                        </span>
+                        <span 
+                            *ngIf="!(getValue(column, dataObject) > 0)" 
+                            style="color: red; font-weight: 600;">
+                            {{ getValue(column, dataObject) }}
+                        </span>
+                    </div>
+                </td>
+                <td *ngIf="actions.length > 0">
+                    <div class="dropdown d-flex justify-content-end">
+                        <button class="btn btn-link rounded-circle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="true">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <span *ngFor="let action of getActions(dataObject)">
+                            <a  class="dropdown-item"
+                                (click)="action.do(dataObject)"
+                                [class.disabled]="!action.showActions(dataObject)"
+                                style="cursor: pointer;">
+                                <i class="{{ action.icon }}"></i> {{ action.title }}
+                            </a>
+                          </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngFor="let staticRow of staticData">
+                <td *ngFor="let cell of staticRow.cells" [attr.colspan]="cell.colSpan">
+                   <span [ngStyle]="cell.style">{{ cell.data }}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

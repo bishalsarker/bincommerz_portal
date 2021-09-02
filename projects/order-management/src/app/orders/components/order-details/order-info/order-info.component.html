@@ -1,0 +1,81 @@
+<div *ngIf="orderModel">
+    <div class="row" style="margin-bottom: 30px;">
+        <div class="col-12 d-flex justify-content-start">
+            <div class="dropdown" style="margin-right: 10px;">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fas-fw fa-cogs "></i>&nbsp;&nbsp;Order Actions
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" routerLink="/orders/transactions/{{ orderModel.id }}">
+                    <i class="fas fa-history fa-fw"></i>&nbsp;&nbsp;Transaction Logs
+                  </a>
+                  <ng-container *ngIf="!orderModel.isCompleted && !orderModel.isCanceled">
+                    <a 
+                        class="dropdown-item" 
+                        routerLink="/orders/update-payment/{{ orderModel.id }}"
+                        [queryParams]="{ payable: orderModel.totalPayable, due: orderModel.totalPayable }">
+                        <i class="fas fa-hand-holding-usd fa-fw"></i>&nbsp;&nbsp;Update Payment
+                    </a>
+                    <a  
+                        class="dropdown-item" 
+                        style="cursor: pointer;" 
+                        (click)="completeOrder()">
+                        <i class="fas fa-clipboard-check fa-fw"></i>&nbsp;&nbsp;Complete Order
+                    </a>
+                    <a  
+                        class="dropdown-item" 
+                        style="cursor: pointer;" 
+                        (click)="cancelOrder()">
+                        <i class="fas fa-power-off fa-fw"></i>&nbsp;&nbsp;Cancel Order
+                    </a>
+                  </ng-container>
+                    <a  *ngIf="orderModel.isCompleted || orderModel.isCanceled"
+                        class="dropdown-item" 
+                        style="cursor: pointer;" 
+                        (click)="deleteOrder()">
+                        <i class="fas fa-trash-alt fa-fw"></i>&nbsp;&nbsp;Delete Order
+                    </a>
+                </div>
+            </div>
+            <app-btn-process
+                [processModel]="processService.nextProcess$ | async">
+            </app-btn-process>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h3 style="margin-bottom: 20px">Order Info</h3>
+            <ul class="info-box">
+                <li><span class="info-label">Order ID:&nbsp;&nbsp;</span>{{ orderModel.id }}</li>
+                <li><span class="info-label">Placed On:&nbsp;&nbsp;</span>{{ formatDate(orderModel.placedOn) }}</li>
+                <li><span class="info-label">Full Name:&nbsp;&nbsp;</span>{{ orderModel.fullName }}</li>
+                <li><span class="info-label">Phone:&nbsp;&nbsp;</span>{{ orderModel.phone }}</li>
+                <li><span class="info-label">Email:&nbsp;&nbsp;</span>{{ orderModel.email }}</li>
+                <li><span class="info-label">Address:&nbsp;&nbsp;</span>{{ orderModel.address }}</li>
+                <li>
+                    <span class="info-label">Status:&nbsp;&nbsp;</span>
+                    <span class="badge badge-primary">{{ orderModel.status }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12">
+            <h3 style="margin-bottom: 20px">Items & Payments</h3>
+            <app-data-table
+                [columnConfig]="orderItemListService.columnConfig$ | async" 
+                [tableData]="orderModel.items"
+                [staticData]="staticTableData">
+            </app-data-table>
+            <ul style="list-style-type: none; padding-left: 0;">
+                <li><a 
+                    *ngIf="!orderModel.isCompleted && !orderModel.isCanceled" 
+                    routerLink="/orders/update-payment/{{ orderModel.id }}"
+                    style="padding-left: 12px">
+                    Update payments
+                </a></li>
+                <li>
+                    <a routerLink="/orders/transactions/{{ orderModel.id }}" style="padding-left: 12px">See transaction logs</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

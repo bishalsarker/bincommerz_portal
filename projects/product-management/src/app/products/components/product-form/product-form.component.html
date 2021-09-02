@@ -1,0 +1,77 @@
+<div style="padding-left: 12px;">
+    <div>
+        <div class="row">
+            <div class="col-lg-7 col-12">
+                <h3 style="margin-bottom: 20px">Basic Info</h3>
+                <div class="form-group required">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" class="form-control" [formControl]="nameControl" />
+                </div>
+                <div class="form-group required">
+                    <label for="exampleFormControlTextarea1">Description</label>
+                    <quill-editor
+                        [styles]="{height: '190px'}"
+                        class="content-editor" 
+                        [formControl]="descriptionControl">
+                    </quill-editor>
+                </div>
+                <div class="form-group required">
+                    <label for="exampleInputEmail1">Price</label>
+                    <input type="number" min="0.00" step="0.5" class="form-control" [formControl]="priceControl" />
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Discounts (%)</label>
+                    <input type="number" min="0.00" step="0.5" class="form-control" value="0.00" [formControl]="discountControl" />
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Stock Quantity</label>
+                    <input type="number" min="0.00" step="0.5" class="form-control" value="0.00" [formControl]="stockQuantityControl" />
+                </div>
+                <div class="form-group required">
+                    <label for="exampleFormControlSelect2">Tags</label>
+                    <ng-select
+                        [items]="tags$ | async"
+                        [multiple]="true"
+                        [closeOnSelect]="false"
+                        [searchable]="false"
+                        [loading]="loading$ | async"
+                        bindLabel="name"
+                        bindValue="value"
+                        placeholder="Select people"
+                        [formControl]="tagsControl">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-lg-5 col-12">
+               <h3 style="margin-bottom:20px">Images</h3>
+               <div class="row">
+                <div class="col-12" style="padding-right: 20px;">
+                    <div class="form-group required" style="margin-bottom:20px">
+                        <label for="file">Product Image</label>
+                        <div class="border" style="padding: 15px; margin-bottom: 15px; width: 420px;">
+                            <img [src]="imageUrl" class="w-100"  style="height: 375px; object-fit: contain" />
+                        </div>
+                        <input 
+                            id="file" 
+                            type="file" 
+                            accept=".jpg, .jpeg, .png" 
+                            (change)="handleFileInput($event.target.files[0])" 
+                        />
+                    </div>
+                    <div *ngIf="isEditMode">
+                        <button class="btn btn-primary" (click)="gotoImgGallery()">Go To Image Gallery</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="row">  
+            <div class="col-12 button-row" style="margin-top: 33px;">
+                <button class="btn btn-danger" routerLink="/products" [disabled]="disableAddBtn">Cancel</button>
+                <button class="btn btn-primary" (click)="addOrUpdateProduct()" [disabled]="!productForm.valid || disableAddBtn">
+                    <span>{{ buttonText }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
