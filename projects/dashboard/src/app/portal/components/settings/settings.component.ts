@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from '../../../shared/services/auth.service';
+import { SettingsDataService } from '../../services/settings-data.service';
 
 @Component({
   selector: 'app-settings',
@@ -17,10 +18,13 @@ export class SettingsComponent implements OnInit {
     shopUrl: new FormControl("", Validators.required),
     shopIpAddress: new FormControl("", Validators.required),
     shopDescription: new FormControl("", Validators.required),
-    shopLogo: new FormControl("", Validators.required),
+    shopLogo: new FormControl(""),
+    reorderLevel: new FormControl("", [Validators.required, Validators.min(1)])
   });
 
-  constructor(private authService: AuthService) { 
+  constructor(
+    private authService: AuthService, 
+    private settingsDataService: SettingsDataService) { 
     authService.getShopInfo();
   }
 
@@ -32,8 +36,8 @@ export class SettingsComponent implements OnInit {
       this.shopUrlControl.setValue(siteInfo.url);
       this.shopIpAddressControl.setValue(siteInfo.ipAddress);
       this.shopDescriptionControl.setValue(siteInfo.description);
-      this.shopLogoControl.setValue(siteInfo.logo);
       this.imageUrl = 'https://bincommerzstaticstorage.blob.core.windows.net' + siteInfo.logo;
+      this.reorderLevelControl.setValue(siteInfo.reorderLevel);
     })
   }
 
@@ -57,6 +61,10 @@ export class SettingsComponent implements OnInit {
     return this.settingsForm.get("shopLogo");
   }
 
+  get reorderLevelControl(): AbstractControl {
+    return this.settingsForm.get("reorderLevel");
+  }
+
   handleFileInput(file: File): void {
     if(file) {
       var reader = new FileReader();
@@ -67,6 +75,23 @@ export class SettingsComponent implements OnInit {
         this.shopLogoControl.setValue(imageData.split(",")[1]);
       };
     }
+  }
+
+  updateSettings(): void {
+    this.buttonText = "Saving...";
+    this.disableAddBtn = true;
+
+    this.settingsDataService.updateSettings({
+      name: this.shopNameControl.value,
+      description: this.shopDescriptionControl.value,
+      logo: this.shopLogoControl.value,
+      url: this.shopUrlControl.value,
+      iPAddress: this.shopIpAddressControl.value,
+      reorderLevel: 10
+    }).subscribe(() => {}, () => {}, () => {
+      this.buttonText = "Save";
+      this.disableAddBtn = false;
+    });
   }
 
 }

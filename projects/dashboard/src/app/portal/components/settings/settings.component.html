@@ -1,53 +1,68 @@
-<h5>Shop Info</h5>
+<div style="margin-bottom: 30px;">
+    <h5>Shop Info</h5>
 
-<div class="row" style="margin-top: 30px;">
-    <div class="col-md-5 col-sm-12">
-        <div class="form-group required">
-            <label for="exampleInputEmail1">Name</label>
-            <input type="text" class="form-control" [formControl]="shopNameControl" />
-        </div>
-        <div class="form-group required">
-            <label for="exampleInputEmail1">Site Url</label>
-            <input type="text" class="form-control" [formControl]="shopUrlControl" />
-        </div>
-        <div class="form-group required">
-            <label for="exampleInputEmail1">IP Address</label>
-            <input type="text" class="form-control" [formControl]="shopIpAddressControl" />
-        </div>
-        <div class="form-group required">
-            <label for="exampleFormControlTextarea1">Description</label>
-            <textarea 
-                class="form-control" 
-                id="exampleFormControlTextarea1" 
-                rows="4"
-                [formControl]="shopDescriptionControl">
-            </textarea>
-        </div>
-    </div>
-    <div class="col-lg-7 col-sm-12 d-flex justify-content-center">
-        <div style="padding-right: 20px;">
-            <div class="form-group required" style="margin-bottom:20px">
-                <label for="file">Logo</label>
-                <div class="border" style="padding: 15px; margin-bottom: 15px; width: 300px;">
-                    <img [src]="imageUrl" class="w-100"  style="height: 235px; object-fit: contain" />
-                </div>
-                <input 
-                    id="file" 
-                    type="file" 
-                    accept=".jpg, .jpeg, .png" 
-                    (change)="handleFileInput($event.target.files[0])" 
-                />
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-md-5 col-sm-12">
+            <div class="form-group required">
+                <label for="exampleInputEmail1">Name</label>
+                <input type="text" class="form-control" [formControl]="shopNameControl" />
+            </div>
+            <div class="form-group required">
+                <label for="exampleInputEmail1">Site Url</label>
+                <input type="text" class="form-control" [formControl]="shopUrlControl" />
+            </div>
+            <div class="form-group required">
+                <label for="exampleInputEmail1">IP Address</label>
+                <input type="text" class="form-control" [formControl]="shopIpAddressControl" />
+            </div>
+            <div class="form-group required">
+                <label for="exampleFormControlTextarea1">Description</label>
+                <textarea 
+                    class="form-control" 
+                    id="exampleFormControlTextarea1" 
+                    rows="4"
+                    [formControl]="shopDescriptionControl">
+                </textarea>
             </div>
         </div>
-     </div>
+        <div class="col-lg-7 col-sm-12">
+            <div class="logo-selector" style="padding-right: 20px;">
+                <div class="form-group required" style="margin-bottom:20px">
+                    <label for="file">Logo</label>
+                    <div class="border" style="padding: 15px; margin-bottom: 15px; width: 300px;">
+                        <img [src]="imageUrl" class="w-100"  style="height: 235px; object-fit: contain" />
+                    </div>
+                    <input 
+                        id="file" 
+                        type="file" 
+                        accept=".jpg, .jpeg, .png" 
+                        (change)="handleFileInput($event.target.files[0])" 
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h5>Inventory Configurations</h5>
+
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-md-5 col-sm-12">
+            <div class="form-group required">
+                <label for="exampleInputEmail1">Re-order Level</label>
+                <input type="number" class="form-control" [formControl]="reorderLevelControl" />
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="button-row" style="margin-top: 20px;">
     <button class="btn btn-danger" routerLink="/dashboard" [disabled]="disableAddBtn">Cancel</button>
-    <!-- <button 
+    <button 
         class="btn btn-primary" 
         [disabled]="!settingsForm.valid || disableAddBtn" 
-        (click)="addOrUpdateCatagory()">
+        (click)="updateSettings()">
         {{ buttonText }}
-    </button> -->
+    </button>
 </div>
