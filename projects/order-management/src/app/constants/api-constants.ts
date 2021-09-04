@@ -1,4 +1,4 @@
-import { environment } from "../../environments/environment";
+import { environment } from "projects/order-management/src/environments/environment";
 
 
 export var API_HOST: string = 

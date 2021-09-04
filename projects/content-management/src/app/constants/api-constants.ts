@@ -1,4 +1,4 @@
-import { environment } from "../../environments/environment";
+import { environment } from "projects/content-management/src/environments/environment";
 
 export var API_HOST: string = 
     window.location.hostname.includes("localhost") ? 
