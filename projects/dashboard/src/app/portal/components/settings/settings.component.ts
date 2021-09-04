@@ -87,11 +87,10 @@ export class SettingsComponent implements OnInit {
       logo: this.shopLogoControl.value,
       url: this.shopUrlControl.value,
       iPAddress: this.shopIpAddressControl.value,
-      reorderLevel: 10
+      reorderLevel: this.reorderLevelControl.value
     }).subscribe(() => {}, () => {}, () => {
       this.buttonText = "Save";
       this.disableAddBtn = false;
     });
   }
-
 }
