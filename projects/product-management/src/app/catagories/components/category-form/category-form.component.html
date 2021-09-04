@@ -1,0 +1,63 @@
+<div style="padding-left: 12px;">
+    <div class="row">
+        <div class="col-md-5 col-sm-12">
+            <div class="form-group required">
+                <label for="exampleInputEmail1">Name</label>
+                <input type="text" class="form-control" [formControl]="nameControl" />
+            </div>
+            <div class="form-group required" style="margin-bottom: 15px;">
+                <label for="exampleInputEmail1">Slug</label>
+                <input type="text" class="form-control" [formControl]="slugControl" />
+                <small>Slug should be unique. Only english characters are allowed. No spaces and special characters are allowed accept hypen (-) and underscore (_)</small>
+            </div>
+            <div class="form-group required">
+                <label for="exampleFormControlSelect2">Associated Tag</label>
+                <ng-select
+                    [items]="tags$ | async"
+                    [multiple]="false"
+                    [closeOnSelect]="true"
+                    [searchable]="false"
+                    bindLabel="name"
+                    bindValue="value"
+                    placeholder="Select Tag"
+                    [formControl]="tagsControl">
+                </ng-select>
+            </div> 
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Description</label>
+                <textarea 
+                    class="form-control" 
+                    id="exampleFormControlTextarea1" 
+                    rows="5"
+                    [formControl]="descriptionControl">
+                </textarea>
+            </div>
+        </div>
+        <div class="col-lg-7 col-sm-12 d-flex justify-content-center">
+            <div style="padding-right: 20px;">
+                <div class="form-group required" style="margin-bottom:20px">
+                    <label for="file">Category Image</label>
+                    <div class="border" style="padding: 15px; margin-bottom: 15px; width: 420px;">
+                        <img [src]="imageUrl" class="w-100"  style="height: 375px; object-fit: contain" />
+                    </div>
+                    <input 
+                        id="file" 
+                        type="file" 
+                        accept=".jpg, .jpeg, .png" 
+                        (change)="handleFileInput($event.target.files[0])" 
+                    />
+                </div>
+            </div>
+         </div>
+    </div>
+    
+    <div class="button-row">
+        <button class="btn btn-danger" routerLink="/categories" [disabled]="disableAddBtn">Cancel</button>
+        <button 
+            class="btn btn-primary" 
+            [disabled]="!categoryForm.valid || disableAddBtn" 
+            (click)="addOrUpdateCatagory()">
+            {{ buttonText }}
+        </button>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div style="padding-left: 12px;">
+    <ul class="info-box">
+        <li><span class="info-label">Order ID:&nbsp;&nbsp;</span>{{ orderId }}</li>
+        <li>
+            <span class="info-label">Total Payable:&nbsp;&nbsp;</span>
+            <span style="font-weight: 600; color: #28a745;">{{ orderService.selectedOrder$.value.totalPayable }} Tk</span>
+        </li>
+        <li>
+            <span class="info-label">Total Due:&nbsp;&nbsp;</span>
+            <span style="font-weight: 600; color: red;">{{ orderService.selectedOrder$.value.totalDue }} Tk</span>
+        </li>
+        <li>
+            <span class="info-label">Total Paid:&nbsp;&nbsp;</span>
+            <span style="font-weight: 600; color: blue;">
+                {{ orderService.selectedOrder$.value.totalPayable - orderService.selectedOrder$.value.totalDue }} Tk
+            </span>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group required">
+                <label for="exampleInputEmail1">Amount (Tk)</label>
+                <input type="number" class="form-control" value="0.00" [formControl]="ammountControl" />
+            </div>
+            <div class="form-group required">
+                <label for="exampleInputEmail2">Transaction Method</label>
+                <select class="custom-select" [formControl]="transactionMethodControl">
+                    <option [value]="'cash'">Cash</option>
+                    <option [value]="'online'">Online</option>
+                </select>                  
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Payment Notes</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [formControl]="paymentNotesControl"></textarea>
+            </div>
+            <a routerLink="/orders/transactions/{{ orderId }}" >See transaction logs</a>
+        </div>
+    </div>
+    <div class="button-row" style="margin-top: 25px;">
+        <button class="btn btn-primary" (click)="addAmount()" [disabled]="paymentForm.invalid">(+) Add Amount</button>
+        <button class="btn btn-danger" (click)="deductAmount()" [disabled]="paymentForm.invalid">(-) Deduct Amount</button>
+        <button class="btn btn-secondary" routerLink="/orders/details/{{ orderId }}">Back</button>
+    </div>
+</div>

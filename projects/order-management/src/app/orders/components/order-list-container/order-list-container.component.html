@@ -1,0 +1,38 @@
+<div style="padding-left: 12px;">
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <select class="custom-select" [formControl]="listViewControl">
+                <option [value]="1">Inbox</option>
+                <option [value]="2">Delivered</option>
+                <option [value]="3">Canceled</option>
+            </select>
+        </div>
+    </div>
+
+    <app-data-table
+        *ngIf = "listViewControl.value === '1'"
+        [columnConfig]="orderListService.inboxColumnConfig$ | async" 
+        [tableData]="orderDataService.orders$ | async"
+        [actions]="orderListService.tableActions$ | async">
+    </app-data-table>
+
+    <app-data-table
+        *ngIf = "listViewControl.value === '2'"
+        [columnConfig]="orderListService.deliveredColumnConfig$ | async" 
+        [tableData]="orderDataService.orders$ | async"
+        [actions]="orderListService.tableActions$ | async">
+    </app-data-table>
+
+    <app-data-table
+        *ngIf = "listViewControl.value === '3'"
+        [columnConfig]="orderListService.canceledColumnConfig$ | async" 
+        [tableData]="orderDataService.orders$ | async"
+        [actions]="orderListService.tableActions$ | async">
+    </app-data-table>
+
+    <div *ngIf="isEmptyList" class="row" style="margin-top: 20px;">
+        <div class="col-12 d-flex justify-content-center">
+            <h5>The list is currently empty</h5>
+        </div>
+    </div>
+</div>

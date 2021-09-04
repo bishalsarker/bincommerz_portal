@@ -1,0 +1,11 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="padding-left: 12px;">
+      <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
+      <li class="breadcrumb-item" *ngFor="let item of breadcrumbs">
+          <span *ngIf="hasRoute(item)">
+            <a class="link" (click)="navigate(item)">{{ item.title }}</a>
+          </span>
+          <a *ngIf="!hasRoute(item)">{{ item.title }}</a>
+      </li>
+    </ol>
+</nav>

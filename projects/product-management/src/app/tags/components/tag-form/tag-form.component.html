@@ -1,0 +1,28 @@
+<div style="padding-left: 12px;">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Name</label>
+                <input type="text" class="form-control" [formControl]="nameControl" />
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Description</label>
+                <textarea 
+                    class="form-control" 
+                    id="exampleFormControlTextarea1" 
+                    rows="3"
+                    [formControl]="descriptionControl">
+                </textarea>
+              </div>
+        </div>
+    </div>
+    <div class="button-row">
+        <button class="btn btn-danger" routerLink="/tags" [disabled]="disableAddBtn">Cancel</button>
+        <button 
+            class="btn btn-primary" 
+            [disabled]="!tagForm.valid || disableAddBtn" 
+            (click)="addOrUpdateTag()">
+            {{ buttonText }}
+        </button>
+    </div>
+</div>
