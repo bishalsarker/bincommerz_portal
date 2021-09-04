@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   api_host: "https://localhost:5001/",
   auth_host: "https://localhost:5001/",
+  portal_url: "http://localhost:4200/"
 };
 
 /*

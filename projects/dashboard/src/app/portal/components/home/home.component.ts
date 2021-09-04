@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
+import { environment } from 'projects/dashboard/src/environments/environment';
 import { API_HOST } from '../../../constants/api-constants';
 import { AuthService } from '../../../shared/services/auth.service';
 import { ReportsService } from '../../services/reports.service';
@@ -60,6 +61,8 @@ export class HomeComponent implements OnInit {
   ];
 
   public currentMonthIndex: number = 0;
+
+  private readonly portalUrl: string = environment.portal_url;
   
   constructor(
     private reportservice: ReportsService, 
@@ -108,15 +111,15 @@ export class HomeComponent implements OnInit {
   }
 
   get orderManagementUrl(): string {
-    return API_HOST + "retail-admin/order-management/";
+    return this.portalUrl + "order-management/";
   }
 
   get productManagementUrl(): string {
-    return API_HOST + "retail-admin/product-management/";
+    return this.portalUrl + "product-management/";
   }
 
   get contentManagementUrl(): string {
-    return API_HOST + "retail-admin/content-management/";
+    return this.portalUrl + "content-management/";
   }
 
 }
