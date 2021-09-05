@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { AUTH_HOST } from "projects/dashboard/src/app/constants/api-constants";
+import { AUTH_HOST } from "projects/order-management/src/app/constants/api-constants";
 import { Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 

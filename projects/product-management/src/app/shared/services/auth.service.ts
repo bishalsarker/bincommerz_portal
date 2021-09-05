@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { AUTH_HOST } from "projects/product-management/src/app/constants/api-constants";
 import { Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { AUTH_HOST } from "../../constants/api-constants";
 
 @Injectable({
   providedIn: "root",
