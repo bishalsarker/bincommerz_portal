@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
-import { API_HOST } from "projects/dashboard/src/app/constants/api-constants";
+import { API_HOST } from "projects/order-management/src/app/constants/api-constants";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Process } from "../../processes/interfaces/process";

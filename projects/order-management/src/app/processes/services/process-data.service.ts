@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { API_HOST } from "projects/order-management/src/app/constants/api-constants";
 import { BehaviorSubject } from "rxjs";
-import { API_HOST } from "../../constants/api-constants";
 import { Process } from "../interfaces/process";
 
 @Injectable({

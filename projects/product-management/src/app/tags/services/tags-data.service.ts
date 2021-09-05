@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Tag } from "../interfaces/tag";
 import { find } from "lodash";
-import { API_HOST } from "../../constants/api-constants";
+import { API_HOST } from 'projects/product-management/src/app/constants/api-constants';
 
 @Injectable({
   providedIn: "root",

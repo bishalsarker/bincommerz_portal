@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { API_HOST } from 'projects/content-management/src/app/constants/api-constants';
+import { API_HOST } from 'projects/dashboard/src/app/constants/api-constants';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,7 +10,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SettingsDataService {
-
   constructor(
     private httpClient: HttpClient,
     private toastr: ToastrService,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { API_HOST } from 'projects/dashboard/src/app/constants/api-constants';
+import { API_HOST } from 'projects/product-management/src/app/constants/api-constants';
 import { BehaviorSubject } from 'rxjs';
 import { STATIC_FILES_ENDPOINT } from '../../constants/api-constants';
 import { ITableColumn, ITableColumnAction } from '../../shared/interfaces/data-table';
