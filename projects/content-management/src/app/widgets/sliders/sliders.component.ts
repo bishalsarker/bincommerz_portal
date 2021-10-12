@@ -20,5 +20,4 @@ export class SlidersComponent implements OnInit {
   ngOnDestroy(): void {
     this.breadCrumbService.removeLast();
   }
-
 }

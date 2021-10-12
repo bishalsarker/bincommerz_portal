@@ -24,7 +24,7 @@ export class SlideListService {
       propertyName: "buttonText",
     },
     {
-      columnName: "ButtonUrl",
+      columnName: "Button Url",
       propertyName: "buttonUrl",
     },
     {
@@ -54,7 +54,7 @@ export class SlideListService {
       predicate: (item: any) => true,
       do: (item: Slide) => {
         if(confirm("Are you sure?")) {
-          this.sliderDataService.deletePage(item.id).subscribe();
+          this.sliderDataService.deleteSlider(item.id).subscribe();
         }
       },
     },

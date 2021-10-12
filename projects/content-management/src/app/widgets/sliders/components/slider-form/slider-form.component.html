@@ -24,7 +24,7 @@
         <div class="row">  
             <div class="col-12 button-row" style="margin-top: 33px;">
                 <button class="btn btn-danger" routerLink="/widgets/sliders" [disabled]="disableAddBtn">Cancel</button>
-                <button class="btn btn-primary" (click)="addOrUpdatePage()" [disabled]="!pageForm.valid || disableAddBtn">
+                <button class="btn btn-primary" (click)="addOrUpdateSlider()" [disabled]="!sliderForm.valid || disableAddBtn">
                     <span>{{ buttonText }}</span>
                 </button>
             </div>

@@ -21,6 +21,10 @@ export class SliderListService {
       }
     },
     {
+      columnName: "Id",
+      propertyName: "id",
+    },
+    {
       columnName: "Type",
       propertyName: "type",
     },
@@ -43,7 +47,7 @@ export class SliderListService {
       predicate: (item: any) => true,
       do: (item: Slider) => {
         if(confirm("Are you sure?")) {
-          this.sliderDataService.deletePage(item.id).subscribe();
+          this.sliderDataService.deleteSlider(item.id).subscribe();
         }
       },
     },

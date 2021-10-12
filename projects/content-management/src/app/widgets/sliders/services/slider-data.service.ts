@@ -49,6 +49,26 @@ export class SliderDataService {
       );
   }
 
+  getSlider(sliderId: string): Observable<Slider> {
+    return this.httpClient
+      .get<any>(API_HOST + "widgets/sliders/getbyid/" + sliderId, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .pipe(
+        map((response) => {
+          if (response.isSuccess) {
+            return response.data as Slider;
+          } else {
+            this.showError(response.message);
+            return null;
+          }
+        })
+      );
+  }
+
   getSlides(sliderId: string): Observable<Slide[]> {
     return this.httpClient
       .get<any>(API_HOST + "widgets/sliders/get/slides/" + sliderId, {
@@ -69,8 +89,71 @@ export class SliderDataService {
       );
   }
 
-  deletePage(id: string): Observable<void>{
-    return new Observable();
+  addSlider(payload: Slider): Observable<boolean> {
+    return this.httpClient
+      .post<any>(API_HOST + "widgets/sliders/addnew", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .pipe(
+        map((response) => {
+          if (!response.isSuccess) {
+            this.showError(response.message);
+            return false;
+          } else {
+            this.getAllSliders().subscribe();
+            this.router.navigate(["pages"]);
+            this.toastr.success(`New page added`);
+            return true;
+          }
+        })
+      );
+  }
+
+  updateSlider(payload: Slider): Observable<boolean> {
+    return this.httpClient
+      .put<any>(API_HOST + "widgets/sliders/update", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .pipe(
+        map((response) => {
+          if (!response.isSuccess) {
+            this.showError(response.message);
+            return false;
+          } else {
+            this.getAllSliders().subscribe();
+            this.router.navigate(["pages"]);
+            this.toastr.success(`Page updated`);
+            return true;
+          }
+        })
+      );
+  }
+
+  public deleteSlider(sliderId: string): Observable<void> {
+    return this.httpClient
+      .delete<any>(API_HOST + "widgets/sliders/delete/" + sliderId, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .pipe(
+        map((response) => {
+          if (!response.isSuccess) {
+            this.showError(response.message);
+          } else {
+            this.getAllSliders().subscribe();
+            this.router.navigate(["categories"]);
+            this.toastr.success(`Category deleted`);
+          }
+        })
+      );
   }
 
   private showError(message: string): void {
