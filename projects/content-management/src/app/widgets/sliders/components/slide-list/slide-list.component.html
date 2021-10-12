@@ -1,0 +1,11 @@
+<div>
+    <app-data-table
+        [columnConfig]="slideListService.columnConfig | async" 
+        [tableData]="slides$ | async"
+        [actions]="slideListService.tableActions | async">
+        <a class="btn btn-link" routerLink="/widgets/sliders/slides/add"  style="padding-left: 0px;">
+            <i class="fas fa-plus"></i>&nbsp;
+            <span style="font-weight: 600; margin-left: 5px;">Add New</span>
+        </a>
+    </app-data-table>
+</div>

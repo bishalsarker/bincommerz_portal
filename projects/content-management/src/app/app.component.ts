@@ -16,6 +16,12 @@ export class AppComponent {
       route: "/pages",
       isActive: false,
     },
+    {
+      title: "Widgets",
+      icon: "fas fa-hat-wizard",
+      route: "/widgets",
+      isActive: false,
+    },
   ];
 
   constructor(private router: Router) {}
