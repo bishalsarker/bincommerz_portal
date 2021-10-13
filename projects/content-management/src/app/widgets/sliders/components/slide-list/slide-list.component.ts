@@ -17,8 +17,8 @@ export class SlideListComponent implements OnInit, OnDestroy {
   
   constructor(
     private breadCrumbService: BreadcrumbService,
-    private sliderDataService: SliderDataService,
-    private slideListService: SlideListService,
+    public sliderDataService: SliderDataService,
+    public slideListService: SlideListService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -26,8 +26,7 @@ export class SlideListComponent implements OnInit, OnDestroy {
       const sliderid: string = param["id"];
       this.sliderId = sliderid;
 
-      this.sliderDataService.getSlides(this.sliderId)
-      .subscribe((data) => this.slides$.next(data));
+      this.sliderDataService.getSlides(this.sliderId).subscribe();
     });
 
     this.breadCrumbService.addBreadcrumb({

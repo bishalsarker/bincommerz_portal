@@ -6,9 +6,11 @@ export interface Slider {
 
 export interface Slide {
     id?: string;
-    imageURL: string;
+    imageURL?: string;
+    image?: string;
     title: string;
     description: string;
     buttonText: string;
     buttonUrl: string;
+    sliderId?: string;
 }

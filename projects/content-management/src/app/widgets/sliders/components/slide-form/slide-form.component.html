@@ -45,8 +45,8 @@
         </div>
         <div class="row">  
             <div class="col-12 button-row" style="padding-left: 0px;">
-                <button class="btn btn-danger" routerLink="/products" [disabled]="disableAddBtn">Cancel</button>
-                <button class="btn btn-primary" (click)="addOrUpdateProduct()" [disabled]="!slideForm.valid || disableAddBtn">
+                <button class="btn btn-danger" routerLink="/widgets/sliders/slides/list/{{sliderId$.value}}" [disabled]="disableAddBtn">Cancel</button>
+                <button class="btn btn-primary" (click)="addOrUpdateSlide()" [disabled]="!slideForm.valid || disableAddBtn">
                     <span>{{ buttonText }}</span>
                 </button>
             </div>

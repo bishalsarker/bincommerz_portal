@@ -30,12 +30,12 @@ const routes: Routes = [{
       data: { editMode: true },
     },
     {
-      path: "slides/add",
+      path: "slides/add/:sliderid",
       component: SlideFormComponent,
       data: { editMode: false },
     },
     {
-      path: "slides/edit/:id",
+      path: "slides/edit/:sliderid/:id",
       component: SlideFormComponent,
       data: { editMode: true },
     },

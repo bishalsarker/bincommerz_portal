@@ -12,22 +12,6 @@ import { SliderDataService } from './slider-data.service';
 export class SlideListService {
   columnConfig = new BehaviorSubject<ITableColumn[]>([
     {
-      columnName: "Title",
-      propertyName: "title",
-    },
-    {
-      columnName: "Description",
-      propertyName: "description",
-    },
-    {
-      columnName: "Button Text",
-      propertyName: "buttonText",
-    },
-    {
-      columnName: "Button Url",
-      propertyName: "buttonUrl",
-    },
-    {
       columnName: "Image",
       propertyName: "imageURL",
       filter: (slide: Slide) => STATIC_FILES_ENDPOINT + slide.imageURL,
@@ -44,7 +28,7 @@ export class SlideListService {
       showActions: () => true,
       predicate: (item: any) => true,
       do: (item: Slide) => {
-        this.router.navigate(["widgets/sliders/edit/" + item.id]);
+        this.router.navigate([`widgets/sliders/slides/edit/${item.sliderId}/${item.id}`]);
       },
     },
     {
@@ -54,7 +38,7 @@ export class SlideListService {
       predicate: (item: any) => true,
       do: (item: Slide) => {
         if(confirm("Are you sure?")) {
-          this.sliderDataService.deleteSlider(item.id).subscribe();
+          this.sliderDataService.deleteSlide(item).subscribe();
         }
       },
     },
