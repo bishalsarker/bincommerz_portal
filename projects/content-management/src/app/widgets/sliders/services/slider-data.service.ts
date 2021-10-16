@@ -246,8 +246,8 @@ export class SliderDataService {
             this.showError(response.message);
           } else {
             this.getAllSliders().subscribe();
-            this.router.navigate(["categories"]);
-            this.toastr.success(`Category deleted`);
+            this.router.navigate([`widgets/sliders`]);
+            this.toastr.success(`Slider deleted`);
           }
         })
       );
