@@ -16,6 +16,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: "widgets",
+    loadChildren: () =>
+      import("./widgets/widgets.module").then((m) => m.WidgetsModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: "auth-callback",
     component: AuthCallbackComponent,
   },
