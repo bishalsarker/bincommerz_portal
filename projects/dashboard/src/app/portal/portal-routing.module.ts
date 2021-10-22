@@ -22,7 +22,7 @@ const routes: Routes = [
           {
             path: "",
             pathMatch: "full",
-            redirectTo: "/dashboard/settings/account"
+            redirectTo: "/dashboard/settings/shop"
           },
           {
             path: "account",
