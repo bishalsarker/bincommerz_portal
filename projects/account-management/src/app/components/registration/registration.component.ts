@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { environment } from 'projects/content-management/src/environments/environment';
+import { environment } from 'projects/account-management/src/environments/environment';
 
 @Component({
   selector: 'app-registration',
