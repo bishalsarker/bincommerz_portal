@@ -490,6 +490,128 @@
           }
         }
       }
+    },
+    "account-management": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/account-management",
+      "sourceRoot": "projects/account-management/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/account-management",
+            "index": "projects/account-management/src/index.html",
+            "main": "projects/account-management/src/main.ts",
+            "polyfills": "projects/account-management/src/polyfills.ts",
+            "tsConfig": "projects/account-management/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/account-management/src/favicon.ico",
+              "projects/account-management/src/assets"
+            ],
+            "styles": [
+              "projects/account-management/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/account-management/src/environments/environment.ts",
+                  "with": "projects/account-management/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "account-management:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "account-management:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "account-management:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/account-management/src/test.ts",
+            "polyfills": "projects/account-management/src/polyfills.ts",
+            "tsConfig": "projects/account-management/tsconfig.spec.json",
+            "karmaConfig": "projects/account-management/karma.conf.js",
+            "assets": [
+              "projects/account-management/src/favicon.ico",
+              "projects/account-management/src/assets"
+            ],
+            "styles": [
+              "projects/account-management/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/account-management/tsconfig.app.json",
+              "projects/account-management/tsconfig.spec.json",
+              "projects/account-management/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/account-management/e2e/protractor.conf.js",
+            "devServerTarget": "account-management:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "account-management:serve:production"
+            }
+          }
+        }
+      }
     }},
   "defaultProject": "dashboard"
 }
