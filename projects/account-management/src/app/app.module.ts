@@ -30,9 +30,10 @@ import {
   MatProgressSpinnerModule,
   MatTabsModule,
 } from "@angular/material";
+import { CongratulationsComponent } from './components/congratulations/congratulations.component';
 
 @NgModule({
-  declarations: [AppComponent, RegistrationComponent],
+  declarations: [AppComponent, RegistrationComponent, CongratulationsComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

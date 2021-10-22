@@ -48,7 +48,7 @@ export class RegistrationComponent implements OnInit {
           this.hasError = true;
           this.errorMessage = response.message;
         } else {
-          this.router.navigateByUrl('/congratulations');
+          this.router.navigateByUrl('/signup-success');
         }
       }, err => {}, () => {
         this.showButton = true;
