@@ -36,6 +36,25 @@ export class SettingsDataService {
     );
   }
 
+  updatePassword(payload: { oldPassword: string, newPassword: string }): Observable<boolean> {
+    return this.httpClient
+      .patch<any>(API_HOST + "auth/updatepassword", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+    }).pipe(
+      map((response) => {
+        if (!response.isSuccess) {
+          this.showError(response.message);
+          return false;
+        } else {
+          return true;
+        }
+      })
+    );
+  }
+
   private showError(message: string): void {
     this.toastr.error("", "Error occured: " + message);
   }

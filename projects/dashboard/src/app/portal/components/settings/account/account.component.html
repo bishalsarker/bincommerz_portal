@@ -1,0 +1,29 @@
+<div style="margin-bottom: 20px;">
+    <h5>Renew Password</h5>
+
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-md-5 col-sm-12">
+            <div class="form-group required">
+                <label for="exampleInputEmail1">Old Password</label>
+                <input type="password" class="form-control" [formControl]="oldPasswordControl" />
+            </div>
+            <div class="form-group required">
+                <label for="exampleInputEmail1">New Password</label>
+                <input type="password" class="form-control" [formControl]="newPasswordControl" />
+            </div>
+            <div class="form-group required">
+                <label for="exampleInputEmail1">Re-type Password</label>
+                <input type="password" class="form-control" [formControl]="retypePasswordControl" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="button-row">
+    <button 
+        class="btn btn-primary" 
+        [disabled]="!renewPasswordForm.valid || disableAddBtn" 
+        (click)="updatePassword()">
+        {{ buttonText }}
+    </button>
+</div>
