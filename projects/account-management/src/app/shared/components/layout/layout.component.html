@@ -1,0 +1,49 @@
+<div class="d-flex" id="wrapper" [ngClass]="{'toggled': toggleSidebar }">
+    <div class="border-right" id="sidebar-wrapper" style="background-color: #4e73df; text-align: center;">
+      <div class="sidebar-heading" style="color: white; text-align: left;">
+        <img [src]="'./assets/images/bincom-logo.png'"/>
+      </div>
+      <hr class="sidebar-divider">
+      <div id="doc-nav">                      
+        <nav id="doc-menu" class="nav doc-menu flex-column">
+            <a *ngFor="let menu of menuItems" 
+               class="nav-link"
+               [class.active]="menu.isActive"
+               (click)="onMenuClick(menu)">
+                <i class="{{ menu.icon }}"></i><br>
+                <span>{{ menu.title }}</span>
+            </a>
+        </nav>
+     </div>
+  
+    </div>
+    <div id="page-content-wrapper">
+  
+      <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background-color: #4e73df; height: 4.375rem;">
+        <button class="btn btn-link rounded-circle" style="margin-right: 10px;" id="menu-toggle" (click)="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h5 class="mr-auto mb-0">Content Management</h5>
+        <span class="navbar-text">
+          <div class="dropdown">
+            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ userName }}
+            </a>
+          
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="/">
+                <i class="fas fa-home fa-fw"></i> Portal
+              </a>
+              <a class="dropdown-item" (click)="authService.signOut()" style="cursor: pointer;">
+                <i class="fas fa-sign-out-alt fa-fw"></i> Log out
+              </a>
+            </div>
+          </div>
+        </span>
+      </nav>
+  
+      <div class="container-fluid">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
