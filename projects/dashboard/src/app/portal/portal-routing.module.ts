@@ -1,7 +1,9 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./components/home/home.component";
+import { AccountComponent } from "./components/settings/account/account.component";
 import { SettingsComponent } from "./components/settings/settings.component";
+import { ShopComponent } from "./components/settings/shop/shop.component";
 import { PortalComponent } from "./portal.component";
 
 const routes: Routes = [
@@ -15,7 +17,22 @@ const routes: Routes = [
       },
       {
         path: 'settings',
-        component: SettingsComponent
+        component: SettingsComponent,
+        children: [
+          {
+            path: "",
+            pathMatch: "full",
+            redirectTo: "/dashboard/settings/shop"
+          },
+          {
+            path: "account",
+            component: AccountComponent
+          },
+          {
+            path: "shop",
+            component: ShopComponent
+          }
+        ]
       }
     ]
   },

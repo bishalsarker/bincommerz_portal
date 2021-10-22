@@ -7,9 +7,11 @@ import { ChartsModule } from "ng2-charts";
 import { SettingsComponent } from "./components/settings/settings.component";
 import { HomeComponent } from "./components/home/home.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { AccountComponent } from './components/settings/account/account.component';
+import { ShopComponent } from './components/settings/shop/shop.component';
 
 @NgModule({
-  declarations: [PortalComponent, SettingsComponent, HomeComponent],
+  declarations: [PortalComponent, SettingsComponent, HomeComponent, AccountComponent, ShopComponent],
   imports: [
     CommonModule,
     PortalRoutingModule,
