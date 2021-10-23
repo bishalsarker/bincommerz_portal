@@ -10,6 +10,7 @@ import { CatagoriesListService } from '../../services/catagories-list.service';
   styleUrls: ['./category-list.component.scss']
 })
 export class CategoryListComponent implements OnInit {
+  freeCategoryLimit: number = 3;
   tableData = new BehaviorSubject<Catagory[]>([]);
 
   constructor(
@@ -18,5 +19,13 @@ export class CategoryListComponent implements OnInit {
   ) {}
 
   ngOnInit() {}
+
+  get productQuantityLimitExceeds(): boolean {
+    return this.catagoriesDataService.catagories.value.length > this.freeCategoryLimit;
+  }
+
+  get hasFreePlan(): boolean {
+    return localStorage.getItem("subscription_plan") === "free" ? true : false; 
+  }
 
 }

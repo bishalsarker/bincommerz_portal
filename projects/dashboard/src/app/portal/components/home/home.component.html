@@ -5,64 +5,74 @@
   <div class="w-100" style="margin-bottom: 10px;">
       <h6 style="font-weight: 700;">Stock Health</h6>
   </div>
-  <div class="w-100" *ngIf="!stockHealthData">
-      <p>Something went wrong. Couldn't fetch stock health data.</p>
+  <div class="alert alert-danger" role="alert" *ngIf = "hasFreePlan">
+    Sorry, this feature is not available on free plan. Please Upgrade.
   </div>
-  <span *ngIf="stockHealthData">
-    <div class="notice notice-success" *ngIf="stockHealthData.outOfStock.length === 0 && stockHealthData.warning.length === 0">
-      <strong><i class="fas fa-check-double fa-fw"></i></strong> &nbsp; All product stock quantity is good
+  <div *ngIf = "!hasFreePlan">
+    <div class="w-100" *ngIf="!stockHealthData">
+        <p>Something went wrong. Couldn't fetch stock health data.</p>
     </div>
-    <div class="notice notice-danger" *ngIf="stockHealthData.outOfStock.length > 0">
-        <strong><i class="fas fa-exclamation-triangle fa-fw"></i></strong> &nbsp; <b>{{ stockHealthData.outOfStock.length }} Products are running out of stock!</b>
-    </div>
-    <div class="notice notice-warning" *ngIf="stockHealthData.warning.length > 0">
-      <strong><i class="fas fa-exclamation-circle fa-fw"></i></strong> &nbsp; <b>{{ stockHealthData.warning.length }} Product stocks are soon going to be finished</b>
-    </div>
-  </span>
+    <span *ngIf="stockHealthData">
+      <div class="notice notice-success" *ngIf="stockHealthData.outOfStock.length === 0 && stockHealthData.warning.length === 0">
+        <strong><i class="fas fa-check-double fa-fw"></i></strong> &nbsp; All product stock quantity is good
+      </div>
+      <div class="notice notice-danger" *ngIf="stockHealthData.outOfStock.length > 0">
+          <strong><i class="fas fa-exclamation-triangle fa-fw"></i></strong> &nbsp; <b>{{ stockHealthData.outOfStock.length }} Products are running out of stock!</b>
+      </div>
+      <div class="notice notice-warning" *ngIf="stockHealthData.warning.length > 0">
+        <strong><i class="fas fa-exclamation-circle fa-fw"></i></strong> &nbsp; <b>{{ stockHealthData.warning.length }} Product stocks are soon going to be finished</b>
+      </div>
+    </span>
+  </div>
 </div>
 <div style="margin-bottom: 50px;">
     <div class="w-100" style="margin-bottom: 10px;">
         <h6 style="font-weight: 700;">Analytics</h6>
     </div>
-    <div class="w-100" *ngIf="!(barChartData[0].data.length > 0 && barChartData[0].data.length > 0)">
-        <p>No analytics data available for this month</p>
+    <div class="alert alert-danger" role="alert" *ngIf = "hasFreePlan">
+      Sorry, this feature is not available on free plan. Please Upgrade.
     </div>
-    <div class="row" *ngIf="barChartData[0].data.length > 0 && barChartData[0].data.length > 0">
-        <div class="col-md-6 col-sm-12" *ngIf="barChartData[0].data.length > 0">
-            <div class="card text-center">
-                <div class="card-body">
-                  <h5 class="card-title">Most Ordered Products</h5>
-                  <h6 style="font-weight: 700; margin-bottom: 40px;">Month: 
-                    <span style="color: green;">{{ currentMonth }}</span>
-                  </h6>
-                  <canvas baseChart
-                    [datasets]="barChartData"
-                    [labels]="barChartLabels"
-                    [options]="barChartOptions"
-                    [legend]="barChartLegend"
-                    [chartType]="barChartType">
-                </canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-12" *ngIf="pieChartData.length > 0">
-            <div class="card text-center">
-                <div class="card-body">
-                  <h5 class="card-title">Most Popular Tags</h5>
-                  <h6 style="font-weight: 700; margin-bottom: 40px;">Month: 
-                    <span style="color: green;">{{ currentMonth }}</span>
-                  </h6>
-                  <canvas baseChart
-                    [data]="pieChartData"
-                    [labels]="pieChartLabels"
-                    [chartType]="pieChartType"
-                    [options]="pieChartOptions"
-                    [colors]="pieChartColors"
-                    [legend]="pieChartLegend">
+    <div *ngIf = "!hasFreePlan">
+      <div class="w-100" *ngIf="!(barChartData[0].data.length > 0 && barChartData[0].data.length > 0)">
+          <p>No analytics data available for this month</p>
+      </div>
+      <div class="row" *ngIf="barChartData[0].data.length > 0 && barChartData[0].data.length > 0">
+          <div class="col-md-6 col-sm-12" *ngIf="barChartData[0].data.length > 0">
+              <div class="card text-center">
+                  <div class="card-body">
+                    <h5 class="card-title">Most Ordered Products</h5>
+                    <h6 style="font-weight: 700; margin-bottom: 40px;">Month: 
+                      <span style="color: green;">{{ currentMonth }}</span>
+                    </h6>
+                    <canvas baseChart
+                      [datasets]="barChartData"
+                      [labels]="barChartLabels"
+                      [options]="barChartOptions"
+                      [legend]="barChartLegend"
+                      [chartType]="barChartType">
                   </canvas>
-                </div>
-            </div>
-        </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-sm-12" *ngIf="pieChartData.length > 0">
+              <div class="card text-center">
+                  <div class="card-body">
+                    <h5 class="card-title">Most Popular Tags</h5>
+                    <h6 style="font-weight: 700; margin-bottom: 40px;">Month: 
+                      <span style="color: green;">{{ currentMonth }}</span>
+                    </h6>
+                    <canvas baseChart
+                      [data]="pieChartData"
+                      [labels]="pieChartLabels"
+                      [chartType]="pieChartType"
+                      [options]="pieChartOptions"
+                      [colors]="pieChartColors"
+                      [legend]="pieChartLegend">
+                    </canvas>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
 </div>
 <div style="margin-bottom: 50px;">

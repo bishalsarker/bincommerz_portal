@@ -8,10 +8,20 @@ import { ProductListService } from "../../services/product-list.service";
   styleUrls: ["./product-list.component.scss"],
 })
 export class ProductListComponent implements OnInit {
+  freeProductLimit: number = 15;
+
   constructor(
     public productListService: ProductListService,
     public productDataService: ProductDataService
   ) {}
 
   ngOnInit() {}
+
+  get productQuantityLimitExceeds(): boolean {
+    return this.productDataService.products$.value.length > this.freeProductLimit;
+  }
+
+  get hasFreePlan(): boolean {
+    return localStorage.getItem("subscription_plan") === "free" ? true : false; 
+  }
 }

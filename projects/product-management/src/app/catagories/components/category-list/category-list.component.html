@@ -1,9 +1,16 @@
 <div style="padding-left: 12px;">
+    <div class="alert alert-danger" role="alert" *ngIf = "hasFreePlan">
+        On free plan you can add only {{ freeCategoryLimit }} categories. Please upgrade to add more.
+    </div>
     <app-data-table
         [columnConfig]="catagoriesListService.columnConfig | async" 
         [tableData]="catagoriesDataService.catagories | async"
         [actions]="catagoriesListService.tableActions | async">
-        <a class="btn btn-link" routerLink="/categories/add"  style="padding-left: 0px;">
+        <a *ngIf="(hasFreePlan && !productQuantityLimitExceeds)" class="btn btn-link" routerLink="/categories/add"  style="padding-left: 0px;">
+            <i class="fas fa-plus"></i>&nbsp;
+            <span style="font-weight: 600; margin-left: 5px;">Add New</span>
+        </a>
+        <a *ngIf="!hasFreePlan" class="btn btn-link" routerLink="/categories/add"  style="padding-left: 0px;">
             <i class="fas fa-plus"></i>&nbsp;
             <span style="font-weight: 600; margin-left: 5px;">Add New</span>
         </a>
