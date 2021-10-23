@@ -41,6 +41,7 @@ export class AuthService {
       })
       .subscribe((data: any) => {
         localStorage.setItem("user_name", data.userName);
+        localStorage.setItem("subscription_plan", data.subscriptionPlan);
       });
   }
 

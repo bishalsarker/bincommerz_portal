@@ -122,4 +122,8 @@ export class HomeComponent implements OnInit {
     return this.portalUrl + "content-management/";
   }
 
+  get hasFreePlan(): boolean {
+    return localStorage.getItem("subscription_plan") === "free" ? true : false; 
+  }
+
 }
