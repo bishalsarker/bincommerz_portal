@@ -1,12 +1,10 @@
 <div style="padding-left: 12px;">
+    <p *ngIf="parentCategory">
+        <span style="font-weight: bold;">Parent Category: </span> 
+        <a routerLink="/categories/edit/{{ categoryId.value }}">{{ parentCategory.name }}</a>
+    </p>
     <div class="row">
-        <div class="col-md-5 col-sm-12">
-            <a class="btn btn-link" 
-                routerLink="/categories/subcategories/{{ categoryId.value }}"  
-                style="padding-left: 0px; margin-left: 0px; margin-bottom: 10px;"
-                *ngIf="isEditMode">
-                <span style="font-weight: 600;">Manage Subcategories</span>
-            </a>
+        <div class="col-md-7 col-sm-12">
             <div class="form-group required">
                 <label for="exampleInputEmail1">Name</label>
                 <input type="text" class="form-control" [formControl]="nameControl" />
@@ -39,26 +37,10 @@
                 </textarea>
             </div>
         </div>
-        <div class="col-lg-7 col-sm-12 d-flex justify-content-center">
-            <div style="padding-right: 20px;">
-                <div class="form-group required" style="margin-bottom:20px">
-                    <label for="file">Category Image</label>
-                    <div class="border" style="padding: 15px; margin-bottom: 15px; width: 420px;">
-                        <img [src]="imageUrl" class="w-100"  style="height: 375px; object-fit: contain" />
-                    </div>
-                    <input 
-                        id="file" 
-                        type="file" 
-                        accept=".jpg, .jpeg, .png" 
-                        (change)="handleFileInput($event.target.files[0])" 
-                    />
-                </div>
-            </div>
-         </div>
     </div>
     
     <div class="button-row">
-        <button class="btn btn-danger" routerLink="/categories" [disabled]="disableAddBtn">Cancel</button>
+        <button class="btn btn-danger" (click)="cancelForm()" [disabled]="disableAddBtn">Cancel</button>
         <button 
             class="btn btn-primary" 
             [disabled]="!categoryForm.valid || disableAddBtn" 

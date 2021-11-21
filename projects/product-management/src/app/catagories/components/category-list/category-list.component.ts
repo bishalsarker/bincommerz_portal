@@ -18,7 +18,9 @@ export class CategoryListComponent implements OnInit {
     public catagoriesDataService: CatagoriesDataService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.catagoriesDataService.getAllCatagories().subscribe();
+  }
 
   get productQuantityLimitExceeds(): boolean {
     return this.catagoriesDataService.catagories.value.length > this.freeCategoryLimit;
