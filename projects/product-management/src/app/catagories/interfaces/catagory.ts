@@ -3,8 +3,9 @@ export interface Catagory {
     name: string;
     slug?: string;
     tagHashId: string;
-    image: string;
+    image?: string;
     imageUrl?: string;
     description: string;
+    parentCategoryId?: string;
   }
   

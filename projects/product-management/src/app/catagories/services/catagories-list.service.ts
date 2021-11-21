@@ -13,10 +13,45 @@ export class CatagoriesListService {
     {
       columnName: "Name",
       propertyName: "name",
+      template: {
+        type: "link",
+        config: {
+          href: "/categories/edit/:id",
+        },
+      },
     },
     {
       columnName: "Assiciated Tag",
       propertyName: "tagName",
+    },
+    {
+      columnName: "Slug",
+      propertyName: "slug",
+      filter: (item: Catagory) => "/" + item.slug,
+    },
+    {
+      columnName: "Description",
+      propertyName: "description",
+      filter: (item: Catagory) =>
+        item.description && item.description.trim() !== ""
+          ? item.description
+          : "n/a",
+    },
+  ]);
+
+  subColumnConfig = new BehaviorSubject<ITableColumn[]>([
+    {
+      columnName: "Name",
+      propertyName: "name",
+    },
+    {
+      columnName: "Assiciated Tag",
+      propertyName: "tagName",
+    },
+    {
+      columnName: "Slug",
+      propertyName: "slug",
+      filter: (item: Catagory) => "/" + item.slug,
     },
     {
       columnName: "Description",
@@ -49,6 +84,38 @@ export class CatagoriesListService {
         }
       },
     },
+    {
+      icon: "",
+      title: "Manage Subcategories",
+      showActions: () => true,
+      predicate: (item: any) => true,
+      do: (item: Catagory) => {
+        this.router.navigate(["/categories/subcategories/" + item.id]);
+      },
+    },
+  ]);
+
+  subCatTableActions = new BehaviorSubject<ITableColumnAction[]>([
+    {
+      icon: "",
+      title: "Edit",
+      showActions: () => true,
+      predicate: (item: any) => true,
+      do: (item: Catagory) => {
+        this.router.navigate(["/categories/subcategories/edit/" + item.id + "/" + item.parentCategoryId]);
+      },
+    },
+    {
+      icon: "",
+      title: "Delete",
+      showActions: () => true,
+      predicate: (item: any) => true,
+      do: (item: Catagory) => {
+        if(confirm("Are you sure?")) {
+          this.categoryDataService.deleteCategory(item.id).subscribe();
+        }
+      },
+    }
   ]);
 
   constructor(

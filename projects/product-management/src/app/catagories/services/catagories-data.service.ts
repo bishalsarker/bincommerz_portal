@@ -11,14 +11,16 @@ import { Catagory } from '../interfaces/catagory';
   providedIn: 'root'
 })
 export class CatagoriesDataService {
+  category = new BehaviorSubject<Catagory>(null);
   catagories = new BehaviorSubject<Catagory[]>([]);
+  subCatagories = new BehaviorSubject<Catagory[]>([]);
 
   constructor(
     private httpClient: HttpClient,
     private toastr: ToastrService,
     private router: Router
   ) {
-    this.getAllCatagories().subscribe();
+    
   }
 
   getAllCatagories(): Observable<void> {
@@ -33,6 +35,26 @@ export class CatagoriesDataService {
         map((response) => {
           if (response.isSuccess) {
             this.catagories.next(response.data as Catagory[]);
+          } else {
+            this.showError(response.message);
+          }
+        })
+      );
+  }
+
+  getSubCatagories(catid: string): Observable<void> {
+    return this.httpClient
+      .get<any>(API_HOST + "categories/get/subcategories/" + catid, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .pipe(
+        map((response) => {
+          if (response.isSuccess) {
+            this.category.next(response.data);
+            this.subCatagories.next(response.data.subcategories as Catagory[]);
           } else {
             this.showError(response.message);
           }
@@ -75,7 +97,13 @@ export class CatagoriesDataService {
             return false;
           } else {
             this.getAllCatagories().subscribe();
-            this.router.navigate(["categories"]);
+            
+            if (!payload.parentCategoryId) {
+              this.router.navigate(["categories"]);
+            } else {
+              this.router.navigate(["categories", "subcategories", payload.parentCategoryId]);
+            }
+
             this.toastr.success(`New category added: ${payload.name}`);
             return true;
           }
