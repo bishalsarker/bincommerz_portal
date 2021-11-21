@@ -133,7 +133,7 @@ export class CategoryFormComponent implements OnInit {
     });
   }
 
-  private get isEditMode(): boolean {
+  public get isEditMode(): boolean {
     return this.route.snapshot.data["editMode"];
   }
 
