@@ -12,6 +12,7 @@ import { OrderInfoComponent } from "./components/order-details/order-info/order-
 import { OrderPaymentFormComponent } from "./components/order-details/order-payment-form/order-payment-form.component";
 import { BtnProcessComponent } from "./components/order-details/btn-process/btn-process.component";
 import { TransactionLogsComponent } from "./components/order-details/transaction-logs/transaction-logs.component";
+import { InvoiceTemplateComponent } from './components/order-details/invoice-template/invoice-template.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TransactionLogsComponent } from "./components/order-details/transaction
     OrderPaymentFormComponent,
     BtnProcessComponent,
     TransactionLogsComponent,
+    InvoiceTemplateComponent,
   ],
   imports: [
     CommonModule,

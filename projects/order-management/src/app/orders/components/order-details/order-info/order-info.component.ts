@@ -7,7 +7,10 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { format } from "date-fns";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import { TableStaticRow } from "projects/dashboard/src/app/shared/interfaces/data-table";
+import { AuthService } from "projects/dashboard/src/app/shared/services/auth.service";
 import { ProcessDataService } from "projects/order-management/src/app/processes/services/process-data.service";
 import { Order } from "../../../interfaces/order";
 import { OrderDataService } from "../../../services/order-data.service";
@@ -27,6 +30,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
     public orderDataService: OrderDataService,
     public orderItemListService: OrderItemListService,
     public processService: ProcessDataService,
+    public authService: AuthService,
     private router: Router
   ) {}
 

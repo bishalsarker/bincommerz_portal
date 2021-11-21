@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { InvoiceTemplateComponent } from "./components/order-details/invoice-template/invoice-template.component";
 import { OrderDetailsComponent } from "./components/order-details/order-details.component";
 import { OrderPaymentFormComponent } from "./components/order-details/order-payment-form/order-payment-form.component";
 import { TransactionLogsComponent } from "./components/order-details/transaction-logs/transaction-logs.component";
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: "transactions/:orderid",
         component: TransactionLogsComponent,
+      },
+      {
+        path: "invoice/:orderid",
+        component: InvoiceTemplateComponent,
       },
     ],
   },
