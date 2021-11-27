@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-lg-7 col-md-12 col-sm-12">
+        <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Category</th>
+                <th scope="col">Move</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of categories; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ row.name }}</td>
+                <td style="padding: 5px">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button [disabled]="i === 0" type="button" class="btn btn-secondary" (click)="moveUp(row)">Up</button>
+                        <button 
+                            [disabled]="i === categories.length - 1" 
+                            type="button" 
+                            class="btn btn-secondary"
+                            (click)="moveDown(row)">
+                            Down
+                        </button>
+                    </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+<div *ngIf="categories.length > 0" class="button-row" style="padding-left: 10px; margin-top: 20px;">
+    <button class="btn btn-danger" routerLink="/categories">Cancel</button>
+    <button 
+        class="btn btn-primary" 
+        (click)="saveOrders()">
+        Save
+    </button>
+</div>
