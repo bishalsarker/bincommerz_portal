@@ -10,9 +10,10 @@ import { CategoryFormComponent } from './components/category-form/category-form.
 import { NgSelectModule } from "@ng-select/ng-select";
 import { SubcatListComponent } from './components/subcat-list/subcat-list.component';
 import { SubcatFormComponent } from './components/subcat-form/subcat-form.component';
+import { CategoryOrderComponent } from './components/category-order/category-order.component';
 
 @NgModule({
-  declarations: [CatagoriesComponent, CategoryListComponent, CategoryFormComponent, SubcatListComponent, SubcatFormComponent],
+  declarations: [CatagoriesComponent, CategoryListComponent, CategoryFormComponent, SubcatListComponent, SubcatFormComponent, CategoryOrderComponent],
   imports: [
     CommonModule,
     CatagoriesRoutingModule,

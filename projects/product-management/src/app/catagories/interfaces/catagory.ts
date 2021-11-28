@@ -7,5 +7,6 @@ export interface Catagory {
     imageUrl?: string;
     description: string;
     parentCategoryId?: string;
+    order?: number;
   }
   

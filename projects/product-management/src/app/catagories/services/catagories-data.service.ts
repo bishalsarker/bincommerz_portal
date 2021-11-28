@@ -6,6 +6,7 @@ import { API_HOST } from 'projects/product-management/src/app/constants/api-cons
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Catagory } from '../interfaces/catagory';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,8 @@ export class CatagoriesDataService {
       .pipe(
         map((response) => {
           if (response.isSuccess) {
-            this.catagories.next(response.data as Catagory[]);
+            const sortedCategories: Catagory[] = _.orderBy(response.data, ['order'], ['asc']);
+            this.catagories.next(sortedCategories);
           } else {
             this.showError(response.message);
           }
@@ -128,6 +130,29 @@ export class CatagoriesDataService {
             this.getAllCatagories().subscribe();
             this.router.navigate(["categories"]);
             this.toastr.success(`Category Updated: ${payload.name}`);
+            return true;
+          }
+        })
+      );
+  }
+  
+  saveCategoryOrder(payload: {id: string, order: number}[]): Observable<boolean> {
+    return this.httpClient
+      .put<any>(API_HOST + "categories/updateorder", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .pipe(
+        map((response) => {
+          if (!response.isSuccess) {
+            this.showError(response.message);
+            return false;
+          } else {
+            this.getAllCatagories().subscribe();
+            this.router.navigate(["categories"]);
+            this.toastr.success(`Category Orders Updated`);
             return true;
           }
         })
