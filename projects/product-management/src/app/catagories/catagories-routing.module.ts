@@ -3,6 +3,9 @@ import { Routes, RouterModule } from "@angular/router";
 import { CatagoriesComponent } from "./catagories.component";
 import { CategoryFormComponent } from "./components/category-form/category-form.component";
 import { CategoryListComponent } from "./components/category-list/category-list.component";
+import { CategoryOrderComponent } from "./components/category-order/category-order.component";
+import { SubcatFormComponent } from "./components/subcat-form/subcat-form.component";
+import { SubcatListComponent } from "./components/subcat-list/subcat-list.component";
 
 const routes: Routes = [
   {
@@ -14,6 +17,10 @@ const routes: Routes = [
         component: CategoryListComponent,
       },
       {
+        path: "rearrange",
+        component: CategoryOrderComponent,
+      },
+      {
         path: "add",
         component: CategoryFormComponent,
         data: { editMode: false },
@@ -21,6 +28,20 @@ const routes: Routes = [
       {
         path: "edit/:id",
         component: CategoryFormComponent,
+        data: { editMode: true },
+      },
+      {
+        path: "subcategories/:categoryid",
+        component: SubcatListComponent,
+      },
+      {
+        path: 'subcategories/add/:categoryid',
+        component: SubcatFormComponent,
+        data: { editMode: false },
+      },
+      {
+        path: "subcategories/edit/:id/:categoryid",
+        component: SubcatFormComponent,
         data: { editMode: true },
       },
     ],

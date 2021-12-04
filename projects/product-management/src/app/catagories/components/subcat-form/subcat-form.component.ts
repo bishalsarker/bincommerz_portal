@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { BreadcrumbService } from 'projects/dashboard/src/app/shared/services/breadcrumb.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { BreadcrumbService } from 'projects/account-management/src/app/shared/services/breadcrumb.service';
+import { STATIC_FILES_ENDPOINT } from 'projects/content-management/src/app/constants/api-constants';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { STATIC_FILES_ENDPOINT } from '../../../constants/api-constants';
 import { TagsDataService } from '../../../tags/services/tags-data.service';
+import { Catagory } from '../../interfaces/catagory';
 import { CatagoriesDataService } from '../../services/catagories-data.service';
 
 @Component({
-  selector: 'app-category-form',
-  templateUrl: './category-form.component.html',
-  styleUrls: ['./category-form.component.scss']
+  selector: 'app-subcat-form',
+  templateUrl: './subcat-form.component.html',
+  styleUrls: ['./subcat-form.component.scss']
 })
-export class CategoryFormComponent implements OnInit {
+export class SubcatFormComponent implements OnInit {
+
   tags$ = new BehaviorSubject<any[]>([]);
   categoryId = new BehaviorSubject<string>(null);
+  parentCategoryId = new BehaviorSubject<string>(null);
   imageUrl: string | any = "./assets/images/product-placeholder.png";
 
   categoryForm = new FormGroup({
@@ -23,7 +26,6 @@ export class CategoryFormComponent implements OnInit {
     slug: new FormControl("", Validators.required),
     description: new FormControl(""),
     tag: new FormControl("", Validators.required),
-    image: new FormControl("", Validators.required),
   });
 
   disableAddBtn: boolean = false;
@@ -33,7 +35,8 @@ export class CategoryFormComponent implements OnInit {
     public breadCrumbService: BreadcrumbService,
     private tagsDataService: TagsDataService,
     private catagoryDataService: CatagoriesDataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -43,6 +46,12 @@ export class CategoryFormComponent implements OnInit {
     });
 
     this.setTags();
+
+    this.route.params.subscribe((param: ParamMap) => {
+      const parentcatid: string = param["categoryid"];
+      console.log(parentcatid);
+      this.parentCategoryId.next(parentcatid);
+    });
 
     if (this.isEditMode) {
       this.slugControl.disable();
@@ -85,12 +94,12 @@ export class CategoryFormComponent implements OnInit {
     return this.categoryForm.get("tag");
   }
 
-  get imageControl(): AbstractControl {
-    return this.categoryForm.get("image");
-  }
-
   get slugControl(): AbstractControl {
     return this.categoryForm.get("slug");
+  }
+
+  get parentCategory(): Catagory {
+    return this.catagoryDataService.category.value;
   }
 
   addOrUpdateCatagory(): void {
@@ -127,13 +136,11 @@ export class CategoryFormComponent implements OnInit {
         this.tagsControl.setValue(cat.tagHashId);
         this.descriptionControl.setValue(cat.description);
         this.slugControl.setValue(cat.slug);
-        this.imageControl.setValue(STATIC_FILES_ENDPOINT + cat.imageUrl);
-        this.imageUrl = STATIC_FILES_ENDPOINT + cat.imageUrl;
       }
     });
   }
 
-  public get isEditMode(): boolean {
+  private get isEditMode(): boolean {
     return this.route.snapshot.data["editMode"];
   }
 
@@ -142,8 +149,8 @@ export class CategoryFormComponent implements OnInit {
       name: this.nameControl.value,
       slug: this.slugControl.value,
       tagHashId: this.tagsControl.value,
-      image: this.imageControl.value,
       description: this.descriptionControl.value,
+      parentCategoryId: this.parentCategoryId.value
     });
   }
 
@@ -153,21 +160,11 @@ export class CategoryFormComponent implements OnInit {
       name: this.nameControl.value,
       tagHashId: this.tagsControl.value,
       slug: this.slugControl.value,
-      image: this.imageControl.value,
       description: this.descriptionControl.value,
     });
   }
 
-  handleFileInput(file: File): void {
-    if(file) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (_event) => {
-        const imageData: string = reader.result as string;
-        this.imageUrl = imageData;
-        this.imageControl.setValue(imageData.split(",")[1]);
-      };
-    }
+  public cancelForm(): void {
+    this.router.navigateByUrl('/categories/subcategories/' + this.parentCategoryId.value)
   }
-
 }
