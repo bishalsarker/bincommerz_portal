@@ -40,7 +40,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (environment.production) {
       this.authService.getShopInfoObservable().subscribe((shopinfo) => {
-        this.shop_logo = shopinfo.logo;
+        this.shop_logo = 'https://bincommerzstaticstorage.blob.core.windows.net' + shopinfo.logo;
       });
     }
 
