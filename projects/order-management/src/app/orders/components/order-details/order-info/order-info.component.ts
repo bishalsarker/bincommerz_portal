@@ -27,7 +27,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
 
   staticTableData: TableStaticRow[] = [];
 
-  shop_logo: string = "/assets/images/bincom-logo-black.png";
+  shop_logo: string = "./assets/images/bincom-logo-black.png";
 
   constructor(
     public orderDataService: OrderDataService,
@@ -45,7 +45,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
     // }
 
     if (localStorage.getItem('user_name') === 'Bdgadgethouse') {
-      this.shop_logo = "/assets/images/bd-gadget-house.png";
+      this.shop_logo = "./assets/images/bd-gadget-house.png";
     }
 
     this.staticTableData = this.getStaticTableData();
