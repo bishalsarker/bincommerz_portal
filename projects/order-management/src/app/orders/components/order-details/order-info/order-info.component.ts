@@ -107,7 +107,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
     let PDF = new jsPDF('p', 'mm', 'a4');
     var shopLogo = new Image();
     shopLogo.src = this.shop_logo;
-    PDF.addImage(this.shop_logo, 'jpg', 10, 5, 40, 0);
+    PDF.addImage(this.shop_logo, 'png', 10, 5, 40, 0);
     PDF.setLineWidth(0.20); 
     PDF.line(0, 35, 560, 35);
     PDF.setFontSize(10);
