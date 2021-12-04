@@ -6,6 +6,12 @@
                     <i class="fas fas-fw fa-cogs "></i>&nbsp;&nbsp;Order Actions
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <!-- <a class="dropdown-item" routerLink="/orders/invoice/{{ orderModel.id }}">
+                    <i class="fas fa-download fa-fw"></i>&nbsp;&nbsp;Get Invoice
+                  </a> -->
+                  <a class="dropdown-item" style="cursor: pointer;" (click)="downloadInvoice()">
+                    <i class="fas fa-download fa-fw"></i>&nbsp;&nbsp;Get Invoice
+                  </a>
                   <a class="dropdown-item" routerLink="/orders/transactions/{{ orderModel.id }}">
                     <i class="fas fa-history fa-fw"></i>&nbsp;&nbsp;Transaction Logs
                   </a>
