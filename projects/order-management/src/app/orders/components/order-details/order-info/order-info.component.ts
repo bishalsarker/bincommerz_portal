@@ -38,10 +38,14 @@ export class OrderInfoComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
-    if (environment.production) {
-      this.authService.getShopInfoObservable().subscribe((shopinfo) => {
-        this.shop_logo = 'https://bincommerzstaticstorage.blob.core.windows.net' + shopinfo.logo;
-      });
+    // if (environment.production) {
+    //   this.authService.getShopInfoObservable().subscribe((shopinfo) => {
+    //     this.shop_logo = 'https://bincommerzstaticstorage.blob.core.windows.net' + shopinfo.logo;
+    //   });
+    // }
+
+    if (localStorage.getItem('user_name') === 'Bdgadgethouse') {
+      this.shop_logo = "/assets/images/bd-gadget-house.png";
     }
 
     this.staticTableData = this.getStaticTableData();
