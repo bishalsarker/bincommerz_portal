@@ -25,24 +25,5 @@ export class OrderItemListService {
     },
   ]);
 
-  // tableActions$ = new BehaviorSubject<ITableColumnAction[]>([
-  //   {
-  //     icon: "",
-  //     title: "Edit",
-  //     predicate: (item: any) => true,
-  //     do: (item: Product) => {
-  //       this.router.navigate(["/products/edit/" + item.id]);
-  //     },
-  //   },
-  //   {
-  //     icon: "",
-  //     title: "Delete",
-  //     predicate: (item: any) => true,
-  //     do: (item: Product) => {
-  //       this.productDataService.deleteTag(item.id).subscribe();
-  //     },
-  //   },
-  // ]);
-
   constructor() {}
 }

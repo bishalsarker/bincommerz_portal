@@ -26,7 +26,7 @@ const routes: Routes = [
       {
         path: "transactions/:orderid",
         component: TransactionLogsComponent,
-      },
+      }
     ],
   },
 ];

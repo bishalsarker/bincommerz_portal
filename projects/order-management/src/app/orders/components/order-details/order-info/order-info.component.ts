@@ -7,7 +7,11 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { format } from "date-fns";
+import jsPDF from "jspdf";
+import 'jspdf-autotable';
+import { environment } from "projects/order-management/src/environments/environment";
 import { TableStaticRow } from "projects/dashboard/src/app/shared/interfaces/data-table";
+import { AuthService } from "projects/dashboard/src/app/shared/services/auth.service";
 import { ProcessDataService } from "projects/order-management/src/app/processes/services/process-data.service";
 import { Order } from "../../../interfaces/order";
 import { OrderDataService } from "../../../services/order-data.service";
@@ -23,14 +27,23 @@ export class OrderInfoComponent implements OnInit, OnChanges {
 
   staticTableData: TableStaticRow[] = [];
 
+  shop_logo: string = "/assets/images/bincom-logo-black.png";
+
   constructor(
     public orderDataService: OrderDataService,
     public orderItemListService: OrderItemListService,
     public processService: ProcessDataService,
+    public authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit() {
+    if (environment.production) {
+      this.authService.getShopInfoObservable().subscribe((shopinfo) => {
+        this.shop_logo = shopinfo.logo;
+      });
+    }
+
     this.staticTableData = this.getStaticTableData();
   }
 
@@ -88,6 +101,65 @@ export class OrderInfoComponent implements OnInit, OnChanges {
         window.location.href = '/orders'
       });
     }
+  }
+
+  downloadInvoice(): void {
+    let PDF = new jsPDF('p', 'mm', 'a4');
+    var shopLogo = new Image();
+    shopLogo.src = this.shop_logo;
+    PDF.addImage(this.shop_logo, 'jpg', 10, 5, 40, 0);
+    PDF.setLineWidth(0.20); 
+    PDF.line(0, 35, 560, 35);
+    PDF.setFontSize(10);
+    PDF.text(`Invoice ID: ${this.orderModel.id}`, 16, 45);
+    PDF.text(`Date: ${format(new Date(), "MMM dd, yyyy")}`, 166, 45);
+
+    let head = [], data = [];
+
+    this.orderItemListService.columnConfig$.value.forEach((col) => {
+      head.push(col.columnName);
+    });
+
+    this.orderModel.items.forEach((item) => {
+      const row = [];
+      row.push(item.name);
+      row.push(item.quantity);
+      row.push(item.discount);
+      row.push(item.price + 'Tk');
+      data.push(row);
+    });
+
+    data.push(["", "", "Shipping Charge", `${this.orderModel.shippingCharge + 0.00} Tk`]);
+    data.push(["", "", "Total Payable", `${this.orderModel.totalPayable + 0.00} Tk`]);
+    data.push(["", "", "Total Due", `${this.orderModel.totalDue + 0.00} Tk` ]);
+    data.push(["", "", "Total Paid", `${(this.orderModel.totalPayable - this.orderModel.totalDue) + 0.00} Tk`]);
+
+    let bill_col = ["Bill To", "Shipping Address"];
+    let bill_data = [
+      [this.orderModel.fullName, this.orderModel.fullName],
+      ['+880' + this.orderModel.phone, '+880' + this.orderModel.phone],
+      [this.orderModel.email, this.orderModel.address]
+    ];
+
+    (PDF as any).autoTable({
+      head: [bill_col],
+      body: bill_data,
+      theme: 'plain',
+      startX: 50,
+      startY: 55
+    });
+
+    let finalY = (PDF as any).lastAutoTable.finalY;
+
+    (PDF as any).autoTable({
+      head: [head],
+      body: data,
+      theme: 'striped',
+      startX: 50,
+      startY: finalY + 10
+    });
+
+    PDF.save(`invoice_${this.orderModel.id}.pdf`);
   }
 
   private getStaticTableData(): TableStaticRow[] {
