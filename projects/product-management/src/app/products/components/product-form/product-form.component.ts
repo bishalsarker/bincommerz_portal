@@ -79,7 +79,7 @@ export class ProductFormComponent implements OnInit {
           this.nameControl.setValue(product.name);
           this.descriptionControl.setValue(product.description);
           this.priceControl.setValue(product.price);
-          this.discountControl.setValue(product.discount);
+          this.discountControl.setValue(this.getDicountPrice(product.discount, product.price));
           this.tagsControl.setValue(product.tags);
           this.imageUrl = this.productdataService.resolveProductImage(product);
           this.stockQuantityControl.setValue(product.stockQuantity);
@@ -149,7 +149,7 @@ export class ProductFormComponent implements OnInit {
       description: this.descriptionControl.value,
       image: this.imageControl.value,
       price: this.priceControl.value,
-      discount: this.discountControl.value,
+      discount: this.getDicountPercentage(),
       stockQuantity: this.stockQuantityControl.value,
       tags: this.tagsControl.value,
     });
@@ -162,7 +162,7 @@ export class ProductFormComponent implements OnInit {
       description: this.descriptionControl.value,
       image: this.imageControl.value,
       price: this.priceControl.value,
-      discount: this.discountControl.value,
+      discount: this.getDicountPercentage(),
       stockQuantity: this.stockQuantityControl.value,
       tags: this.tagsControl.value,
     });
@@ -170,6 +170,14 @@ export class ProductFormComponent implements OnInit {
 
   gotoImgGallery(): void {
     this.router.navigateByUrl('/products/image_gallery/' + this.productId.value);
+  }
+
+  private getDicountPercentage() {
+    return (this.discountControl.value/this.priceControl.value) * 100;
+  }
+
+  private getDicountPrice(discount, price) {
+    return (discount/100) * price;
   }
 
   private setTags(): void {
