@@ -111,7 +111,14 @@ export class OrderInfoComponent implements OnInit, OnChanges {
     let PDF = new jsPDF('p', 'mm', 'a4');
     var shopLogo = new Image();
     shopLogo.src = this.shop_logo;
-    PDF.addImage(this.shop_logo, 'png', 10, 5, 40, 0);
+    // PDF.addImage(this.shop_logo, 'png', 10, 5, 40, 0);
+    PDF.setFont("courier", null, 800);
+    PDF.setFontSize(15);
+    PDF.text(`BD Gadget House`, 10, 15);
+    PDF.setFontSize(11);
+    PDF.text(`Number: 01771734092`, 10, 20);
+    PDF.text(`Email : bdgadgethouse24@gmail.com`, 10, 25);
+
     PDF.setLineWidth(0.20); 
     PDF.line(0, 35, 560, 35);
     PDF.setFontSize(10);
