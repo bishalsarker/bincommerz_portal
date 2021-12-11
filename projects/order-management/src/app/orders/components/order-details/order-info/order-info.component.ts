@@ -135,8 +135,8 @@ export class OrderInfoComponent implements OnInit, OnChanges {
 
     data.push(["", "", "Shipping Charge", `${this.orderModel.shippingCharge + 0.00} Tk`]);
     data.push(["", "", "Total Payable", `${this.orderModel.totalPayable + 0.00} Tk`]);
-    data.push(["", "", "Total Due", `${this.orderModel.totalDue + 0.00} Tk` ]);
     data.push(["", "", "Total Paid", `${(this.orderModel.totalPayable - this.orderModel.totalDue) + 0.00} Tk`]);
+    data.push(["", "", "Total Due", `${this.orderModel.totalDue + 0.00} Tk` ]);
 
     let bill_col = ["Bill To", "Shipping Address"];
     let bill_data = [
