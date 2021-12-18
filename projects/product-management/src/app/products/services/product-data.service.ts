@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { API_HOST } from 'projects/product-management/src/app/constants/api-constants';
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, forkJoin, merge, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { STATIC_FILES_ENDPOINT } from "../../constants/api-constants";
 import { TagsDataService } from "../../tags/services/tags-data.service";
@@ -13,7 +13,11 @@ import { Product } from "../interfaces/product";
   providedIn: "root",
 })
 export class ProductDataService {
+  loading$ = new BehaviorSubject<boolean>(false);
   products$ = new BehaviorSubject<Product[]>([]);
+  pageSize$ = new BehaviorSubject<Number>(5);
+  pageNumber$ = new BehaviorSubject<Number>(1);
+  totalPages$ = new BehaviorSubject<Number[]>([]);
 
   constructor(
     private httpClient: HttpClient,
@@ -21,15 +25,24 @@ export class ProductDataService {
     private router: Router,
     private tagsService: TagsDataService
   ) {
-    this.getAllProducts().subscribe();
-    this.products$.subscribe((data) => console.log(data));
+    this.pageSize$.subscribe(() => {
+      this.getAllProducts().subscribe();
+    });
+
+    this.pageNumber$.subscribe(() => {
+      this.getAllProducts().subscribe();
+    })
+
   }
 
   getAllProducts(): Observable<void> {
+    this.loading$.next(true);
     return this.httpClient
       .get<any>(API_HOST + "products/get/all", {
         params: {
           sort_by: "newest",
+          page_size: this.pageSize$.value.toString(),
+          page_number: this.pageNumber$.value.toString()
         },
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +52,7 @@ export class ProductDataService {
       .pipe(
         map((response) => {
           if (response.isSuccess) {
-            const data: Product[] = response.data.map((product) => {
+            const data: Product[] = response.data.products.map((product) => {
               return {
                 id: product.id,
                 name: product.name,
@@ -52,8 +65,15 @@ export class ProductDataService {
               };
             });
             this.products$.next(data);
+            const pageNumbers = [];
+            for(let i = 1; i <= response.data.totalPages; i++) {
+              pageNumbers.push(i);
+            }
+            this.totalPages$.next(pageNumbers);
+            this.loading$.next(false);
           } else {
             this.showError();
+            this.loading$.next(false);
           }
         })
       );
