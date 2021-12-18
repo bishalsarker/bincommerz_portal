@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start-pm": "ng serve product-management --prod",
-    "start-om": "ng serve order-management --prod",
+    "start-pm": "ng serve product-management",
+    "start-om": "ng serve order-management",
     "build-dashboard": "ng build dashboard --prod --output-path dist --base-href /",
     "build-pm": "ng build product-management --prod --output-path dist/product-management --base-href /product-management/",
     "build-om": "ng build order-management --prod --output-path dist/order-management --base-href /order-management/",

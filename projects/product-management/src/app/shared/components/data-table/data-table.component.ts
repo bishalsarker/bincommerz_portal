@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { filter } from "lodash";
+import { BehaviorSubject } from "rxjs";
 import { ITableColumn, ITableColumnAction, TableStaticRowData } from "../../interfaces/data-table";
 
 @Component({
@@ -12,6 +14,7 @@ export class DataTableComponent implements OnInit {
   @Input() public actions: ITableColumnAction[] = [];
   @Input() public tableData: any[] = [];
   @Input() public staticData: TableStaticRowData[] = [];
+  @Input() public loading: boolean = false;
 
   constructor() {}
 

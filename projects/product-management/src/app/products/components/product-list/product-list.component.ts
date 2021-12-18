@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { ProductDataService } from "../../services/product-data.service";
 import { ProductListService } from "../../services/product-list.service";
 
@@ -9,13 +10,23 @@ import { ProductListService } from "../../services/product-list.service";
 })
 export class ProductListComponent implements OnInit {
   freeProductLimit: number = 15;
+  pageSize = new FormControl(5);
+  pageNumber = new FormControl(1);
 
   constructor(
     public productListService: ProductListService,
     public productDataService: ProductDataService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.pageSize.valueChanges.subscribe((pagesize) => {
+      this.productDataService.pageSize$.next(pagesize);
+    });
+
+    this.pageNumber.valueChanges.subscribe((pagenumber) => {
+      this.productDataService.pageNumber$.next(pagenumber);
+    });
+  }
 
   get productQuantityLimitExceeds(): boolean {
     return this.productDataService.products$.value.length > this.freeProductLimit;

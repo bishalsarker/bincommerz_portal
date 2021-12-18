@@ -3,6 +3,7 @@
         On free plan you can add only {{ freeProductLimit }} products. Please upgrade to add more.
     </div>
     <app-data-table
+        [loading] = "productDataService.loading$ | async"
         [columnConfig]="productListService.columnConfig$ | async" 
         [tableData]="productDataService.products$ | async"
         [actions]="productListService.tableActions$ | async">
@@ -15,4 +16,22 @@
             <span style="font-weight: 600; margin-left: 5px;">Add New</span>
         </a>
     </app-data-table>
+    <div class="row w-100" style="padding: 10px; background-color: #e9ecef; margin-top: 10px;">
+        <div class="col-6">
+            <span style="font-weight: 800;">Items: </span>
+            <select [formControl]="pageSize" class="custom-select" style="width: 100px;">
+                <option [value]="5">5</option>
+                <option [value]="10">10</option>
+                <option [value]="20">20</option>
+            </select>
+        </div>
+        <div class="col-6">
+            <div style="float: right;">
+                <span style="font-weight: 800;">Page: </span>
+                <select [formControl]="pageNumber" class="custom-select" style="width: 100px;">
+                    <option *ngFor="let value of productDataService.totalPages$ | async" [value]="value">{{ value }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
 </div>
