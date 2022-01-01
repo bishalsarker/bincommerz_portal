@@ -22,6 +22,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: "templates",
+    loadChildren: () =>
+      import("./templates/templates.module").then((m) => m.TemplatesModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: "auth-callback",
     component: AuthCallbackComponent,
   },
