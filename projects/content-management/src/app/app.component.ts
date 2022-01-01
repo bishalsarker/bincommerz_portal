@@ -22,6 +22,12 @@ export class AppComponent {
       route: "/widgets",
       isActive: false,
     },
+    {
+      title: "Templates",
+      icon: "fas fa-scroll",
+      route: "/templates",
+      isActive: false,
+    },
   ];
 
   constructor(private router: Router) {}
