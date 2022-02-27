@@ -20,9 +20,9 @@ export class ProductListService {
       filter: (data: Product) => data.price + " Tk",
     },
     {
-      columnName: "Discount",
+      columnName: "Discount Price",
       propertyName: "discount",
-      filter: (data: Product) => data.discount + " %",
+      filter: (data: Product) => data.discount > 0 ? `${data.discount} Tk (${data.discountInPercentage}%)` : 'n/a',
     },
     {
       columnName: "Stock Quantity",
