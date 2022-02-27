@@ -60,6 +60,7 @@ export class ProductDataService {
                 image: product.imageUrl,
                 price: product.price,
                 discount: product.discount,
+                discountInPercentage: product.discountInPercentage,
                 stockQuantity: product.stockQuantity,
                 tags: this.tagsService.resolveTags(product.tags),
               };
@@ -100,6 +101,7 @@ export class ProductDataService {
               inStock: product.inStock,
               stockQuantity: product.stockQuantity,
               discount: product.discount,
+              discountInPercentage: product.discountInPercentage,
               tags: product.tags,
             };
           } else {

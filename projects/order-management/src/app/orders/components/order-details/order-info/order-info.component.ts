@@ -134,16 +134,17 @@ export class OrderInfoComponent implements OnInit, OnChanges {
     this.orderModel.items.forEach((item) => {
       const row = [];
       row.push(item.name);
+      row.push(item.price + ' Tk');
       row.push(item.quantity);
-      row.push(item.discount);
-      row.push(item.price + 'Tk');
+      row.push('-' + item.discountAmount + ' Tk');
+      row.push(item.subtotal + ' Tk');
       data.push(row);
     });
 
-    data.push(["", "", "Shipping Charge", `${this.orderModel.shippingCharge + 0.00} Tk`]);
-    data.push(["", "", "Total Payable", `${this.orderModel.totalPayable + 0.00} Tk`]);
-    data.push(["", "", "Total Paid", `${(this.orderModel.totalPayable - this.orderModel.totalDue) + 0.00} Tk`]);
-    data.push(["", "", "Total Due", `${this.orderModel.totalDue + 0.00} Tk` ]);
+    data.push(["", "", "", "Shipping Charge", `${this.orderModel.shippingCharge + 0.00} Tk`]);
+    data.push(["", "", "", "Total Payable", `${this.orderModel.totalPayable + 0.00} Tk`]);
+    data.push(["", "", "", "Total Paid", `${(this.orderModel.totalPayable - this.orderModel.totalDue) + 0.00} Tk`]);
+    data.push(["", "", "", "Total Due", `${this.orderModel.totalDue + 0.00} Tk` ]);
 
     let bill_col = ["Bill To", "Shipping Address"];
     let bill_data = [
@@ -180,7 +181,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
           {
             data: "Shipping Charge",
             style: { "font-weight": "bold" },
-            colSpan: 3,
+            colSpan: 4,
           },
           {
             data: `${
@@ -195,7 +196,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
           {
             data: "Total Payable",
             style: { "font-weight": "bold", color: "#28a745" },
-            colSpan: 3,
+            colSpan: 4,
           },
           {
             data: `${
@@ -211,7 +212,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
           {
             data: "Total Due",
             style: { "font-weight": "bold", color: "red" },
-            colSpan: 3,
+            colSpan: 4,
           },
           {
             data: `${
@@ -227,7 +228,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
           {
             data: "Total Paid",
             style: { "font-weight": "bold", color: "blue" },
-            colSpan: 3,
+            colSpan: 4,
           },
           {
             data: `${
@@ -247,7 +248,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
           {
             data: "Payment Method",
             style: { "font-weight": "bold" },
-            colSpan: 3,
+            colSpan: 4,
           },
           {
             data: this.orderModel
@@ -263,7 +264,7 @@ export class OrderInfoComponent implements OnInit, OnChanges {
           {
             data: "Payment Notes",
             style: { "font-weight": "bold" },
-            colSpan: 3,
+            colSpan: 4,
           },
           {
             data:

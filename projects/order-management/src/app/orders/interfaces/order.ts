@@ -24,7 +24,9 @@ export interface OrderItem {
   name: string;
   price: number;
   discount: number;
+  discountAmount: number;
   quantity: number;
+  subtotal: number;
 }
 
 export interface OrderPayment {
