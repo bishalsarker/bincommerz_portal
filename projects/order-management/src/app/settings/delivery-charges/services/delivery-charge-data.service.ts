@@ -41,6 +41,26 @@ export class DeliveryChargeDataService {
       );
   }
 
+  getDeliveryCharge(deliveryChargeId: string): Observable<DeliveryCharge> {
+    return this.httpClient
+      .get<any>(API_HOST + "orders/settings/delivery-charge/get/" + deliveryChargeId, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .pipe(
+        map((response) => {
+          if (response.isSuccess) {
+            return response.data as DeliveryCharge;
+          } else {
+            this.showError(response.message);
+            return null;
+          }
+        })
+      );
+  }
+
   addDeliveryCharge(payload: DeliveryCharge): Observable<boolean> {
     return this.httpClient
       .post<any>(API_HOST + "orders/settings/delivery-charge/addnew", payload, {
@@ -66,9 +86,12 @@ export class DeliveryChargeDataService {
 
   updateDeliveryCharge(payload: DeliveryCharge): Observable<boolean> {
     return this.httpClient
-      .put<any>(API_HOST + "templates/update", {
+      .put<any>(API_HOST + "orders/settings/delivery-charge/update", {
         id: payload.id,
-        templateData: payload
+        payload: {
+          title: payload.title,
+          amount: payload.amount
+        }
       }, {
         headers: {
           "Content-Type": "application/json",
@@ -82,9 +105,30 @@ export class DeliveryChargeDataService {
             return false;
           } else {
             this.getAllDeliveryCharges().subscribe();
-            this.router.navigate(["templates"]);
+            this.router.navigate(["settings", "delivery-charges"]);
             this.toastr.success(`Template updated`);
             return true;
+          }
+        })
+      );
+  }
+
+  public deleteDeliveryCharge(deliveryChargeId: string): Observable<void> {
+    return this.httpClient
+      .delete<any>(API_HOST + "orders/settings/delivery-charge/delete/" + deliveryChargeId, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .pipe(
+        map((response) => {
+          if (!response.isSuccess) {
+            this.showError(response.message);
+          } else {
+            this.getAllDeliveryCharges().subscribe();
+            this.router.navigate(["settings", "delivery-charges"]);
+            this.toastr.success(`Template deleted`);
           }
         })
       );

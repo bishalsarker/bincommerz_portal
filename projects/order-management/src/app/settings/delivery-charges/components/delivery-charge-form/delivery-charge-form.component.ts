@@ -11,7 +11,7 @@ import { DeliveryChargeDataService } from '../../services/delivery-charge-data.s
   styleUrls: ['./delivery-charge-form.component.scss']
 })
 export class DeliveryChargeFormComponent implements OnInit {
-  // templateId = new BehaviorSubject<string>(null);
+  deliveryChargeId = new BehaviorSubject<string>(null);
   loading$ = new BehaviorSubject<boolean>(false);
   disableAddBtn: boolean = false;
   buttonText: string = "Add";
@@ -37,8 +37,8 @@ export class DeliveryChargeFormComponent implements OnInit {
     if (this.isEditMode) {
       this.route.params.subscribe((param: ParamMap) => {
         const templateid: string = param["id"];
-        // this.templateId.next(templateid);
-        // this.getTemplateById();
+        this.deliveryChargeId.next(templateid);
+        this.getDeliveryChargeById();
       });
     }
 
@@ -49,15 +49,14 @@ export class DeliveryChargeFormComponent implements OnInit {
     this.breadCrumbService.removeLast();
   }
 
-  // getTemplateById(): void {
-  //   this.templateDataService.getTemplate(this.templateId.value).subscribe((template) => {
-  //     if (template) {
-  //       this.templateNameControl.setValue(template.name);
-  //       this.contentControl.setValue(template.content);
-  //       this.isDefaultControl.setValue(template.isDefault);
-  //     }
-  //   });
-  // }
+  getDeliveryChargeById(): void {
+    this.deliveryChargeDataService.getDeliveryCharge(this.deliveryChargeId.value).subscribe((deliveryCharge) => {
+      if (deliveryCharge) {
+        this.titleControl.setValue(deliveryCharge.title);
+        this.amountControl.setValue(deliveryCharge.amount);
+      }
+    });
+  }
 
   get titleControl(): AbstractControl {
     return this.deliveryChargeForm.get("title");
@@ -100,10 +99,9 @@ export class DeliveryChargeFormComponent implements OnInit {
 
   updateDeliveryCharge(): Observable<boolean> {
     return this.deliveryChargeDataService.updateDeliveryCharge({
-      id: "",
+      id: this.deliveryChargeId.value,
       title: this.titleControl.value,
       amount: this.amountControl.value
     });
   }
-
 }

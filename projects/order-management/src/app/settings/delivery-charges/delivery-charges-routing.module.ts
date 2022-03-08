@@ -17,6 +17,11 @@ const routes: Routes = [{
         component: DeliveryChargeFormComponent,
         data: { editMode: false },
     },
+    {
+        path: "edit/:id",
+        component: DeliveryChargeFormComponent,
+        data: { editMode: true },
+    }
   ]
 }];
 

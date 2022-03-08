@@ -29,7 +29,7 @@ export class DeliveryChargeListService {
       showAction: () => true,
       predicate: (item: any) => true,
       do: (item: DeliveryCharge) => {
-        this.router.navigate(["/templates/edit/" + item.id]);
+        this.router.navigate(["/settings/delivery-charges/edit/" + item.id]);
       },
     },
     {
@@ -39,7 +39,7 @@ export class DeliveryChargeListService {
       predicate: (item: any) => true,
       do: (item: DeliveryCharge) => {
         if(confirm("Are you sure?")) {
-          // this.templatesDataService.deleteTemplate(item.id).subscribe();
+          this.deliveryChargeDataService.deleteDeliveryCharge(item.id).subscribe();
         }
       },
     },
@@ -47,6 +47,6 @@ export class DeliveryChargeListService {
 
   constructor(
     private router: Router,
-    public templatesDataService: DeliveryChargeDataService
+    public deliveryChargeDataService: DeliveryChargeDataService
   ) {}
 }

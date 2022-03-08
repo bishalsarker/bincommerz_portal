@@ -1,5 +1,5 @@
 export interface DeliveryCharge {
-    id?: String;
-    title: String;
+    id?: string;
+    title: string;
     amount: Number;
 }
