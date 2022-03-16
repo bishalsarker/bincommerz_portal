@@ -16,6 +16,12 @@ export class AppComponent {
       route: "/orders",
       isActive: false,
     },
+    {
+      title: "Settings",
+      icon: "fas fa-cogs",
+      route: "/settings",
+      isActive: false,
+    },
   ];
 
   constructor(private router: Router) {}
