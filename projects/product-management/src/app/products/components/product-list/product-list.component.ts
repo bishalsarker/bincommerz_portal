@@ -12,6 +12,7 @@ export class ProductListComponent implements OnInit {
   freeProductLimit: number = 15;
   pageSize = new FormControl(5);
   pageNumber = new FormControl(1);
+  searchKeyword = new FormControl("");
 
   constructor(
     public productListService: ProductListService,
@@ -26,6 +27,15 @@ export class ProductListComponent implements OnInit {
     this.pageNumber.valueChanges.subscribe((pagenumber) => {
       this.productDataService.pageNumber$.next(pagenumber);
     });
+  }
+
+  public clearFilters(): void {
+    this.searchKeyword.setValue("");
+    this.searchProduct();
+  }
+
+  public searchProduct(): void {
+    this.productDataService.keyword.next(this.searchKeyword.value);
   }
 
   get productQuantityLimitExceeds(): boolean {
