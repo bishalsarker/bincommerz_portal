@@ -18,6 +18,7 @@ export class ProductDataService {
   pageSize$ = new BehaviorSubject<Number>(5);
   pageNumber$ = new BehaviorSubject<Number>(1);
   totalPages$ = new BehaviorSubject<Number[]>([]);
+  keyword = new BehaviorSubject<string>("");
 
   constructor(
     private httpClient: HttpClient,
@@ -31,7 +32,11 @@ export class ProductDataService {
 
     this.pageNumber$.subscribe(() => {
       this.getAllProducts().subscribe();
-    })
+    });
+
+    this.keyword.subscribe(() => {
+      this.getAllProducts().subscribe();
+    });
 
   }
 
@@ -42,7 +47,8 @@ export class ProductDataService {
         params: {
           sort_by: "newest",
           page_size: this.pageSize$.value.toString(),
-          page_number: this.pageNumber$.value.toString()
+          page_number: this.pageNumber$.value.toString(),
+          keyword: this.keyword.value
         },
         headers: {
           "Content-Type": "application/json",

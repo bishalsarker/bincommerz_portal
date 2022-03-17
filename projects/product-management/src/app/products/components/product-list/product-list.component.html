@@ -7,14 +7,38 @@
         [columnConfig]="productListService.columnConfig$ | async" 
         [tableData]="productDataService.products$ | async"
         [actions]="productListService.tableActions$ | async">
-        <a *ngIf="(hasFreePlan && !productQuantityLimitExceeds)" class="btn btn-link" routerLink="/products/add"  style="padding-left: 0px;">
-            <i class="fas fa-plus"></i>&nbsp;
-            <span style="font-weight: 600; margin-left: 5px;">Add New</span>
-        </a>
-        <a *ngIf="!hasFreePlan" class="btn btn-link" routerLink="/products/add"  style="padding-left: 0px;">
-            <i class="fas fa-plus"></i>&nbsp;
-            <span style="font-weight: 600; margin-left: 5px;">Add New</span>
-        </a>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <a *ngIf="(hasFreePlan && !productQuantityLimitExceeds)" class="btn btn-link" routerLink="/products/add"  style="padding-left: 0px;">
+                    <i class="fas fa-plus"></i>&nbsp;
+                    <span style="font-weight: 600; margin-left: 5px;">Add New</span>
+                </a>
+                <a *ngIf="!hasFreePlan" class="btn btn-link" routerLink="/products/add"  style="padding-left: 0px;">
+                    <i class="fas fa-plus"></i>&nbsp;
+                    <span style="font-weight: 600; margin-left: 5px;">Add New</span>
+                </a>
+                <a class="btn btn-link" (click)="clearFilters()" style="padding-left: 10px;">
+                    <i class="fas fa-redo"></i>&nbsp;
+                    <span style="font-weight: 600; margin-left: 5px;">Clear Filters</span>
+                </a>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="d-flex justify-content-end row">
+                    <div class="col-md-10 col-12">
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <input type="text" [formControl]="searchKeyword" class="form-control" placeholder="Search with name or description...">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" (click)="searchProduct()" (keyup.enter)="searchProduct()">
+                                        <span>Search</span>
+                                    </button>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </app-data-table>
     <div class="row w-100" style="padding: 10px; background-color: #e9ecef; margin-top: 10px;">
         <div class="col-6">
