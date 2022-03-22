@@ -1,37 +1,146 @@
 <div style="padding-left: 12px;">
-    <div>
-        <div class="row">
-            <div class="col-lg-6 col-12">
-                <div class="form-group required">
-                    <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" [formControl]="templateNameControl" />
+    <div class="row">
+        <div class="col-lg-7 col-12">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group required">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" class="form-control" [formControl]="templateNameControl" />
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px; margin-top: 20px;">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1" [formControl]="isDefaultControl">
+                            <label class="custom-control-label" for="customCheck1">Set As Default</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group" style="margin-bottom: 20px; margin-top: 20px;">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1" [formControl]="isDefaultControl">
-                        <label class="custom-control-label" for="customCheck1">Set As Default</label>
+            </div>
+            <h5>Layout</h5>
+            <div class="row">
+                <div class="col-12">
+                    <div *ngFor="let row of templateContent">
+                        <div *ngIf="row.type === 'slider'">
+                            <div class="card w-100" style="margin-bottom: 10px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ row.type }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ row.resolve }}</h6>
+                                    <a style="cursor: pointer" (click)="moveUp(row)" class="card-link">Move Up</a>
+                                    <a style="cursor: pointer" (click)="moveDown(row)" class="card-link">Move Down</a>
+                                    <a style="cursor: pointer" (click)="deleteRow(row)" class="card-link">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="row.type === 'banner'">
+                            <div class="card w-100" style="margin-bottom: 10px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ row.type }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ row.resolve }}</h6>
+                                    <a style="cursor: pointer" (click)="moveUp(row)" class="card-link">Move Up</a>
+                                    <a style="cursor: pointer" (click)="moveDown(row)" class="card-link">Move Down</a>
+                                    <a style="cursor: pointer" (click)="deleteRow(row)" class="card-link">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="row.type === 'section'" >
+                            <div class="card w-100" style="margin-bottom: 10px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ row.type }}: {{ row.resolve.type }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ row.resolve.title }}</h6>
+                                    <p *ngIf="row.resolve.type === 'product'" class="card-text">slug: {{ row.resolve.value }}</p>
+                                    <a style="cursor: pointer" (click)="moveUp(row)" class="card-link">Move Up</a>
+                                    <a style="cursor: pointer" (click)="moveDown(row)" class="card-link">Move Down</a>
+                                    <a style="cursor: pointer" (click)="deleteRow(row)" class="card-link">Delete</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-8 col-12">
-                <div class="form-group required" >
-                    <label for="exampleFormControlTextarea1">Content</label>
-                    <textarea
-                        class="form-control"
-                        rows="12"
-                        [formControl]="contentControl">
-                    </textarea>
+        <div class="col-lg-5 col-12">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Row Type</label>
+                        <ng-select
+                            [items]="templateDataService.rowTypes$ | async"
+                            [multiple]="false"
+                            [closeOnSelect]="true"
+                            [searchable]="false"
+                            bindLabel="name"
+                            bindValue="value"
+                            placeholder="Select Row Type"
+                            [formControl]="rowTypeControl">
+                        </ng-select>
+                    </div>
+                    <div *ngIf="showSliderFields" class="form-group">
+                        <label for="exampleInputEmail1">Sliders</label>
+                        <ng-select
+                            [items]="templateDataService.sliders$ | async"
+                            [multiple]="false"
+                            [closeOnSelect]="true"
+                            [searchable]="false"
+                            bindLabel="name"
+                            bindValue="value"
+                            placeholder="Select Row Type"
+                            [formControl]="selectedSliderControl">
+                        </ng-select>
+                    </div>
+                    <div *ngIf="showBannerFields" class="form-group">
+                        <label for="exampleInputEmail1">Banners</label>
+                        <ng-select
+                            [items]="templateDataService.banners$ | async"
+                            [multiple]="false"
+                            [closeOnSelect]="true"
+                            [searchable]="false"
+                            bindLabel="name"
+                            bindValue="value"
+                            placeholder="Select Row Type"
+                            [formControl]="selectedBannerControl">
+                        </ng-select>
+                    </div>
+                    <div *ngIf="showSectionFields" class="form-group">
+                        <label for="exampleInputEmail1">Section Type</label>
+                        <ng-select
+                            [items]="templateDataService.sectionTypes$ | async"
+                            [multiple]="false"
+                            [closeOnSelect]="true"
+                            [searchable]="false"
+                            bindLabel="name"
+                            bindValue="value"
+                            placeholder="Select Section Type"
+                            [formControl]="sectionTypeControl">
+                        </ng-select>
+                    </div>
+                    <div *ngIf="showSectionFields" class="form-group">
+                        <label for="exampleInputEmail1">Section Name</label>
+                        <input type="text" class="form-control" [formControl]="sectionNameControl" />
+                    </div>
+                    <div *ngIf = "showProductFields" class="form-group">
+                        <label for="exampleInputEmail1">Categories</label>
+                        <ng-select
+                            [items]="templateDataService.sliders$ | async"
+                            [multiple]="false"
+                            [closeOnSelect]="true"
+                            [searchable]="false"
+                            bindLabel="name"
+                            bindValue="value"
+                            placeholder="Select Row Type"
+                            [formControl]="selectedCategoryControl">
+                        </ng-select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">  
-            <div class="col-12 button-row" style="margin-top: 33px;">
-                <button class="btn btn-danger" routerLink="/templates" [disabled]="disableAddBtn">Cancel</button>
-                <button class="btn btn-primary" (click)="addOrUpdateTemplate()" [disabled]="!templateForm.valid || disableAddBtn">
-                    <span>{{ buttonText }}</span>
-                </button>
+            <div class="row">  
+                <div class="col-12 button-row" style="margin-top: 10px;">
+                    <button class="btn btn-danger" routerLink="/templates" [disabled]="disableAddBtn">Cancel</button>
+                    <button class="btn btn-primary" (click)="addRow()">
+                        <span>Add Row</span>
+                    </button>
+                    <button class="btn btn-success" (click)="addOrUpdateTemplate()" [disabled]="!templateForm.valid || disableAddBtn">
+                        <span>Save Layout</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

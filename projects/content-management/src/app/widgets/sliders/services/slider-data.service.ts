@@ -16,12 +16,12 @@ export class SliderDataService {
 
   types$: BehaviorSubject<{name: string, value: string}[]> = new BehaviorSubject([
     {
-      name: "Image",
+      name: "Image Slider",
       value: "image"
     },
     {
-      name: "Card",
-      value: "card"
+      name: "Image Banner",
+      value: "banner"
     }
   ]);
 

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { API_HOST } from '../../constants/api-constants';
+import { Slider } from '../../widgets/sliders/interfaces/slider';
 import { Template } from '../interfaces/template';
 
 @Injectable({
@@ -12,6 +13,34 @@ import { Template } from '../interfaces/template';
 })
 export class TemplateDataService {
   templates$ = new BehaviorSubject<Template[]>([]);
+  sliders$ = new BehaviorSubject<{name: string, value: string}[]>([]);
+  banners$ = new BehaviorSubject<{name: string, value: string}[]>([]);
+
+  rowTypes$: BehaviorSubject<{name: string, value: string}[]> = new BehaviorSubject([
+    {
+      name: "Slider",
+      value: "slider"
+    },
+    {
+      name: "Banner",
+      value: "banner"
+    },
+    {
+      name: "Section",
+      value: "section"
+    }
+  ]);
+
+  sectionTypes$: BehaviorSubject<{name: string, value: string}[]> = new BehaviorSubject([
+    {
+      name: "Category",
+      value: "category"
+    },
+    {
+      name: "Product",
+      value: "product"
+    }
+  ]);
   
   constructor(
     private httpClient: HttpClient, 
@@ -19,6 +48,45 @@ export class TemplateDataService {
     private router: Router) 
   {
     this.getAllTemplates().subscribe();
+    this.getAllSliders().subscribe();
+  }
+
+  getAllSliders(): Observable<void> {
+    return this.httpClient
+      .get<any>(API_HOST + "widgets/sliders/get/all", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+      })
+      .pipe(
+        map((response) => {
+          if (response.isSuccess) {
+            const data = response.data as Slider[];
+            const sliders = [], banners = [];
+            data.forEach((d) => {
+              if (d.type === 'image') {
+                sliders.push({
+                  name: d.name,
+                  value: d.id
+                });
+              }
+
+              if (d.type === 'banner') {
+                banners.push({
+                  name: d.name,
+                  value: d.id
+                });
+              }
+            });
+
+            this.sliders$.next(sliders);
+            this.banners$.next(banners);
+          } else {
+            this.showError(response.message);
+          }
+        })
+      );
   }
 
   getAllTemplates(): Observable<void> {
