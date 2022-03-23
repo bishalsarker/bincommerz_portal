@@ -119,7 +119,7 @@
                     <div *ngIf = "showProductFields" class="form-group">
                         <label for="exampleInputEmail1">Categories</label>
                         <ng-select
-                            [items]="templateDataService.sliders$ | async"
+                            [items]="templateDataService.categories$ | async"
                             [multiple]="false"
                             [closeOnSelect]="true"
                             [searchable]="false"

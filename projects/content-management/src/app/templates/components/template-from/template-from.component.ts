@@ -173,7 +173,7 @@ export class TemplateFromComponent implements OnInit {
   addTemplate(): Observable<boolean> {
     return this.templateDataService.addTemplate({
       name: this.templateNameControl.value,
-      content: this.rowTypeControl.value,
+      content: JSON.stringify(this.templateContent),
       isDefault: this.isDefaultControl.value
     });
   }
@@ -182,7 +182,7 @@ export class TemplateFromComponent implements OnInit {
     return this.templateDataService.updateTemplate({
       id: this.templateId.value,
       name: this.templateNameControl.value,
-      content: this.rowTypeControl.value,
+      content: JSON.stringify(this.templateContent),
       isDefault: this.isDefaultControl.value
     });
   }
@@ -254,16 +254,6 @@ export class TemplateFromComponent implements OnInit {
     this.templateContent = [];
     this.templateContent = _.orderBy(reArrangedList, ['row_number'], ['asc']);
   }
-
-  // saveOrders(): void {
-  //   const payload: {id: string, order: number}[] = [];
-
-  //   this.categories.forEach((cat) => {
-  //     payload.push({ id: cat.id, order: cat.order});
-  //   })
-
-  //   this.catagoriesDataService.saveCategoryOrder(payload).subscribe();
-  // }
 
   private swapOrder(curr: any, prev: any): void {
     const newList: any[] = _.filter(this.templateContent, 
