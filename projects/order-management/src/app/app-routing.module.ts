@@ -22,6 +22,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: "coupons",
+    loadChildren: () =>
+      import("./coupons/coupons.module").then((m) => m.CouponsModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path: "auth-callback",
     component: AuthCallbackComponent,
   },

@@ -22,6 +22,12 @@ export class AppComponent {
       route: "/settings",
       isActive: false,
     },
+    {
+      title: "Coupons",
+      icon: "fas fa-money-bill-alt",
+      route: "/coupons",
+      isActive: false,
+    },
   ];
 
   constructor(private router: Router) {}
