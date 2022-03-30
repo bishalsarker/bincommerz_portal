@@ -142,6 +142,12 @@ export class OrderInfoComponent implements OnInit, OnChanges {
     });
 
     data.push(["", "", "", "Shipping Charge", `${this.orderModel.shippingCharge + 0.00} Tk`]);
+    data.push(["", "", "", "Total Amount", `${this.orderModel.totalAmount + 0.00} Tk`]);
+
+    if (this.orderModel.discount > 0) {
+      data.push(["", "", "", "Discount", `-${this.orderModel.discount + 0.00} Tk`]);
+    }
+
     data.push(["", "", "", "Total Payable", `${this.orderModel.totalPayable + 0.00} Tk`]);
     data.push(["", "", "", "Total Paid", `${(this.orderModel.totalPayable - this.orderModel.totalDue) + 0.00} Tk`]);
     data.push(["", "", "", "Total Due", `${this.orderModel.totalDue + 0.00} Tk` ]);
@@ -187,6 +193,38 @@ export class OrderInfoComponent implements OnInit, OnChanges {
             data: `${
               this.orderModel ? this.orderModel.shippingCharge.toString() : "0"
             } Tk`,
+            colSpan: 0,
+          },
+        ],
+      },
+      {
+        cells: [
+          {
+            data: "Total Amount",
+            style: { "font-weight": "bold" },
+            colSpan: 4,
+          },
+          {
+            data: `${
+              this.orderModel ? this.orderModel.totalAmount.toString() : "0"
+            } Tk`,
+            style: { "font-weight": "bold" },
+            colSpan: 0,
+          },
+        ],
+      },
+      {
+        cells: [
+          {
+            data: "Discount",
+            style: { "font-weight": "bold", color: "red" },
+            colSpan: 4,
+          },
+          {
+            data: `${
+              this.orderModel ? "-" + this.orderModel.discount.toString() : "-0"
+            } Tk`,
+            style: { "font-weight": "bold", color: "red" },
             colSpan: 0,
           },
         ],

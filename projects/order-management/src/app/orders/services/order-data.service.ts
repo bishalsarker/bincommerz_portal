@@ -115,6 +115,8 @@ export class OrderDataService {
               phone: response.data.phone,
               email: response.data.email,
               address: response.data.address,
+              totalAmount: response.data.totalAmount,
+              discount: response.data.discount,
               totalPayable: response.data.totalPayable,
               totalDue: response.data.totalDue,
               shippingCharge: response.data.shippingCharge,
