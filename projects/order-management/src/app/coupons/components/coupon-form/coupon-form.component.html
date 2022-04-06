@@ -1,0 +1,31 @@
+<div style="padding-left: 12px;">
+    <div>
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="form-group required">
+                    <label for="exampleInputEmail1">Coupon Code</label>
+                    <input type="text" class="form-control" [formControl]="couponControl" />
+                    <small>Codes are case sensitive</small>
+                </div>
+                <div class="form-group required">
+                    <label for="exampleInputEmail1">Discount (%)</label>
+                    <input type="number" min="0.00" step="0.5" value="0.00" class="form-control" [formControl]="discountControl" />
+                </div>
+                <div class="form-group" style="margin-bottom: 20px; margin-top: 20px;">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1" [formControl]="isActiveControl">
+                        <label class="custom-control-label" for="customCheck1">Is Active</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">  
+            <div class="col-12 button-row" style="margin-top: 33px;">
+                <button class="btn btn-danger" routerLink="/coupons" [disabled]="disableAddBtn">Cancel</button>
+                <button class="btn btn-primary" (click)="addOrUpdateCoupon()" [disabled]="!couponForm.valid || disableAddBtn">
+                    <span>{{ buttonText }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

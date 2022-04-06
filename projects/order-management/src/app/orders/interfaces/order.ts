@@ -7,6 +7,8 @@ export interface Order {
   phone: string;
   email: string;
   address: string;
+  totalAmount: string;
+  discount: number;
   totalPayable: number;
   totalDue: number;
   shippingCharge: number;
