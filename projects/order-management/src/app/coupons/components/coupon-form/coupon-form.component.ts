@@ -26,7 +26,7 @@ export class CouponFormComponent implements OnInit {
 
   constructor(
     private breadCrumbService: BreadcrumbService,
-    private couponDataService: CouponDataService,
+    public couponDataService: CouponDataService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
