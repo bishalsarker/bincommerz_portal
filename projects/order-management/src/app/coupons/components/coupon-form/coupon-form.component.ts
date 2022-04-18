@@ -19,6 +19,8 @@ export class CouponFormComponent implements OnInit {
   couponForm = new FormGroup({
     coupon: new FormControl("", [Validators.required, Validators.maxLength(50)]),
     discount: new FormControl(0, Validators.required),
+    discountType: new FormControl("percentage", Validators.required),
+    minimumPurchaseAmount: new FormControl(0),
     isActive: new FormControl(false)
   });
 
@@ -48,6 +50,8 @@ export class CouponFormComponent implements OnInit {
     this.couponDataService.getCoupon(this.couponId.value).subscribe((coupon) => {
       if (coupon) {
         this.couponControl.setValue(coupon.code);
+        this.discountTypeControl.setValue(coupon.discountType);
+        this.minimumPurchaseAmountControl.setValue(coupon.minimumPurchaseAmount);
         this.discountControl.setValue(coupon.discount);
         this.isActiveControl.setValue(coupon.isActive);
       }
@@ -70,32 +74,51 @@ export class CouponFormComponent implements OnInit {
     return this.couponForm.get("discount");
   }
 
+  get discountTypeControl(): AbstractControl {
+    return this.couponForm.get("discountType");
+  }
+
+  get minimumPurchaseAmountControl(): AbstractControl {
+    return this.couponForm.get("minimumPurchaseAmount");
+  }
+
   get isActiveControl(): AbstractControl {
     return this.couponForm.get("isActive");
   }
 
   addOrUpdateCoupon(): void {
-    this.disableAddBtn = true;
-    this.buttonText = "Saving...";
+    let isValid = true;
 
-    const add: Observable<boolean> = this.isEditMode
-      ? this.updateCoupon()
-      : this.addCoupon();
+    if (this.discountTypeControl.value === 'amount' && (this.minimumPurchaseAmountControl.value <= this.discountControl.value)) {
+      isValid = false;
+      alert("Miminum amount should be greater than discount");
+    }
 
-    add.subscribe((isSuccess: boolean) => {
-      if (!isSuccess) {
+    if (isValid) {
+      this.disableAddBtn = true;
+      this.buttonText = "Saving...";
+
+      const add: Observable<boolean> = this.isEditMode
+        ? this.updateCoupon()
+        : this.addCoupon();
+
+      add.subscribe((isSuccess: boolean) => {
+        if (!isSuccess) {
+          this.disableAddBtn = false;
+          this.buttonText = "Save";
+        }
+      }, () => {
         this.disableAddBtn = false;
         this.buttonText = "Save";
-      }
-    }, () => {
-      this.disableAddBtn = false;
-      this.buttonText = "Save";
-    });
+      });
+    }
   }
 
   addCoupon(): Observable<boolean> {
     return this.couponDataService.addCoupon({
       code: this.couponControl.value,
+      discountType: this.discountTypeControl.value,
+      minimumPurchaseAmount: this.minimumPurchaseAmountControl.value,
       discount: this.discountControl.value,
       isActive: this.isActiveControl.value
     });
@@ -104,6 +127,8 @@ export class CouponFormComponent implements OnInit {
   updateCoupon(): Observable<boolean> {
     return this.couponDataService.updateCoupon(this.couponId.value, {
       code: this.couponControl.value,
+      discountType: this.discountTypeControl.value,
+      minimumPurchaseAmount: this.minimumPurchaseAmountControl.value,
       discount: this.discountControl.value,
       isActive: this.isActiveControl.value
     });
