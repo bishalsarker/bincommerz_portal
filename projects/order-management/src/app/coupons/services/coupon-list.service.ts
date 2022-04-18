@@ -17,7 +17,16 @@ export class CouponListService {
     {
       columnName: "Discount",
       propertyName: "discount",
-      filter: (item: Coupon) => { return item.discount + "%" }
+      filter: (item: Coupon) => { return `${item.discount}${item.discountType === "amount" ? " Tk" : " %"}` }
+    },
+    {
+      columnName: "Type",
+      propertyName: "discountType"
+    },
+    {
+      columnName: "Minimum Purchase",
+      propertyName: "minimumPurchaseAmount",
+      filter: (item: Coupon) => { return item.minimumPurchaseAmount > 0 ? item.minimumPurchaseAmount + " Tk" : "n/a" }
     },
     {
       columnName: "Is Active",

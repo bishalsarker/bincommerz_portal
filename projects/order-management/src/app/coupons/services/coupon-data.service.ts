@@ -12,6 +12,16 @@ import { Coupon } from '../interfaces/coupon';
 })
 export class CouponDataService {
   coupons$ = new BehaviorSubject<Coupon[]>([]);
+  couponTypes$: BehaviorSubject<{name: string, value: string}[]> = new BehaviorSubject([
+    {
+      name: "Percentage",
+      value: "percentage"
+    },
+    {
+      name: "Fixed Amount",
+      value: "amount"
+    }
+  ]);
 
   constructor(
     private httpClient: HttpClient,

@@ -8,8 +8,26 @@
                     <small>Codes are case sensitive</small>
                 </div>
                 <div class="form-group required">
-                    <label for="exampleInputEmail1">Discount (%)</label>
+                    <label for="exampleInputEmail1">Type</label>
+                    <ng-select
+                        [items]="couponDataService.couponTypes$ | async"
+                        [multiple]="false"
+                        [closeOnSelect]="true"
+                        [searchable]="false"
+                        bindLabel="name"
+                        bindValue="value"
+                        placeholder="Select Discount Type"
+                        [formControl]="discountTypeControl">
+                    </ng-select>
+                </div>
+                <div class="form-group required">
+                    <label for="exampleInputEmail1">Discount</label>
                     <input type="number" min="0.00" step="0.5" value="0.00" class="form-control" [formControl]="discountControl" />
+                </div>
+                <div *ngIf="discountTypeControl.value === 'amount'" class="form-group required">
+                    <label for="exampleInputEmail1">Minimum Purchase Amount</label>
+                    <input type="number" min="0.00" step="0.5" value="0.00" class="form-control" [formControl]="minimumPurchaseAmountControl" />
+                    <small>Should be greater than discount amount</small>
                 </div>
                 <div class="form-group" style="margin-bottom: 20px; margin-top: 20px;">
                     <div class="custom-control custom-checkbox">
