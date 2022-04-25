@@ -9,9 +9,10 @@ import { HomeComponent } from "./components/home/home.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AccountComponent } from './components/settings/account/account.component';
 import { ShopComponent } from './components/settings/shop/shop.component';
+import { PreviewComponent } from './components/preview/preview.component';
 
 @NgModule({
-  declarations: [PortalComponent, SettingsComponent, HomeComponent, AccountComponent, ShopComponent],
+  declarations: [PortalComponent, SettingsComponent, HomeComponent, AccountComponent, ShopComponent, PreviewComponent],
   imports: [
     CommonModule,
     PortalRoutingModule,
