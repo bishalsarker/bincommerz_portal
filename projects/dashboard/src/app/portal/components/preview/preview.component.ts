@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PreviewService } from '../../services/preview.service';
-import * as htmlencode from 'htmlencode';
 
 @Component({
   selector: 'app-preview',
