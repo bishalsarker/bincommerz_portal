@@ -1,0 +1,46 @@
+<div style="margin-bottom: 40px;">
+    <h5>App URL</h5>
+
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-12">
+            <div *ngIf = "appUrl">
+                <a style="font-weight: bold;" routerLink="https://{{appUrl}}">https://{{appUrl}}</a>
+            </div>
+            <div *ngIf = "!appUrl">
+               <p>You haven't generated any app URL for your shop yet</p>
+               <div class="button-row">
+                    <button 
+                        class="btn btn-primary" 
+                        (click)="addAppUrl()">
+                        Generate App URL
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <h5>Domains</h5>
+    <p style="margin-bottom: 10;">You can add your own custom domain here. After adding the domain copy the DNS target associated to the domain and add it as a CNAME record in your DNS records</p>
+
+    <div class="row">
+        <div class="col-12">
+            <div>
+                <app-data-table
+                    [columnConfig]="domainTableColumnConfig | async" 
+                    [tableData]="domains$ | async"
+                    [actions]="domainTableActions | async">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="www.example.com" [formControl]="domainNameControl">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" (click)="addDomainUrl()" [disabled]="!domainForm.valid">
+                                <span>Add Domain</span>
+                            </button>
+                        </div>
+                    </div>
+                </app-data-table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -9,15 +9,17 @@ import { HomeComponent } from "./components/home/home.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { AccountComponent } from './components/settings/account/account.component';
 import { ShopComponent } from './components/settings/shop/shop.component';
-import { PreviewComponent } from './components/preview/preview.component';
+import { DomainsComponent } from './components/settings/domains/domains.component';
+import { SharedModule } from "projects/account-management/src/app/shared/shared.module";
 
 @NgModule({
-  declarations: [PortalComponent, SettingsComponent, HomeComponent, AccountComponent, ShopComponent, PreviewComponent],
+  declarations: [PortalComponent, SettingsComponent, HomeComponent, AccountComponent, ShopComponent, DomainsComponent],
   imports: [
     CommonModule,
     PortalRoutingModule,
     ChartsModule,
     ReactiveFormsModule,
+    SharedModule
   ],
 })
 export class PortalModule {}
