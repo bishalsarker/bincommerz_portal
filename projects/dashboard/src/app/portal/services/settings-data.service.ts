@@ -55,6 +55,83 @@ export class SettingsDataService {
     );
   }
 
+  getShopDomains(): Observable<any> {
+    return this.httpClient
+      .get<any>(API_HOST + "auth/domains", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+    }).pipe(
+      map((response) => {
+        if (!response.isSuccess) {
+          this.showError(response.message);
+          return null;
+        } else {
+          return response.data;
+        }
+      })
+    );
+  }
+
+  addAppURL(): Observable<any> {
+    return this.httpClient
+      .post<any>(API_HOST + "auth/domains/app_url", null, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+    }).pipe(
+      map((response) => {
+        if (!response.isSuccess) {
+          this.showError(response.message);
+          return null;
+        } else {
+          return response.data;
+        }
+      })
+    );
+  }
+
+  addDomainURL(payload: { url: string }): Observable<any> {
+    return this.httpClient
+      .post<any>(API_HOST + "auth/domains", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+    }).pipe(
+      map((response) => {
+        if (!response.isSuccess) {
+          this.showError(response.message);
+          return null;
+        } else {
+          return response.data;
+        }
+      })
+    );
+  }
+
+  deleteDomainRecord(id: string): Observable<any> {
+    return this.httpClient
+      .delete<any>(API_HOST + "auth/domains/delete/" + id, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+    }).pipe(
+      map((response) => {
+        if (!response.isSuccess) {
+          this.showError(response.message);
+          return null;
+        } else {
+          window.location.reload();
+          return response.data;
+        }
+      })
+    );
+  }
+
   private showError(message: string): void {
     this.toastr.error("", "Error occured: " + message);
   }

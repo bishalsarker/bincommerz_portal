@@ -9,6 +9,7 @@ export interface ITableColumnAction {
   icon: string;
   title: string;
   isDisabled?: boolean;
+  showActions?(item: any): boolean;
   predicate(item: any): boolean;
   do(item: any): void;
 }

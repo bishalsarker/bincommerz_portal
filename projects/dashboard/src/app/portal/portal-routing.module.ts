@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./components/home/home.component";
-import { PreviewComponent } from "./components/preview/preview.component";
 import { AccountComponent } from "./components/settings/account/account.component";
+import { DomainsComponent } from "./components/settings/domains/domains.component";
 import { SettingsComponent } from "./components/settings/settings.component";
 import { ShopComponent } from "./components/settings/shop/shop.component";
 import { PortalComponent } from "./portal.component";
@@ -15,10 +15,6 @@ const routes: Routes = [
       {
         path: "",
         component: HomeComponent
-      },
-      {
-        path: "preview",
-        component: PreviewComponent
       },
       {
         path: 'settings',
@@ -36,6 +32,10 @@ const routes: Routes = [
           {
             path: "shop",
             component: ShopComponent
+          },
+          {
+            path: "domains",
+            component: DomainsComponent
           }
         ]
       }
