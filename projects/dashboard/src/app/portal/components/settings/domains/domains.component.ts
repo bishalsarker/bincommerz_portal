@@ -58,7 +58,7 @@ export class DomainsComponent implements OnInit {
       this.appUrl = urls.appUrl;
       this.domains$.next(urls.domains.map((domain) => {
         return {
-          id: domain.id, domain: domain.url, DNSTarget: urls.domainDNSValue
+          id: domain.id, domain: domain.url, DNSTarget: domain.dnsTarget
         }
       }));
     });
