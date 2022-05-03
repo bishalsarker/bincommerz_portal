@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Process } from "../../processes/interfaces/process";
 import { ProcessDataService } from "../../processes/services/process-data.service";
+import { LoaderService } from "../../shared/services/loader.service";
 import { Order, OrderPayment } from "../interfaces/order";
 
 @Injectable({
@@ -22,6 +23,7 @@ export class OrderDataService {
     private httpClient: HttpClient,
     private toastr: ToastrService,
     private processService: ProcessDataService,
+    private loaderService: LoaderService,
     private router: Router
   ) {
     this.selectedOrderId.subscribe((orderId) => {
@@ -33,6 +35,7 @@ export class OrderDataService {
   }
 
   updateProcess({ id }: Process): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient.patch<void>(
       API_HOST + "orders/updateprocess",
       {
@@ -45,10 +48,11 @@ export class OrderDataService {
           Authorization: "Bearer " + localStorage.getItem("auth_token"),
         },
       }
-    );
+    ).pipe(map(() => this.loaderService.isLoading.next(false)));
   }
 
   getOrders(viewType: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     let req_url = API_HOST + "orders/get/";
 
     switch(viewType) {
@@ -91,6 +95,7 @@ export class OrderDataService {
               };
             });
             this.orders$.next(data);
+            this.loaderService.isLoading.next(false);
           } else {
             this.showError();
           }
@@ -99,6 +104,7 @@ export class OrderDataService {
   }
 
   getOrder(orderId: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "orders/get/" + orderId, {
         headers: {
@@ -138,6 +144,7 @@ export class OrderDataService {
             }
 
             this.selectedOrder$.next(data);
+            this.loaderService.isLoading.next(false);
           } else {
             this.showError();
           }
@@ -146,6 +153,7 @@ export class OrderDataService {
   }
 
   getTransactionLog(orderId: string): Observable<OrderPayment[]> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "orders/payment/logs/" + orderId, {
         headers: {
@@ -168,6 +176,8 @@ export class OrderDataService {
               return data;
             });
 
+            this.loaderService.isLoading.next(false);
+
             return logs;
           } else {
             this.showError();
@@ -178,6 +188,8 @@ export class OrderDataService {
   }
 
   cancelOrder(orderid: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
+
     return this.httpClient
       .patch<void>(
         API_HOST + "orders/cancelorder",
@@ -194,6 +206,7 @@ export class OrderDataService {
       .pipe(
         map((response: any) => {
           if (response.isSuccess) {
+            this.loaderService.isLoading.next(false);
             this.toastr.success(response.message);
           } else {
             this.showError();
@@ -203,6 +216,7 @@ export class OrderDataService {
   }
 
   completeOrder(orderid: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .patch<void>(
         API_HOST + "orders/completeorder",
@@ -219,6 +233,7 @@ export class OrderDataService {
       .pipe(
         map((response: any) => {
           if (response.isSuccess) {
+            this.loaderService.isLoading.next(false);
             this.toastr.success(response.message);
           } else {
             this.showError();
@@ -228,6 +243,7 @@ export class OrderDataService {
   }
 
   deleteOrder(orderid: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .delete<void>(
         API_HOST + "orders/deleteorder/" + orderid,
@@ -241,6 +257,7 @@ export class OrderDataService {
       .pipe(
         map((response: any) => {
           if (response.isSuccess) {
+            this.loaderService.isLoading.next(false);
             this.toastr.success(response.message);
             location.reload();
           } else {
@@ -251,6 +268,7 @@ export class OrderDataService {
   }
 
   addPayment(orderPaymentPayload: OrderPayment): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .patch<void>(API_HOST + "orders/payment/add", orderPaymentPayload, {
         headers: {
@@ -261,6 +279,7 @@ export class OrderDataService {
       .pipe(
         map((response: any) => {
           if (response.isSuccess) {
+            this.loaderService.isLoading.next(false);
             this.toastr.success(response.message);
           } else {
             this.showError();
@@ -270,6 +289,7 @@ export class OrderDataService {
   }
 
   deductPayment(orderPaymentPayload: OrderPayment): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .patch<void>(API_HOST + "orders/payment/deduct", orderPaymentPayload, {
         headers: {
@@ -280,6 +300,7 @@ export class OrderDataService {
       .pipe(
         map((response: any) => {
           if (response.isSuccess) {
+            this.loaderService.isLoading.next(false);
             this.toastr.success(response.message);
           } else {
             this.showError();

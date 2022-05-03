@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from 'projects/dashboard/src/app/shared/services/auth.service';
+import { LoaderService } from 'projects/dashboard/src/app/shared/services/loader.service';
 import { SettingsDataService } from '../../../services/settings-data.service';
 
 @Component({
@@ -9,7 +10,6 @@ import { SettingsDataService } from '../../../services/settings-data.service';
   styleUrls: ['./shop.component.scss']
 })
 export class ShopComponent implements OnInit {
-
   disableAddBtn: boolean = false;
   buttonText: string = "Save";
   imageUrl: string | any = "./assets/images/product-placeholder.png";
@@ -25,11 +25,13 @@ export class ShopComponent implements OnInit {
 
   constructor(
     private authService: AuthService, 
-    private settingsDataService: SettingsDataService) { 
+    private settingsDataService: SettingsDataService,
+    private loaderService: LoaderService) { 
     authService.getShopInfo();
   }
 
   ngOnInit() {
+    this.loaderService.isLoading.next(true);
     this.authService.getShopInfoObservable().subscribe((response) => {
       console.log(response)
       const siteInfo = response;
@@ -39,6 +41,7 @@ export class ShopComponent implements OnInit {
       this.shopDescriptionControl.setValue(siteInfo.description);
       this.imageUrl = 'https://bincommerzstaticstorage.blob.core.windows.net' + siteInfo.logo;
       this.reorderLevelControl.setValue(siteInfo.reorderLevel);
+      this.loaderService.isLoading.next(false);
     })
   }
 

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/fo
 import { Page } from 'projects/content-management/src/app/pages/interfaces/Page';
 import { ITableColumn, ITableColumnAction } from 'projects/dashboard/src/app/shared/interfaces/data-table';
 import { AuthService } from 'projects/dashboard/src/app/shared/services/auth.service';
+import { LoaderService } from 'projects/dashboard/src/app/shared/services/loader.service';
 import { BehaviorSubject } from 'rxjs';
 import { SettingsDataService } from '../../../services/settings-data.service';
 
@@ -41,7 +42,8 @@ export class DomainsComponent implements OnInit {
 
   constructor(
     private authService: AuthService, 
-    private settingsDataService: SettingsDataService) { 
+    private settingsDataService: SettingsDataService,
+    private loaderService: LoaderService) { 
     authService.getShopInfo();
   }
 
@@ -54,6 +56,7 @@ export class DomainsComponent implements OnInit {
   }
 
   getAllDomains(): void {
+    this.loaderService.isLoading.next(true);
     this.settingsDataService.getShopDomains().subscribe((urls) => {
       this.appUrl = urls.appUrl;
       this.domains$.next(urls.domains.map((domain) => {
@@ -61,18 +64,24 @@ export class DomainsComponent implements OnInit {
           id: domain.id, domain: domain.url, DNSTarget: domain.dnsTarget
         }
       }));
+      this.loaderService.isLoading.next(false);
     });
   }
 
   addAppUrl(): void {
-    this.settingsDataService.addAppURL().subscribe();
+    this.loaderService.isLoading.next(true);
+    this.settingsDataService.addAppURL().subscribe(() => this.loaderService.isLoading.next(false));
   }
 
   addDomainUrl(): void {
     const domainPattern = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/;
 
     if (this.domainNameControl.value.match(domainPattern)) {
-      this.settingsDataService.addDomainURL({ url: this.domainNameControl.value }).subscribe(() => this.getAllDomains());
+      this.loaderService.isLoading.next(true);
+      this.settingsDataService.addDomainURL({ url: this.domainNameControl.value }).subscribe(() => {
+        this.getAllDomains();
+        this.loaderService.isLoading.next(false);
+      });
     } else {
       alert('Invalid domain format')
     }

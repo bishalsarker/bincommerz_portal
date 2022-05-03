@@ -15,7 +15,7 @@ export class PageListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.pagesDataService.pages$.subscribe((v) => console.log(v))
+    this.pagesDataService.pages$.subscribe();
   }
 
 }

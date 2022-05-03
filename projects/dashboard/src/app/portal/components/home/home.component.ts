@@ -4,6 +4,7 @@ import { Label } from 'ng2-charts';
 import { environment } from 'projects/dashboard/src/environments/environment';
 import { API_HOST } from '../../../constants/api-constants';
 import { AuthService } from '../../../shared/services/auth.service';
+import { LoaderService } from '../../../shared/services/loader.service';
 import { ReportsService } from '../../services/reports.service';
 import { StockHealthService } from '../../services/stock-health.service';
 
@@ -67,9 +68,12 @@ export class HomeComponent implements OnInit {
   constructor(
     private reportservice: ReportsService, 
     private stockHealthService: StockHealthService,
-    public authService: AuthService) {}
+    public authService: AuthService,
+    private loaderService: LoaderService) {}
 
   ngOnInit() {
+    this.loaderService.isLoading.next(true);
+
     const d = new Date();
     this.currentMonthIndex = d.getMonth();
 
@@ -99,7 +103,7 @@ export class HomeComponent implements OnInit {
 
     this.stockHealthService.getStockHealth().subscribe((response: any) => {
       this.stockHealthData = response.data;
-    });
+    }, () => {}, () => this.loaderService.isLoading.next(false));
   }
 
   get currentMonth(): string {

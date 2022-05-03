@@ -6,6 +6,7 @@ import { Catagory } from 'projects/product-management/src/app/catagories/interfa
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { API_HOST } from '../../constants/api-constants';
+import { LoaderService } from '../../shared/services/loader.service';
 import { Slider } from '../../widgets/sliders/interfaces/slider';
 import { Template } from '../interfaces/template';
 
@@ -47,6 +48,7 @@ export class TemplateDataService {
   constructor(
     private httpClient: HttpClient, 
     private toastr: ToastrService,
+    private loaderService: LoaderService,
     private router: Router) 
   {
     this.getAllTemplates().subscribe();
@@ -55,6 +57,7 @@ export class TemplateDataService {
   }
 
   getAllSliders(): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "widgets/sliders/get/all", {
         headers: {
@@ -85,6 +88,7 @@ export class TemplateDataService {
 
             this.sliders$.next(sliders);
             this.banners$.next(banners);
+            this.loaderService.isLoading.next(false);
           } else {
             this.showError(response.message);
           }
@@ -93,6 +97,7 @@ export class TemplateDataService {
   }
 
   getAllCatagories(): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "categories/get/all", {
         headers: {
@@ -113,6 +118,7 @@ export class TemplateDataService {
             });
 
             this.categories$.next(catOptionList);
+            this.loaderService.isLoading.next(false);
           } else {
             this.showError(response.message);
           }
@@ -121,6 +127,7 @@ export class TemplateDataService {
   }
 
   getAllTemplates(): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "templates/get/all", {
         headers: {
@@ -132,6 +139,7 @@ export class TemplateDataService {
         map((response) => {
           if (response.isSuccess) {
             this.templates$.next(response.data as Template[]);
+            this.loaderService.isLoading.next(false);
           } else {
             this.showError(response.message);
           }
@@ -140,6 +148,7 @@ export class TemplateDataService {
   }
 
   getTemplate(templateId: string): Observable<Template> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "templates/get/" + templateId, {
         headers: {
@@ -150,6 +159,7 @@ export class TemplateDataService {
       .pipe(
         map((response) => {
           if (response.isSuccess) {
+            this.loaderService.isLoading.next(false);
             return response.data as Template;
           } else {
             this.showError(response.message);
@@ -160,6 +170,7 @@ export class TemplateDataService {
   }
 
   addTemplate(payload: Template): Observable<boolean> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .post<any>(API_HOST + "templates/add", payload, {
         headers: {
@@ -173,6 +184,7 @@ export class TemplateDataService {
             this.showError(response.message);
             return false;
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllTemplates().subscribe();
             this.router.navigate(["templates"]);
             this.toastr.success(`New template added`);
@@ -183,6 +195,7 @@ export class TemplateDataService {
   }
 
   updateTemplate(payload: Template): Observable<boolean> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .put<any>(API_HOST + "templates/update", {
         id: payload.id,
@@ -199,6 +212,7 @@ export class TemplateDataService {
             this.showError(response.message);
             return false;
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllTemplates().subscribe();
             this.router.navigate(["templates"]);
             this.toastr.success(`Template updated`);
@@ -209,6 +223,7 @@ export class TemplateDataService {
   }
 
   public deleteTemplate(templateId: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .delete<any>(API_HOST + "templates/delete/" + templateId, {
         headers: {
@@ -221,6 +236,7 @@ export class TemplateDataService {
           if (!response.isSuccess) {
             this.showError(response.message);
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllTemplates().subscribe();
             this.router.navigate(["templates"]);
             this.toastr.success(`Template deleted`);

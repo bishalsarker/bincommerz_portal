@@ -6,6 +6,7 @@ import { API_HOST } from 'projects/product-management/src/app/constants/api-cons
 import { BehaviorSubject, forkJoin, merge, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { STATIC_FILES_ENDPOINT } from "../../constants/api-constants";
+import { LoaderService } from "../../shared/services/loader.service";
 import { TagsDataService } from "../../tags/services/tags-data.service";
 import { Product } from "../interfaces/product";
 
@@ -24,7 +25,8 @@ export class ProductDataService {
     private httpClient: HttpClient,
     private toastr: ToastrService,
     private router: Router,
-    private tagsService: TagsDataService
+    private tagsService: TagsDataService,
+    private loaderService: LoaderService,
   ) {
     this.pageSize$.subscribe(() => {
       this.getAllProducts().subscribe();
@@ -41,6 +43,7 @@ export class ProductDataService {
   }
 
   getAllProducts(): Observable<void> {
+    this.loaderService.isLoading.next(true);
     this.loading$.next(true);
     return this.httpClient
       .get<any>(API_HOST + "products/get/all", {
@@ -78,6 +81,7 @@ export class ProductDataService {
             }
             this.totalPages$.next(pageNumbers);
             this.loading$.next(false);
+            this.loaderService.isLoading.next(false);
           } else {
             this.showError();
             this.loading$.next(false);
@@ -87,6 +91,7 @@ export class ProductDataService {
   }
 
   getProductById(id: string): Observable<Product> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "products/get/" + id, {
         headers: {
@@ -98,6 +103,7 @@ export class ProductDataService {
         map((response) => {
           if (response.isSuccess) {
             const product: any = response.data;
+            this.loaderService.isLoading.next(false);
             return {
               id: product.id,
               name: product.name,
@@ -119,6 +125,7 @@ export class ProductDataService {
   }
 
   addProduct(payload: Product): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .post<any>(API_HOST + "products/addnew", payload, {
         headers: {
@@ -131,6 +138,7 @@ export class ProductDataService {
           if (!response.isSuccess) {
             this.showError();
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllProducts().subscribe();
             this.router.navigate(["products"]);
             this.toastr.success(`New product added: ${payload.name}`);
@@ -140,6 +148,7 @@ export class ProductDataService {
   }
 
   updateProduct(payload: Product): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .put<any>(API_HOST + "products/update", payload, {
         headers: {
@@ -152,6 +161,7 @@ export class ProductDataService {
           if (!response.isSuccess) {
             this.showError();
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllProducts().subscribe();
             this.router.navigate(["products"]);
             this.toastr.success(`Product updated. You may need to refresh the page.`);
@@ -161,6 +171,7 @@ export class ProductDataService {
   }
 
   deleteTag(id: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .delete<any>(API_HOST + "products/delete/" + id, {
         headers: {
@@ -173,6 +184,7 @@ export class ProductDataService {
           if (!response.isSuccess) {
             this.showError();
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllProducts().subscribe();
             this.router.navigate(["products"]);
             this.toastr.success(`Product deleted`);
