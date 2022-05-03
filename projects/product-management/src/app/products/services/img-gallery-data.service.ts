@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { API_HOST } from 'projects/product-management/src/app/constants/api-constants';
 import { GalleryImage } from '../interfaces/product';
+import { LoaderService } from '../../shared/services/loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,12 @@ export class ImgGalleryDataService {
   constructor(
     private httpClient: HttpClient,
     private toastr: ToastrService,
+    private loaderService: LoaderService,
     private router: Router) {}
   
 
   getAllImages(id: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
     .get<void>(API_HOST + "products/imagegallery/" + id, {
       headers: {
@@ -33,12 +36,14 @@ export class ImgGalleryDataService {
           this.showError();
         } else {
           this.imageGalleryData$.next(response.data);
+          this.loaderService.isLoading.next(false);
         }
       })
     );
   }
 
   uploadImage(productid: string, imageData: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
     .post<void>(API_HOST + "products/imagegallery/add", {
       productId: productid,
@@ -56,12 +61,14 @@ export class ImgGalleryDataService {
         } else {
           this.getAllImages(productid).subscribe();
           this.toastr.success(`Image added`);
+          this.loaderService.isLoading.next(false);
         }
       })
     );
   }
 
   deleteImage(productid: string, imageid: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .delete<any>(API_HOST + "products/imagegallery/delete/" + productid + "/" + imageid, {
         headers: {
@@ -76,6 +83,7 @@ export class ImgGalleryDataService {
           } else {
             this.getAllImages(productid).subscribe();
             this.toastr.success(`Image deleted`);
+            this.loaderService.isLoading.next(false);
           }
         })
       );

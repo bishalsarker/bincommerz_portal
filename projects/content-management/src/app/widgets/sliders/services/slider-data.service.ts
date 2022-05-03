@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { API_HOST, STATIC_FILES_ENDPOINT } from '../../../constants/api-constants';
+import { LoaderService } from '../../../shared/services/loader.service';
 import { Slide, Slider } from '../interfaces/slider';
 
 @Injectable({
@@ -28,11 +29,13 @@ export class SliderDataService {
   constructor(
     private httpClient: HttpClient, 
     private toastr: ToastrService,
+    private loaderService: LoaderService,
     private router: Router)  { 
       this.getAllSliders().subscribe();
   }
 
   getAllSliders(): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "widgets/sliders/get/all", {
         headers: {
@@ -44,6 +47,7 @@ export class SliderDataService {
         map((response) => {
           if (response.isSuccess) {
             this.sliders$.next(response.data as Slider[]);
+            this.loaderService.isLoading.next(false);
           } else {
             this.showError(response.message);
           }
@@ -52,6 +56,7 @@ export class SliderDataService {
   }
 
   getSlider(sliderId: string): Observable<Slider> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "widgets/sliders/get/slider/" + sliderId, {
         headers: {
@@ -62,6 +67,7 @@ export class SliderDataService {
       .pipe(
         map((response) => {
           if (response.isSuccess) {
+            this.loaderService.isLoading.next(false);
             return response.data as Slider;
           } else {
             this.showError(response.message);
@@ -72,6 +78,7 @@ export class SliderDataService {
   }
 
   getSlides(sliderId: string): Observable<Slide[]> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "widgets/sliders/get/slides/" + sliderId, {
         headers: {
@@ -85,6 +92,7 @@ export class SliderDataService {
             const slides: Slide[] = response.data as Slide[]
             slides.map((val) => val.sliderId = sliderId);
             this.slides$.next(slides);
+            this.loaderService.isLoading.next(false);
             return response.data as Slide[];
           } else {
             this.showError(response.message);
@@ -95,6 +103,7 @@ export class SliderDataService {
   }
 
   getSlide(slideId: string): Observable<Slide> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "widgets/sliders/get/slide/" + slideId, {
         headers: {
@@ -107,6 +116,7 @@ export class SliderDataService {
           if (response.isSuccess) {
             const image: Slide = response.data as Slide;
             image.imageURL = STATIC_FILES_ENDPOINT + image.imageURL;
+            this.loaderService.isLoading.next(false);
             return image;
           } else {
             this.showError(response.message);
@@ -117,6 +127,7 @@ export class SliderDataService {
   }
 
   addSlider(payload: Slider): Observable<boolean> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .post<any>(API_HOST + "widgets/sliders/addnew", payload, {
         headers: {
@@ -130,6 +141,7 @@ export class SliderDataService {
             this.showError(response.message);
             return false;
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllSliders().subscribe();
             this.router.navigate([`widgets/sliders`]);
             this.toastr.success(`New slider added`);
@@ -140,6 +152,7 @@ export class SliderDataService {
   }
 
   addSlide(payload: Slide): Observable<boolean> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .post<any>(API_HOST + "widgets/sliders/slide/addnew", payload, {
         headers: {
@@ -153,6 +166,7 @@ export class SliderDataService {
             this.showError(response.message);
             return false;
           } else {
+            this.loaderService.isLoading.next(false);
             this.getSlides(payload.sliderId).subscribe();
             this.router.navigate([`widgets/sliders/slides/list/${payload.sliderId}`]);
             this.toastr.success(`New slide added`);
@@ -163,6 +177,7 @@ export class SliderDataService {
   }
 
   updateSlider(payload: Slider): Observable<boolean> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .put<any>(API_HOST + "widgets/sliders/update", payload, {
         headers: {
@@ -176,6 +191,7 @@ export class SliderDataService {
             this.showError(response.message);
             return false;
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllSliders().subscribe();
             this.router.navigate([`widgets/sliders`]);
             this.toastr.success(`New slider added`);
@@ -186,6 +202,7 @@ export class SliderDataService {
   }
 
   updateSlide(payload: Slide): Observable<boolean> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .put<any>(API_HOST + "widgets/sliders/slide/update", {
         id: payload.id,
@@ -202,6 +219,7 @@ export class SliderDataService {
             this.showError(response.message);
             return false;
           } else {
+            this.loaderService.isLoading.next(false);
             this.getSlides(payload.sliderId).subscribe();
             this.router.navigate([`widgets/sliders/slides/list/${payload.sliderId}`]);
             this.toastr.success(`New slide added`);
@@ -212,6 +230,7 @@ export class SliderDataService {
   }
 
   public deleteSlide(payload: Slide): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .delete<any>(API_HOST + "widgets/sliders/slide/delete/" + payload.id, {
         headers: {
@@ -224,6 +243,7 @@ export class SliderDataService {
           if (!response.isSuccess) {
             this.showError(response.message);
           } else {
+            this.loaderService.isLoading.next(false);
             this.getSlides(payload.sliderId).subscribe();
             this.router.navigate([`widgets/sliders/slides/list/${payload.sliderId}`]);
             this.toastr.success(`Slide deleted`);
@@ -233,6 +253,7 @@ export class SliderDataService {
   }
 
   public deleteSlider(sliderId: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .delete<any>(API_HOST + "widgets/sliders/delete/" + sliderId, {
         headers: {
@@ -245,6 +266,7 @@ export class SliderDataService {
           if (!response.isSuccess) {
             this.showError(response.message);
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllSliders().subscribe();
             this.router.navigate([`widgets/sliders`]);
             this.toastr.success(`Slider deleted`);

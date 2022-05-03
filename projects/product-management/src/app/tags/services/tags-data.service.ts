@@ -7,6 +7,7 @@ import { map } from "rxjs/operators";
 import { Tag } from "../interfaces/tag";
 import { find } from "lodash";
 import { API_HOST } from 'projects/product-management/src/app/constants/api-constants';
+import { LoaderService } from "../../shared/services/loader.service";
 
 @Injectable({
   providedIn: "root",
@@ -17,6 +18,7 @@ export class TagsDataService {
   constructor(
     private httpClient: HttpClient,
     private toastr: ToastrService,
+    private loaderService: LoaderService,
     private router: Router
   ) {
     this.getAllTags().subscribe();
@@ -34,6 +36,7 @@ export class TagsDataService {
   }
 
   getAllTags(): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "tags/get/all", {
         headers: {
@@ -45,6 +48,7 @@ export class TagsDataService {
         map((response) => {
           if (response.isSuccess) {
             this.tags.next(response.data as Tag[]);
+            this.loaderService.isLoading.next(false);
           } else {
             this.showError();
           }
@@ -53,6 +57,7 @@ export class TagsDataService {
   }
 
   getTagById(tagId: string): Observable<Tag> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "tags/get/" + tagId, {
         headers: {
@@ -63,6 +68,7 @@ export class TagsDataService {
       .pipe(
         map((response) => {
           if (response.isSuccess) {
+            this.loaderService.isLoading.next(false);
             return response.data as Tag;
           } else {
             this.showError();
@@ -73,6 +79,7 @@ export class TagsDataService {
   }
 
   addTag(payload: Tag): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .post<any>(API_HOST + "tags/addnew", payload, {
         headers: {
@@ -85,6 +92,7 @@ export class TagsDataService {
           if (!response.isSuccess) {
             this.showError();
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllTags().subscribe();
             this.router.navigate(["tags"]);
             this.toastr.success(`New tag added: ${payload.name}`);
@@ -94,6 +102,7 @@ export class TagsDataService {
   }
 
   updateTag(payload: Tag): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .put<any>(API_HOST + "tags/update", payload, {
         headers: {
@@ -106,6 +115,7 @@ export class TagsDataService {
           if (!response.isSuccess) {
             this.showError();
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllTags().subscribe();
             this.router.navigate(["tags"]);
             this.toastr.success(`Tag updated: ${payload.name}`);
@@ -115,6 +125,7 @@ export class TagsDataService {
   }
 
   deleteTag(tagId: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .delete<any>(API_HOST + "tags/delete/" + tagId, {
         headers: {
@@ -127,6 +138,7 @@ export class TagsDataService {
           if (!response.isSuccess) {
             this.showError();
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllTags().subscribe();
             this.router.navigate(["tags"]);
             this.toastr.success(`Tag deleted`);

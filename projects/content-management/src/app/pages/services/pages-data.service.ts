@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { API_HOST } from 'projects/content-management/src/app/constants/api-constants';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { LoaderService } from '../../shared/services/loader.service';
 import { Page } from '../interfaces/Page';
 
 @Injectable({
@@ -47,12 +48,14 @@ export class PagesDataService {
   constructor(
     private httpClient: HttpClient, 
     private toastr: ToastrService,
+    private loaderService: LoaderService,
     private router: Router) 
   {
     this.getAllPages().subscribe();
   }
 
   getAllPages(): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "pages/get/all", {
         headers: {
@@ -64,6 +67,7 @@ export class PagesDataService {
         map((response) => {
           if (response.isSuccess) {
             this.pages$.next(response.data as Page[]);
+            this.loaderService.isLoading.next(false);
           } else {
             this.showError(response.message);
           }
@@ -72,6 +76,7 @@ export class PagesDataService {
   }
 
   getPage(pageId: string): Observable<Page> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .get<any>(API_HOST + "pages/get/" + pageId, {
         headers: {
@@ -82,6 +87,7 @@ export class PagesDataService {
       .pipe(
         map((response) => {
           if (response.isSuccess) {
+            this.loaderService.isLoading.next(false);
             return response.data as Page;
           } else {
             this.showError(response.message);
@@ -92,6 +98,7 @@ export class PagesDataService {
   }
 
   addPage(payload: Page): Observable<boolean> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .post<any>(API_HOST + "pages/add", payload, {
         headers: {
@@ -105,6 +112,7 @@ export class PagesDataService {
             this.showError(response.message);
             return false;
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllPages().subscribe();
             this.router.navigate(["pages"]);
             this.toastr.success(`New page added`);
@@ -115,6 +123,7 @@ export class PagesDataService {
   }
 
   updatePage(payload: Page): Observable<boolean> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .put<any>(API_HOST + "pages/update", payload, {
         headers: {
@@ -128,6 +137,7 @@ export class PagesDataService {
             this.showError(response.message);
             return false;
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllPages().subscribe();
             this.router.navigate(["pages"]);
             this.toastr.success(`Page updated`);
@@ -138,6 +148,7 @@ export class PagesDataService {
   }
 
   public deletePage(pageId: string): Observable<void> {
+    this.loaderService.isLoading.next(true);
     return this.httpClient
       .delete<any>(API_HOST + "pages/delete/" + pageId, {
         headers: {
@@ -150,6 +161,7 @@ export class PagesDataService {
           if (!response.isSuccess) {
             this.showError(response.message);
           } else {
+            this.loaderService.isLoading.next(false);
             this.getAllPages().subscribe();
             this.router.navigate(["categories"]);
             this.toastr.success(`Category deleted`);

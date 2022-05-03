@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from 'projects/dashboard/src/app/shared/services/auth.service';
+import { LoaderService } from 'projects/dashboard/src/app/shared/services/loader.service';
 import { SettingsDataService } from '../../../services/settings-data.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private authService: AuthService, 
-    private settingsDataService: SettingsDataService) { 
+    private settingsDataService: SettingsDataService,
+    private loaderService: LoaderService) { 
     authService.getShopInfo();
   }
 
@@ -40,6 +42,7 @@ export class AccountComponent implements OnInit {
   }
 
   updatePassword(): void {
+    this.loaderService.isLoading.next(true);
     this.buttonText = "Saving...";
     this.disableAddBtn = true;
 
@@ -48,6 +51,7 @@ export class AccountComponent implements OnInit {
       newPassword: this.newPasswordControl.value
     }).subscribe(() => {
       this.authService.signOut();
+      this.loaderService.isLoading.next(false);
     }, () => {}, () => {
       this.buttonText = "Save";
       this.disableAddBtn = false;

@@ -10,7 +10,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AccountComponent } from './components/settings/account/account.component';
 import { ShopComponent } from './components/settings/shop/shop.component';
 import { DomainsComponent } from './components/settings/domains/domains.component';
-import { SharedModule } from "projects/account-management/src/app/shared/shared.module";
+import { SharedModule } from "projects/dashboard/src/app/shared/shared.module";
 
 @NgModule({
   declarations: [PortalComponent, SettingsComponent, HomeComponent, AccountComponent, ShopComponent, DomainsComponent],

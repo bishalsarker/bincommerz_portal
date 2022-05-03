@@ -5,10 +5,11 @@ import { LayoutComponent } from "./components/layout/layout.component";
 import { BreadcrumbComponent } from "./components/breadcrumb/breadcrumb.component";
 import { RouterModule } from "@angular/router";
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
-  declarations: [DataTableComponent, LayoutComponent, BreadcrumbComponent, AuthCallbackComponent],
+  declarations: [DataTableComponent, LayoutComponent, BreadcrumbComponent, AuthCallbackComponent, LoaderComponent],
   imports: [CommonModule, RouterModule],
-  exports: [LayoutComponent, DataTableComponent, BreadcrumbComponent],
+  exports: [LayoutComponent, DataTableComponent, BreadcrumbComponent, LoaderComponent],
 })
 export class SharedModule {}
