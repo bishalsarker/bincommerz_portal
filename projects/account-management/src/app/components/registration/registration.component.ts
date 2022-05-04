@@ -37,8 +37,24 @@ export class RegistrationComponent implements OnInit {
 
   public createAccount(): void {
     this.showButton = false;
-    this.matchPasswords();
-    if(!this.hasError) {
+    let isValid = false;
+
+    if (!this.checkIfPasswordsMatches()) {
+      this.hasError = true;
+      this.errorMessage = "Passwords doesn't match";
+      this.showButton = true;
+      isValid = false;
+    } else if (!this.userName.value.match(/^[a-zA-Z0-9-]+$/)) {
+      this.hasError = true;
+      this.errorMessage = "Invalid username format";
+      this.showButton = true;
+      isValid = false;
+    } else {
+      this.hasError = false;
+      isValid = true;
+    }
+
+    if(isValid) {
       this.httpClient.post<any>(`${environment.api_host}auth/createaccount`, {
         userName: this.userName.value,
         email: this.email.value,
@@ -53,16 +69,6 @@ export class RegistrationComponent implements OnInit {
       }, err => {}, () => {
         this.showButton = true;
       });
-    }
-  }
-
-  private matchPasswords() {
-    if (!this.checkIfPasswordsMatches()) {
-      this.hasError = true;
-      this.errorMessage = "Passwords doesn't match";
-      this.showButton = true;
-    } else {
-      this.hasError = false;
     }
   }
 
