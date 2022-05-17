@@ -14,6 +14,7 @@ import { StockHealthService } from '../../services/stock-health.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  public subscriptionStatus: any = null;
   public stockHealthData: any = null;
 
   public barChartOptions: ChartOptions = {
@@ -73,6 +74,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.loaderService.isLoading.next(true);
+
+    this.authService.getSubscriptionStatus().subscribe(x => this.subscriptionStatus = x.data);
 
     const d = new Date();
     this.currentMonthIndex = d.getMonth();
