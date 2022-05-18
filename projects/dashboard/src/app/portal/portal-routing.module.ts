@@ -5,6 +5,7 @@ import { AccountComponent } from "./components/settings/account/account.componen
 import { DomainsComponent } from "./components/settings/domains/domains.component";
 import { SettingsComponent } from "./components/settings/settings.component";
 import { ShopComponent } from "./components/settings/shop/shop.component";
+import { SubscriptionDetailsComponent } from "./components/settings/subscription-details/subscription-details.component";
 import { PortalComponent } from "./portal.component";
 
 const routes: Routes = [
@@ -36,6 +37,10 @@ const routes: Routes = [
           {
             path: "domains",
             component: DomainsComponent
+          },
+          {
+            path: "subscription",
+            component: SubscriptionDetailsComponent
           }
         ]
       }

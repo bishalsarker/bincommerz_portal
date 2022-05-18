@@ -11,9 +11,10 @@ import { AccountComponent } from './components/settings/account/account.componen
 import { ShopComponent } from './components/settings/shop/shop.component';
 import { DomainsComponent } from './components/settings/domains/domains.component';
 import { SharedModule } from "projects/dashboard/src/app/shared/shared.module";
+import { SubscriptionDetailsComponent } from './components/settings/subscription-details/subscription-details.component';
 
 @NgModule({
-  declarations: [PortalComponent, SettingsComponent, HomeComponent, AccountComponent, ShopComponent, DomainsComponent],
+  declarations: [PortalComponent, SettingsComponent, HomeComponent, AccountComponent, ShopComponent, DomainsComponent, SubscriptionDetailsComponent],
   imports: [
     CommonModule,
     PortalRoutingModule,

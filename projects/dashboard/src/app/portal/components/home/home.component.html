@@ -1,11 +1,11 @@
 <div class="row" style="margin-bottom: 50px;">
     <h4 style="padding-left: 15px;">Welcome to Retail Portal!</h4>
 </div>
-<div *ngIf = "subscriptionStatus">
-  <div class="notice notice-danger" *ngIf="!subscriptionStatus.isActive">
+<div *ngIf = "subscriptionService.subscriptionStatus$ | async">
+  <div class="notice notice-danger" *ngIf="!subscriptionService.subscriptionStatus$.value.isActive">
     <strong><i class="fas fa-exclamation-triangle fa-fw"></i></strong> &nbsp; <b>Your subscription is not active currently. Please contact support team.</b>
   </div>
-  <div style="margin-bottom: 50px;" *ngIf="subscriptionStatus.isActive">
+  <div style="margin-bottom: 50px;" *ngIf="subscriptionService.subscriptionStatus$.value.isActive">
     <div class="w-100" style="margin-bottom: 10px;">
         <h6 style="font-weight: 700;">Stock Health</h6>
     </div>
@@ -29,7 +29,7 @@
       </span>
     </div>
   </div>
-  <div style="margin-bottom: 50px;" *ngIf="subscriptionStatus.isActive">
+  <div style="margin-bottom: 50px;" *ngIf="subscriptionService.subscriptionStatus$.value.isActive">
       <div class="w-100" style="margin-bottom: 10px;">
           <h6 style="font-weight: 700;">Analytics</h6>
       </div>
@@ -79,7 +79,7 @@
         </div>
       </div>
   </div>
-  <div style="margin-bottom: 50px;" *ngIf="subscriptionStatus.isActive">
+  <div style="margin-bottom: 50px;" *ngIf="subscriptionService.subscriptionStatus$.value.isActive">
       <div class="w-100" style="margin-bottom: 10px;">
           <h6 style="font-weight: 700;">Order Summary</h6>
       </div>
@@ -116,7 +116,7 @@
           </div>
       </div>
   </div>
-  <div class="row" *ngIf="subscriptionStatus.isActive">
+  <div class="row" *ngIf="subscriptionService.subscriptionStatus$.value.isActive">
       <div class="col-12" style="margin-bottom: 10px;">
           <h6 style="font-weight: 700;">Management</h6>
       </div>

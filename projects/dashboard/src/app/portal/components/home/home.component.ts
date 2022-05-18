@@ -5,6 +5,7 @@ import { environment } from 'projects/dashboard/src/environments/environment';
 import { API_HOST } from '../../../constants/api-constants';
 import { AuthService } from '../../../shared/services/auth.service';
 import { LoaderService } from '../../../shared/services/loader.service';
+import { SubscriptionService } from '../../../shared/services/subscription.service';
 import { ReportsService } from '../../services/reports.service';
 import { StockHealthService } from '../../services/stock-health.service';
 
@@ -14,7 +15,6 @@ import { StockHealthService } from '../../services/stock-health.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public subscriptionStatus: any = null;
   public stockHealthData: any = null;
 
   public barChartOptions: ChartOptions = {
@@ -69,13 +69,11 @@ export class HomeComponent implements OnInit {
   constructor(
     private reportservice: ReportsService, 
     private stockHealthService: StockHealthService,
-    public authService: AuthService,
+    public subscriptionService: SubscriptionService,
     private loaderService: LoaderService) {}
 
   ngOnInit() {
     this.loaderService.isLoading.next(true);
-
-    this.authService.getSubscriptionStatus().subscribe(x => this.subscriptionStatus = x.data);
 
     const d = new Date();
     this.currentMonthIndex = d.getMonth();
