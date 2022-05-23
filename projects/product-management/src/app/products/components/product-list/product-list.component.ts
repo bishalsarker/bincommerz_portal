@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
+import { SubscriptionService } from "../../../shared/services/subscription.service";
 import { ProductDataService } from "../../services/product-data.service";
 import { ProductListService } from "../../services/product-list.service";
 
@@ -16,7 +17,8 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     public productListService: ProductListService,
-    public productDataService: ProductDataService
+    public productDataService: ProductDataService,
+    public subscriptionService: SubscriptionService
   ) {}
 
   ngOnInit() {
@@ -42,7 +44,18 @@ export class ProductListComponent implements OnInit {
     return this.productDataService.products$.value.length > this.freeProductLimit;
   }
 
-  get hasFreePlan(): boolean {
-    return localStorage.getItem("subscription_plan") === "free" ? true : false; 
+  get productLimit(): number {
+    return this.subscriptionService.subscriptionStatus$.value.productEntryLimit;
+  }
+
+  get productsAdded(): number {
+    const limit = this.subscriptionService.subscriptionStatus$.value.productEntryLimit;
+    const current = this.subscriptionService.subscriptionStatus$.value.totalProducts;
+    return limit - current;
+  }
+
+  get canAddProducts(): boolean {
+    const current = this.subscriptionService.subscriptionStatus$.value.totalProducts;
+    return this.productLimit === 0 || (this.productLimit > 0 &&  this.productLimit > current);
   }
 }

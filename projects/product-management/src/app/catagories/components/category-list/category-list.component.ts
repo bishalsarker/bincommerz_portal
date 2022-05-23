@@ -25,9 +25,4 @@ export class CategoryListComponent implements OnInit {
   get productQuantityLimitExceeds(): boolean {
     return this.catagoriesDataService.catagories.value.length > this.freeCategoryLimit;
   }
-
-  get hasFreePlan(): boolean {
-    return localStorage.getItem("subscription_plan") === "free" ? true : false; 
-  }
-
 }
