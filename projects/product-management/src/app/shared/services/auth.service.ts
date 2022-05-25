@@ -55,4 +55,14 @@ export class AuthService {
         localStorage.setItem("shop_id", response.data.id);
       });
   }
+
+  getSubscriptionStatus(): Observable<any> {
+    return this.httpClient
+      .get(AUTH_HOST + "subscriptions/status", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+    });
+  }
 }

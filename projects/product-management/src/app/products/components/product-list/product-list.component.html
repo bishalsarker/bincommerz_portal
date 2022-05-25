@@ -1,6 +1,6 @@
 <div style="padding-left: 12px;">
-    <div class="alert alert-danger" role="alert" *ngIf = "hasFreePlan">
-        On free plan you can add only {{ freeProductLimit }} products. Please upgrade to add more.
+    <div class="alert alert-danger" role="alert" *ngIf = "productLimit > 0">
+        As per your current plan you can add only <span style="font-weight: bold;">{{productsAdded}}/{{ productLimit }}</span> products. Please upgrade to add more.
     </div>
     <app-data-table
         [loading] = "productDataService.loading$ | async"
@@ -9,11 +9,7 @@
         [actions]="productListService.tableActions$ | async">
         <div class="row">
             <div class="col-md-6 col-12">
-                <a *ngIf="(hasFreePlan && !productQuantityLimitExceeds)" class="btn btn-link" routerLink="/products/add"  style="padding-left: 0px;">
-                    <i class="fas fa-plus"></i>&nbsp;
-                    <span style="font-weight: 600; margin-left: 5px;">Add New</span>
-                </a>
-                <a *ngIf="!hasFreePlan" class="btn btn-link" routerLink="/products/add"  style="padding-left: 0px;">
+                <a *ngIf="canAddProducts" class="btn btn-link" routerLink="/products/add"  style="padding-left: 0px;">
                     <i class="fas fa-plus"></i>&nbsp;
                     <span style="font-weight: 600; margin-left: 5px;">Add New</span>
                 </a>

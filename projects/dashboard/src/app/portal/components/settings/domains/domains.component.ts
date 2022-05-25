@@ -4,6 +4,7 @@ import { Page } from 'projects/content-management/src/app/pages/interfaces/Page'
 import { ITableColumn, ITableColumnAction } from 'projects/dashboard/src/app/shared/interfaces/data-table';
 import { AuthService } from 'projects/dashboard/src/app/shared/services/auth.service';
 import { LoaderService } from 'projects/dashboard/src/app/shared/services/loader.service';
+import { SubscriptionService } from 'projects/dashboard/src/app/shared/services/subscription.service';
 import { BehaviorSubject } from 'rxjs';
 import { SettingsDataService } from '../../../services/settings-data.service';
 
@@ -41,7 +42,8 @@ export class DomainsComponent implements OnInit {
   ]);
 
   constructor(
-    private authService: AuthService, 
+    public authService: AuthService,
+    public subscriptionService: SubscriptionService,
     private settingsDataService: SettingsDataService,
     private loaderService: LoaderService) { 
     authService.getShopInfo();

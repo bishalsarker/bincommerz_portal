@@ -5,6 +5,7 @@ import { environment } from 'projects/dashboard/src/environments/environment';
 import { API_HOST } from '../../../constants/api-constants';
 import { AuthService } from '../../../shared/services/auth.service';
 import { LoaderService } from '../../../shared/services/loader.service';
+import { SubscriptionService } from '../../../shared/services/subscription.service';
 import { ReportsService } from '../../services/reports.service';
 import { StockHealthService } from '../../services/stock-health.service';
 
@@ -68,7 +69,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private reportservice: ReportsService, 
     private stockHealthService: StockHealthService,
-    public authService: AuthService,
+    public subscriptionService: SubscriptionService,
     private loaderService: LoaderService) {}
 
   ngOnInit() {

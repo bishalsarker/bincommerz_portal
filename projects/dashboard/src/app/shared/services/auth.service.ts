@@ -74,4 +74,14 @@ export class AuthService {
         })
       );
   }
+
+  getSubscriptionStatus(): Observable<any> {
+    return this.httpClient
+      .get(AUTH_HOST + "subscriptions/status", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("auth_token"),
+        },
+    });
+  }
 }

@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthCallbackComponent } from "./shared/components/auth-callback/auth-callback.component";
 import { AuthGuard } from "./shared/guards/auth.guard";
+import { SubscriptionCheckGuard } from "./shared/guards/subscription-check.guard";
 
 const routes: Routes = [
   {
@@ -12,19 +13,19 @@ const routes: Routes = [
   {
     path: "tags",
     loadChildren: () => import("./tags/tags.module").then((m) => m.TagsModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, SubscriptionCheckGuard],
   },
   {
     path: "products",
     loadChildren: () =>
       import("./products/products.module").then((m) => m.ProductsModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, SubscriptionCheckGuard],
   },
   {
     path: "categories",
     loadChildren: () =>
       import("./catagories/catagories.module").then((m) => m.CatagoriesModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, SubscriptionCheckGuard],
   },
   {
     path: "auth-callback",

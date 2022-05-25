@@ -1,0 +1,25 @@
+<div class="row" *ngIf = "subscriptionService.subscriptionStatus$ | async">
+    <div class="col-12">
+        <h3 style="margin-bottom: 20px">Subscription</h3>
+        <ul class="info-box">
+            <li><span class="info-label">Plan:&nbsp;&nbsp;</span>{{ subscriptionService.subscriptionStatus$.value.planName }}</li>
+            <li>
+                <span class="info-label">Status:&nbsp;&nbsp;</span>
+                <span
+                    *ngIf = "subscriptionService.subscriptionStatus$.value.isActive"
+                    class="badge badge-success">
+                    {{ getStatus(subscriptionService.subscriptionStatus$.value.isActive) }}
+                </span>
+                <span
+                    *ngIf = "!subscriptionService.subscriptionStatus$.value.isActive"
+                    class = "badge badge-danger">
+                    {{ getStatus(subscriptionService.subscriptionStatus$.value.isActive) }}
+                </span>
+            </li>
+            <li>
+                <span class="info-label">Valid Till:&nbsp;&nbsp;</span>
+                {{ formatDate(subscriptionService.subscriptionStatus$.value.validTill) }}
+            </li>
+        </ul>
+    </div>
+</div>
