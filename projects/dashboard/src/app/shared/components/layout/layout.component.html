@@ -3,7 +3,9 @@
   
       <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" style="background-color: #4e73df; height: 4.375rem;">
         <h5 class="mr-auto mb-0">
-          <img style="width: 100px; height: 50px;" [src]="'./assets/images/bincom-logo.png'"/>
+          <a href="/">
+            <img style="width: 100px; height: 50px;" [src]="'./assets/images/bincom-logo.png'"/>
+          </a>
         </h5>
         <span class="navbar-text">
           <div class="dropdown">
@@ -17,6 +19,9 @@
               </a>
               <a class="dropdown-item" routerLink="/dashboard/settings" style="cursor: pointer;">
                 <i class="fas fa-cog fa-fw"></i> Settings
+              </a>
+              <a class="dropdown-item" href="https://forms.gle/YnkxT2APVvJdpruVA" style="cursor: pointer;">
+                <i class="fas fa-bug fa-fw" aria-hidden="true"></i> Report issue
               </a>
               <a class="dropdown-item" (click)="authService.signOut()" style="cursor: pointer;">
                 <i class="fas fa-sign-out-alt fa-fw"></i> Log out

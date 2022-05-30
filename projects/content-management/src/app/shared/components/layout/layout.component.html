@@ -1,7 +1,9 @@
 <div class="d-flex" id="wrapper" [ngClass]="{'toggled': toggleSidebar }">
     <div class="border-right" id="sidebar-wrapper" style="background-color: #4e73df; text-align: center;">
       <div class="sidebar-heading" style="color: white; text-align: left;">
-        <img [src]="'./assets/images/bincom-logo.png'"/>
+        <a href="/">
+          <img [src]="'./assets/images/bincom-logo.png'"/>
+        </a>
       </div>
       <hr class="sidebar-divider">
       <div id="doc-nav">                      
@@ -33,6 +35,9 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="/">
                 <i class="fas fa-home fa-fw"></i> Portal
+              </a>
+              <a class="dropdown-item" href="https://forms.gle/YnkxT2APVvJdpruVA" style="cursor: pointer;">
+                <i class="fas fa-bug fa-fw" aria-hidden="true"></i> Report issue
               </a>
               <a class="dropdown-item" (click)="authService.signOut()" style="cursor: pointer;">
                 <i class="fas fa-sign-out-alt fa-fw"></i> Log out
