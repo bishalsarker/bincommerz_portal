@@ -4,7 +4,7 @@
     <div class="row" style="margin-top: 30px;">
         <div class="col-12">
             <div *ngIf = "appUrl">
-                <a style="font-weight: bold;" routerLink="https://{{appUrl}}">https://{{appUrl}}</a>
+                <a style="font-weight: bold;" href="https://{{appUrl}}">https://{{appUrl}}</a>
             </div>
             <div *ngIf = "!appUrl">
                <p>You haven't generated any app URL for your shop yet</p>

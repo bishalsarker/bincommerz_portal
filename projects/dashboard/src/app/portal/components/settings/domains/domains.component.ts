@@ -72,7 +72,10 @@ export class DomainsComponent implements OnInit {
 
   addAppUrl(): void {
     this.loaderService.isLoading.next(true);
-    this.settingsDataService.addAppURL().subscribe(() => this.loaderService.isLoading.next(false));
+    this.settingsDataService.addAppURL().subscribe(() => {
+      this.loaderService.isLoading.next(false);
+      window.location.reload();
+    });
   }
 
   addDomainUrl(): void {
@@ -83,6 +86,7 @@ export class DomainsComponent implements OnInit {
       this.settingsDataService.addDomainURL({ url: this.domainNameControl.value }).subscribe(() => {
         this.getAllDomains();
         this.loaderService.isLoading.next(false);
+        window.location.reload();
       });
     } else {
       alert('Invalid domain format')

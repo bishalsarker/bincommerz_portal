@@ -2,6 +2,7 @@
     <div class="col-12">
         <h3 style="margin-bottom: 20px">Subscription</h3>
         <ul class="info-box">
+            <li><span class="info-label">Subscription ID:&nbsp;&nbsp;</span>{{ subscriptionService.subscriptionStatus$.value.id }}</li>
             <li><span class="info-label">Plan:&nbsp;&nbsp;</span>{{ subscriptionService.subscriptionStatus$.value.planName }}</li>
             <li>
                 <span class="info-label">Status:&nbsp;&nbsp;</span>
@@ -21,5 +22,12 @@
                 {{ formatDate(subscriptionService.subscriptionStatus$.value.validTill) }}
             </li>
         </ul>
+    </div>
+    <div class="col-12">
+        <a 
+            class="btn btn-primary" 
+            href="https://forms.gle/NgA1MhypbH4jgMBaA">
+            Buy/Renew Subscription
+        </a>
     </div>
 </div>
